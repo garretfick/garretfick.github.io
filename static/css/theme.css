@@ -451,7 +451,7 @@ body {
 }
 .landing-content {
   background-color: #1E1E1E;
-  background-image: url('../images/background.png');
+  background-image: url('../img/background.png');
   background-repeat: no-repeat;
   background-position-x: 300px; 
   background-position-y: 60px;
