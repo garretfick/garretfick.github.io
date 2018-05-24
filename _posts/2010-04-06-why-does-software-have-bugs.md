@@ -1,0 +1,13 @@
+---
+layout: post
+title: Why Does Software Have Bugs?
+date: 2010-04-06
+---
+
+One of the regular blogs I follow is [The Old New Thing](http://blogs.msdn.com/oldnewthing/). Following the quarterly link clearance, I stumbled upon a discussion of [shipping software with bugs](http://www.ericsink.com/articles/Four_Questions.html). As the writer points out, shipping software is not trivial.
+
+Before software ships, and often repeatedly as the ship date approaches, we have to take a look at the state of the product and decide if it's quality is sufficiently high that we feel comfortable with the current state, bugs and all. It has been argued many times before that every fix has the risk of introducing additional bugs, and there is a risk that the newly introduced bugs are worst than the fix. This has happened for the product that I help develop, where the fix relatively unlikely crash caused a highly likely crash in a completely different part of the product. Luckily this was found before release, but it simply shows that the risk is real.
+
+So, this explains why bugs go unfixed, but it still does not explain why the bugs exist in the first place. At a most basic level, bugs are errors. They can be simple, such as replacing == with !=, or they can be exceedingly complex, but they are nevertheless errors. In many engineering disciplines, we talk about [safety factors](http://en.wikipedia.org/wiki/Factor_of_safety), where the system is over-designed to account for incomplete or inaccurate information. Over-designing helps to ensure that usually structures don't collapse except in the most extreme and unexpected cases. I may write software for a living and have seen software ship with bugs, but I fundamentally do not understand why software insists of being different from other "engineering" disciplines. Considering how difficult it is to design a building, I have always found it difficult to understand why software is apparently more complex.
+
+I remain unconvinced. In response, I have a slightly different reason why software ships with bugs: standards for software development are simply too low. Mistakes are human and inevitable, that is partly why a factor of safety exists in structure design. But as a whole, software developers fail to be concerned with "what if" scenarios, they fail to test thoroughly, they fail to understand the problem at hand, they accept people who are incompetent into their ranks. All of these ultimately lead to the current situation where is it impossible to ship software with no bugs. And that is why software ships with bugs.s
