@@ -27,7 +27,7 @@ Scratch that idea. The whole idea of putting the separator in the HTML was a bad
     <li class="pathway"><a href="/">Home</></li>
     <li class="pathway"><a href="/blog">Blog</a></li>
     <li class="pathway_end">Page title</li>
-</ul> 
+</ul>
 ```
 
 The CSS then adds a background image with left padding so the text doesn't overlap the image. The resulting breadcrumb displays like

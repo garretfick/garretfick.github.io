@@ -14,7 +14,7 @@ The centre of the octagon is located at C, and it is characterized by the circum
 
 We can figure out the location of these points by drawing the blue triangle from the center of the circle to one vertex. We know the length of the sides to the vertices is L/2. We know the interior angle, θ, of the triangle is 45° (360° / 8 triangles).
 
-Now, let's draw a right triangle where the hypotenuse is from the centre to vertex. We can then use trigonometry to calculate x and y. x and y are the same since it is a isosclese triangle.
+Now, let's draw a right triangle where the hypotenuse is from the centre to vertex. We can then use trigonometry to calculate x and y. x and y are the same since it is a isosceles triangle.
 
 ![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/fun-with-octagons/vertex_location.png)
 

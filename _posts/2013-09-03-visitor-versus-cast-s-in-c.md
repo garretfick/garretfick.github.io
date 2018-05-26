@@ -138,13 +138,13 @@ I then wrote to code to either cast via `is` or call a visitor function. Everyth
 
 Times increase with each addition because the total number of objects increases, so the important number is the average. The loop is also run 10000 times so that the times are much larger than the timer resolution of 1 ms.
 
-Overally, the results are not that unexpected. As you add more types, the number of failed if's increases, and the performance degredates. The visitor stays the same. Interestingly, at the lowest end, the cast is faster than the visitor, and so for simple checks, the better choice might be the cast.
+Overall, the results are not that unexpected. As you add more types, the number of failed if's increases, and the performance degredates. The visitor stays the same. Interestingly, at the lowest end, the cast is faster than the visitor, and so for simple checks, the better choice might be the cast.
 
 You can see the full source below.
 
 ```
 // Comment the conditional compile lines below to 
-// remove particular types from the object hierarhcy
+// remove particular types from the object hierarchy
 #define SQUARE
 #define ROUNDEDSQUARE
 #define HEXAGON
@@ -183,7 +183,7 @@ namespace VisitorVsCast
     {
         public abstract void AcceptVisitor(IVisitor visitor);
     }
- 
+
     /// <summary>
     /// A circle
     /// </summary>
@@ -194,7 +194,7 @@ namespace VisitorVsCast
             visitor.VisitCircle(this);
         }
     }
- 
+
 #if SQUARE
     /// <summary>
     /// A square shape
@@ -220,7 +220,7 @@ namespace VisitorVsCast
         }
     }
 #endif
- 
+
 #if HEXAGON
     public class Hexagon : Shape
     {
@@ -230,7 +230,7 @@ namespace VisitorVsCast
         }
     }
 #endif
- 
+
 #if OCTAGON
     public class Octagon : Shape
     {
@@ -240,52 +240,52 @@ namespace VisitorVsCast
         }
     }
 #endif
- 
+
     /// <summary>
     /// Counting visitor
     /// </summary>
     public class CountingVisitor : IVisitor
     {
- 
+
         public void VisitCircle(Circle circle)
         {
         }
- 
+
 #if SQUARE
         public void VisitSquare(Square square)
         {
         }
 #endif
- 
+
 #if ROUNDEDSQUARE
         public void VisitRoundedSquare(RoundedSquare square)
         {
         }
 #endif
- 
+
 #if HEXAGON
         public void VisitHexagon(Hexagon hexagon)
         {
         }
 #endif
- 
+
 #if OCTAGON
         public void VisitOctagon(Octagon octagon)
         {
         }
 #endif
     }
- 
+
     class Program
     {
         static int NumObjectsPerCategory = 10000;
         static int NumIterations = 10000;
- 
+
         static void Main(string[] args)
         {
             long visitorTime = 0;
             long castTime = 0;
- 
+
             // Create a list with lots of shapes. It doesn't matter the order
             // of the shapes, but that we have a bunch
             List<Shape> shapes = new List<Shape>();
@@ -318,14 +318,14 @@ namespace VisitorVsCast
                 shapes.Add(new Octagon());
             }
 #endif
- 
+
             visitorTime = CountByVisitor(shapes);
             castTime = CountByCast(shapes);
- 
+
             Console.WriteLine("Visitor: {0}", visitorTime);
             Console.WriteLine("Cast: {0}", castTime);
         }
- 
+
         /// <summary>
         /// Iterate them by the visitor
         /// </summary>
@@ -334,9 +334,9 @@ namespace VisitorVsCast
         static long CountByVisitor(List<Shape> shapes)
         {
             CountingVisitor visitor = new CountingVisitor();
- 
+
             Stopwatch sw = Stopwatch.StartNew();
- 
+
             for (int i = 0; i < NumIterations; ++i)
             {
                 foreach (Shape shape in shapes)
@@ -344,10 +344,10 @@ namespace VisitorVsCast
                     shape.AcceptVisitor(visitor);
                 }
             }
- 
+
             return sw.ElapsedMilliseconds;
         }
- 
+
         /// <summary>
         /// Iterate them by cast
         /// </summary>
@@ -356,7 +356,7 @@ namespace VisitorVsCast
         static long CountByCast(List<Shape> shapes)
         {
             Stopwatch sw = Stopwatch.StartNew();
- 
+
             for (int i = 0; i < NumIterations; ++i)
             {
                 foreach (Shape shape in shapes)
@@ -386,10 +386,10 @@ namespace VisitorVsCast
 #endif
                 }
             }
- 
+
             return sw.ElapsedMilliseconds;
         }
- 
+
     }
 }
 ```

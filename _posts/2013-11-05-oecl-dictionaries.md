@@ -10,7 +10,7 @@ An OECL file aims to be a complete description of a component or an entire libra
 
 It does that by defining a series of dictionaries that describe various aspects of components.
 
-Entity | Dictionay
+Entity | Dictionary
 -------|-----------
 Components | `ComponentBlueprintDictionary`
 Schematic capture graphic symbols | `SymbolBlueprintDictionary`

@@ -49,7 +49,7 @@ url = urlparse.urlparse(redis_url)
 conn = redis.StrictRedis(host=url.hostname, port=url.port, password=url.password)
 ```
 
-`worker.py` proceses the items in the queue
+`worker.py` processes the items in the queue
 
 ```
 from rq import Worker, Queue, Connection

@@ -6,7 +6,7 @@ date: 2017-05-11
 
 A pretty common problem is to get the top N items from a group from a SQL database. For example, suppose you wanted to get the last order for each customer - this is a top 1 item grouping by customer ID.
 
-For some database engines, you can use `OVER` and `PARTITION BY` to achieve your goal. These functions don't exist on MySQL and SQLite, so if you are using those engines, then you need to fall back to basic SQL. It is almost certinally not as efficient (basically doing a cross-product), but you can make it work.
+For some database engines, you can use `OVER` and `PARTITION BY` to achieve your goal. These functions don't exist on MySQL and SQLite, so if you are using those engines, then you need to fall back to basic SQL. It is almost certainly not as efficient (basically doing a cross-product), but you can make it work.
 
 The key insight, described well by [Bill Karwin](http://stackoverflow.com/users/20860/bill-karwin) on [Stackoverflow](http://stackoverflow.com/questions/1442527/how-to-select-the-newest-four-items-per-category/1442867#1442867) is to join the table with itself, but only do the join for the last item.
 
@@ -33,7 +33,7 @@ GROUP BY i1.category, i1.id
 HAVING COUNT(*) < 2;
 ```
 
-Finally, what you really want is the columns, so use that as a subquery to get the data you really care about.
+Finally, what you really want is the columns, so use that as a sub-query to get the data you really care about.
 
 ```
 SELECT * from items WHERE id IN (

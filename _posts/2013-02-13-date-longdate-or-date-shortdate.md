@@ -10,10 +10,10 @@ The Windows API provides the [`GetDateFormat`](http://msdn.microsoft.com/en-us/l
 // Get the current time
 SYSTEMTIME sysTime;
 GetLocalTime(&sysTime);
- 
+
 // Where to store the date string
 TCHAR szBuf[100];
- 
+
 // Get the date
 GetTimeFormat(LOCALE_USER_DEFAULT, DATE_SHORTDATE, &sysTime, NULL, szBuf, sizeof(szBuf)/sizeof(szBuf[0]));
 ```

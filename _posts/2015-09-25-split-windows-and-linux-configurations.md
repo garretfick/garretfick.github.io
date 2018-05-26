@@ -11,7 +11,7 @@ This is part 4 of a 4 part series on how to setup Django locally on Windows and 
 3. Change Django from SQLite to PostgreSQL
 4. Split Configuration for Windows and Linux (this page)
 5. 
-You may recall from the first page that setting up Django locally on Windows and deplying to Heroku has a problem. If the application uses PostgreSQL, then the configuration between Windows and Linux cannot be the same.
+You may recall from the first page that setting up Django locally on Windows and deploying to Heroku has a problem. If the application uses PostgreSQL, then the configuration between Windows and Linux cannot be the same.
 
 This final part describes how to setup the configuration (requirements) so that Windows and Linux have different requirements.
 
@@ -39,7 +39,7 @@ psycopg2==2.6
 
 Before adding and committing to Git, there are a few things that should not be committed to Git.
 
-Since you cannot direclty create a file name in Windows starting with a period, execute the following to create the `.gitignore` file:
+Since you cannot directly create a file name in Windows starting with a period, execute the following to create the `.gitignore` file:
 
 ```
 touch .gitignore

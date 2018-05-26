@@ -16,7 +16,7 @@ I also put together [an example project](https://bitbucket.org/garretfick/stylec
 * open the project,
 * compile,
 * put the output DLL in the StyleCop installation directory
-* 
+
 Loading the rules should show the custom rule.
 
 ![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/template-stylecop-custom-rule-project/style_cop_custom_rule.png)

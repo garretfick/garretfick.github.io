@@ -14,7 +14,7 @@ The first thing to note is that they are not equivalent. `pre` is a grouping ele
 <code><p>After typing in <kbd>cd D:</kbd> at the command prompt, the output should show <samp>D:\></samp></p></code>
 ```
 
-or 
+or
 
 ```
 <code><pre><code>void main(void) {}</code></pre></code>

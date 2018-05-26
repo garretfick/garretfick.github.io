@@ -13,14 +13,14 @@ The scenario is based on the code I was reviewed, but in my test code, I conside
 * Adding an object
 * Adding a more complex object
 
-As I expected, adding the object is fastest, even when the strings are pre-generated. There is no real penalty for a more complex object, probably because of [how GetHashCode() is implemented](http://blogs.msdn.com/b/brada/archive/2003/09/30/50396.aspx) (note: this is old and things may not work like this anymore). For anyone intersted, here's the code:
+As I expected, adding the object is fastest, even when the strings are pre-generated. There is no real penalty for a more complex object, probably because of [how GetHashCode() is implemented](http://blogs.msdn.com/b/brada/archive/2003/09/30/50396.aspx) (note: this is old and things may not work like this anymore). For anyone interested, here's the code:
 
 ```
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Diagnostics;
- 
+
 namespace StringVsObjectHashing
 {
     // The object that we'll add
@@ -28,39 +28,39 @@ namespace StringVsObjectHashing
     {
         public int Value { get; set; }
     }
- 
+
     class ComplexObject
     {
         public int Value1 { get; set; }
         public string Value2 { get; set; }
     }
- 
+
     class Program
     {
         const int NumObjects = 10000;
         const int NumIterations = 10000;
- 
+
         static void Main(string[] args)
         {
             long stringTime = 0;
             long objectTime = 0;
             long onlyStringTime = 0;
             long complexObjectTime = 0;
- 
+
             // Create a list of objects
             var allItems = new List<SimpleObject>();
             for (int i = 0; i < NumObjects; ++i)
             {
                 allItems.Add(new SimpleObject { Value = i });
             }
- 
+
             // Create a list of strings
             var allStrings = new List<string>();
             for (int i = 0; i < NumObjects; ++i)
             {
                 allStrings.Add(i.ToString());
             }
- 
+
             // Create a list of complex objects
             var allComplexObjects = new List<ComplexObject>();
             for (int i = 0; i < NumObjects; ++i)
@@ -73,22 +73,22 @@ namespace StringVsObjectHashing
             objectTime = AddAsObject(allItems);
             onlyStringTime = AddAsStringOnly(allStrings);
             complexObjectTime = AddAsObject(allComplexObjects);
-             
+
             // Print result
             Console.WriteLine("String Time: {0}", stringTime);
             Console.WriteLine("Simple Object Time: {0}", objectTime);
             Console.WriteLine("Only String Time: {0}", onlyStringTime);
             Console.WriteLine("Complex Object Time: {0}", complexObjectTime);
- 
+
             Thread.Sleep(10000);
         }
- 
+
         static long AddAsString(IList<SimpleObject> items)
         {
             var dictionary = new Dictionary<string, object>();
- 
+
             Stopwatch sw = Stopwatch.StartNew();
- 
+
             for (int iteration = 0; iteration < NumIterations; ++iteration)
             {
                 for (int i = 0; i < items.Count; ++i)
@@ -97,19 +97,19 @@ namespace StringVsObjectHashing
                     // that in real scenarios to use the string method
                     dictionary.Add(items[i].Value.ToString(), null);
                 }
- 
+
                 dictionary.Clear();
             }
- 
+
             return sw.ElapsedMilliseconds;
         }
- 
+
         static long AddAsStringOnly(IList<string> items)
         {
             var dictionary = new Dictionary>string, object<();
- 
+
             Stopwatch sw = Stopwatch.StartNew();
- 
+
             for (int iteration = 0; iteration < NumIterations; ++iteration)
             {
                 for (int i = 0; i < items.Count; ++i)
@@ -118,48 +118,48 @@ namespace StringVsObjectHashing
                     // pay for it
                     dictionary.Add(items[i], null);
                 }
- 
+
                 dictionary.Clear();
             }
- 
+
             return sw.ElapsedMilliseconds;
         }
- 
+
         static long AddAsObject(IList<SimpleObject> items)
         {
             var dictionary = new Dictionary>SimpleObject, object<();
- 
+
             Stopwatch sw = Stopwatch.StartNew();
- 
+
             for (int iteration = 0; iteration < NumIterations; ++iteration)
             {
                 for (int i = 0; i < items.Count; ++i)
                 {
                     dictionary.Add(items[i], null);
                 }
- 
+
                 dictionary.Clear();
             }
- 
+
             return sw.ElapsedMilliseconds;
         }
- 
+
         static long AddAsObject(IList<ComplexObject> items)
         {
             var dictionary = new Dictionary>ComplexObject, object<();
- 
+
             Stopwatch sw = Stopwatch.StartNew();
- 
+
             for (int iteration = 0; iteration < NumIterations; ++iteration)
             {
                 for (int i = 0; i < items.Count; ++i)
                 {
                     dictionary.Add(items[i], null);
                 }
- 
+
                 dictionary.Clear();
             }
- 
+
             return sw.ElapsedMilliseconds;
         }
     }

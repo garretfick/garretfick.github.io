@@ -22,7 +22,7 @@ Instead, I decided to implement a lookup table, where I precalculated correct ch
 
 ```
 // Valid characters encoded as a table
-bool kValidCharTable[256] = 
+bool kValidCharTable[256] =
 {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,//0   - 15
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,//16  - 31
@@ -37,7 +37,7 @@ if (kValidCharTable[charToCheck])
 }
 ```
 
-This of course uses more space, but I think it is more readable and it should perform faster. As I was reading Programming Pearls, it occured to me that I could have encoded things as a bit vector to save space. Just for my interest, tried these out to see how they perform. The results were a little surprising. First I'll give the code, then summarize the results.
+This of course uses more space, but I think it is more readable and it should perform faster. As I was reading Programming Pearls, it occurred to me that I could have encoded things as a bit vector to save space. Just for my interest, tried these out to see how they perform. The results were a little surprising. First I'll give the code, then summarize the results.
 
 ```
 #include <stdio.h>
@@ -53,7 +53,7 @@ const long kNumInterations = 10000000L;
 bool CheckByIf(char* charsToCheck, int numChars)
 {
     bool isValid = true;
-     
+
     for (int charIndex = 0; charIndex < numChars && isValid; ++charIndex)
     {
         char charToCheck = charsToCheck[charIndex];
@@ -70,7 +70,7 @@ bool CheckByIf(char* charsToCheck, int numChars)
     return isValid;
 }
 // Valid characters encoded as a table
-bool kValidCharTable[256] = 
+bool kValidCharTable[256] =
 {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,//0   - 15
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,//16  - 31
@@ -99,7 +99,7 @@ bool CheckByCharTable(char* charsToCheck, int numChars)
     }
     return isValid;
 }
-// Valid charactes, encoded as a bit array
+// Valid characters, encoded as a bit array
 std::uint64_t kValidCharBitArray[4] = {
     0x03FF000000000000,
     0x07FFFFFE87FFFFFE,
@@ -143,7 +143,7 @@ int main(int argc, char* argv[])
             isValidBit = CheckByBitArray(argv[1], len);
         }
         bitTime = clock() - bitTime;
-         
+
         std::cout << "If: " << ifTime << " Valid: " << isValidIf << std::endl;
         std::cout << "Table: " << tableTime << " Valid: " << isValidTable << std::endl;
         std::cout << "Bit: " << bitTime << " Valid: " << isValidTable << std::endl;

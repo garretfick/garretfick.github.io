@@ -4,7 +4,7 @@ title: Avoid Loading of Unnecessary Symbols
 date: 2012-03-09
 ---
 
-Setting up Visual Studio to use a symbol server can greatly improve your ability to debug problems. However, adding a symbol server can significantly slow down debugging as Visual Studio searchs for symbols not in the cache each time a DLL loads for a debugging session and loads symbols for DLLs that are not relevant for your debugging. You'll get a huge speed-up by telling Visual Studio to skip loading symbols for these modules. Follow the steps below tell Visual Studio to skip loading these symbols.
+Setting up Visual Studio to use a symbol server can greatly improve your ability to debug problems. However, adding a symbol server can significantly slow down debugging as Visual Studio searches for symbols not in the cache each time a DLL loads for a debugging session and loads symbols for DLLs that are not relevant for your debugging. You'll get a huge speed-up by telling Visual Studio to skip loading symbols for these modules. Follow the steps below tell Visual Studio to skip loading these symbols.
 
 ## Identify Modules to Skip
 

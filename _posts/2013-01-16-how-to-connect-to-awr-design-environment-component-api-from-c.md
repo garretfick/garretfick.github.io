@@ -51,12 +51,12 @@ Now compile your project. The AWR API generates a few errors and as yet, I haven
 
 ```
 #pragma once
- 
+
 #include "targetver.h"
- 
+
 #include <stdio.h>
 #include <tchar.h>
- 
+
 #import "C:\Program Files (x86)\AWR\AWRDE\10\MWOffice.exe" \
    raw_native_types \
    rename("AddPort", "AddPort2") \

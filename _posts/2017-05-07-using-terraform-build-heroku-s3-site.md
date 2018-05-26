@@ -8,11 +8,11 @@ I have been playing around with [Terraform](http://www.terraform.io), and decide
 staging environment - this was just for my own interest).
 
 My site consists of a simple [Heroku](https://heroku.com) hosted application with static resources
-stored in [AWS S3](https://aws.amazon.com/s3/). My first step was to define my application's architecture in the terrafrom configuration file.
+stored in [AWS S3](https://aws.amazon.com/s3/). My first step was to define my application's architecture in the terraform configuration file.
 
 For my purposes, I wanted to start with a pretty simple definition. If you follow the [Terraform Getting Started](https://www.terraform.io/intro/getting-started/install.html) guide, you will end up with three files:
 
-1. `terraform.tf` containing your infrastracture definition
+1. `terraform.tf` containing your infrastructure definition
 2. `variables.tf` containing variable definitions for your infrastructure definition
 3. `terraform.tfvars` containing the variable values, such as API keys
 
@@ -209,14 +209,14 @@ The final piece is `terraform.tfvars`. The specific values will depend on your p
 
 ```
 app_environment = "VALUE"
-filesystem_s3_user_name = 
-aws_access_key_id = 
-aws_access_secret_key = 
-filesystems_s3_bucket = 
+filesystem_s3_user_name =
+aws_access_key_id =
+aws_access_secret_key =
+filesystems_s3_bucket =
 heroku_api_key =
-heroku_app_name = 
-heroku_email = 
-app_key = 
+heroku_app_name =
+heroku_email =
+app_key =
 ```
 
 Now save those to your main directory. You can then execute `terraform plan` and `terraform apply` to build your infrastructure. Pretty cool!

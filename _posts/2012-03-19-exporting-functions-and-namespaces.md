@@ -4,9 +4,9 @@ title: Exporting Functions and Namespaces
 date: 2012-03-19
 ---
 
-Turns out my initialy analysis was incomplete. See the end of of the post for details.
+Turns out my initial analysis was incomplete. See the end of of the post for details.
 
-## Initialy Analysis
+## Initial Analysis
 
 Last week, I ran into an interesting issue that I think is a bug in the Microsoft VisualC++ compiler relating to exporting functions and namespaces. The symptom I has was I marked a function for export, using `__declspec(dllexport)`, but then couldn't import the function, giving linker error LNK2019: unresolved external symbol.
 

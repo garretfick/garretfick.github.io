@@ -16,7 +16,7 @@ Screen readers read the page title, which means if you include the website title
 
 Navigating navigating links by the keyboard always starts with the first item in the code. Normally we put navigation content first, which means you have to tab through all the navigation items first before you get to the main content. Again, it's really annoying.
 
-An improved way is to provide a "skip link" that goes directly to the main content. To be useful, this link needs to occur before other links and the text should make sense, such as "skip to main content". You can use CSS to position is later., perhaps even off screen, or even invisible until highlighed.
+An improved way is to provide a "skip link" that goes directly to the main content. To be useful, this link needs to occur before other links and the text should make sense, such as "skip to main content". You can use CSS to position it later, perhaps even off screen, or even invisible until it has focus.
 
 ## Provide useful information in links
 

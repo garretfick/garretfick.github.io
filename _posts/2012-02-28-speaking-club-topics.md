@@ -8,7 +8,7 @@ It was my turn today to come up with impromptu speaking topics for our club at w
 
 * Fortune teller (for someone who has 30 days to live)
 * School teacher (explain to parents why student is in detention)
-*Parent (explain why your child shouldn't have been punished)
+* Parent (explain why your child shouldn't have been punished)
 * Sports Reporter (reporting on sport of choice)
 * Scientist (explain one of plate tectonics, global warming, or non-electronics topic of your choice)
 * Politician #1 (why should you be elected?)

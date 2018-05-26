@@ -25,7 +25,7 @@ We arranged things into separate boards so that the boards can be organized acco
 
 Board       | Purpose
 ------------|----------------
-Current Development	| Cards that will be worked on next, are in progress, waiting for testing/evaluation, and the final resting place of all finished work.
+Current Development | Cards that will be worked on next, are in progress, waiting for testing/evaluation, and the final resting place of all finished work.
 Bugs | Bug cards, organized by severity.
 Initiatives | Upcoming cards that are tentatively scheduled.
 Later | Distant future cards that are being ignoring for now.

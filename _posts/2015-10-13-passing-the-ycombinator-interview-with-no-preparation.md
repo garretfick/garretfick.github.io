@@ -24,7 +24,7 @@ I never found YC interview videos but I did find Office Hours videos and I used 
 
 We also used our network to reach out to people who had previously been though YC or were knowledgeable about YC. We managed to setup one short telephone call with a prior founder and with a knowledgeable individual. Although I was hoping for a mini-mock interview with feedback, what we got was some simple advice that was maybe more valuable. The YC partners are exceptionally intelligent so assume they understand your business as well as you do.
 
-In the short preparation time, we also came up with a strategy for sharing answering questions. Since the only part of the product I knew well was the technology, that was my domian and everything else was the domain of my co-founder.
+In the short preparation time, we also came up with a strategy for sharing answering questions. Since the only part of the product I knew well was the technology, that was my domain and everything else was the domain of my co-founder.
 
 Beyond this, I found a list of [interview questions on Quora](https://www.quora.com/What-is-it-like-to-interview-with-Y-Combinator) and wrote down basic answers to the questions. For me personally, I reviewed my answers with my co-founder to make sure I actually understood these other areas of the business.
 The Actual Interview

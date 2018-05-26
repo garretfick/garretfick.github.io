@@ -4,7 +4,7 @@ title: Custom Failed Assert Information for the VisualStudio C# Test Runner
 date: 2014-06-14
 ---
 
-I was recently debugging an intermitent test failure that would only occur on a machine I couldn't access, so I wanted to output some additional information about the test failure.
+I was recently debugging an intermittent test failure that would only occur on a machine I couldn't access, so I wanted to output some additional information about the test failure.
 
 My solution was to append information to the test output when an assert fails. The following is the basic framework I used to capture and add information to the test result.
 
@@ -39,7 +39,7 @@ namespace CustomAssertException
             return "Custom assert text";
         }
     }
- 
+
     /// Exception class that the test runner will catch and print out the message.
     [Serializable]
     public class CustomAssertFailedException : AssertFailedException
@@ -51,7 +51,7 @@ namespace CustomAssertException
         }
         public CustomAssertFailedException(SerializationInfo info, StreamingContext context)
         {
-             
+
         }
         public override string Message
         {

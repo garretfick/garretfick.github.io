@@ -22,7 +22,7 @@ Word has many built-in styles but they compete with using a consistent formattin
 
 4. Check `Limit formatting to permitted styles`.
 5. Click `OK`.
-6. In the `Start Enforcing Protendtion` window, click `OK` without setting a password.
+6. In the `Start Enforcing Protection` window, click `OK` without setting a password.
 
     ![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/remove_builtin_word_styles/start_enforcing_protection.png)
 

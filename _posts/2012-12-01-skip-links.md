@@ -67,5 +67,4 @@ The important part is the testing. This wasn't my first approach, but it was the
 </tbody>
 </table>
 
-
 For things not in the table, such as Firefox, Android, iOS, etc, I simply don't know. If it works (or if it doesn't) let me know and help me populate the table.

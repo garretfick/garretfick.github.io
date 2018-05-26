@@ -73,7 +73,7 @@ The full CSS also contains the reference to the image sprite.
 
 ## JavaScript
 
-The final piece is the JavaScript that initiates the transiation. It does this by adding/removing classes. So, when we add the `rotated` class, it rotates and changes the background color. You can of course use a library such as [jQuery](http://jquery.com/) to add/remove, but you can achieve the same effect with just a few lines of code.
+The final piece is the JavaScript that initiates the transition. It does this by adding/removing classes. So, when we add the `rotated` class, it rotates and changes the background color. You can of course use a library such as [jQuery](http://jquery.com/) to add/remove, but you can achieve the same effect with just a few lines of code.
 
 ```
 function toggle_class(elem_name)

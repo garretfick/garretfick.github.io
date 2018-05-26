@@ -4,7 +4,7 @@ title: Avoiding #include in Headers
 date: 2011-10-13
 ---
 
-Last week I wrote about why I think #include in headers are evil. Sometimes #includes in headers is a result of lazyness, but other times, because there is apparently no other alternative. In reality, there is nearly always an alternative.
+Last week I wrote about why I think #include in headers are evil. Sometimes #includes in headers is a result of laziness, but other times, because there is apparently no other alternative. In reality, there is nearly always an alternative.
 
 ## Forward Declarations
 

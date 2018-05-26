@@ -4,7 +4,7 @@ title: Conditional Logic is Bad in Unit Tests
 date: 2013-04-23
 ---
 
-I've fllow the mantra that branch points in unit tests are bad practice, but I'd never tried to give specific reasons why it is bad practice. If you think about it, it is actually quite easy to see why. Let's look as a simple example (written using [GoogleTest](https://code.google.com/p/googletest/)).
+I've follow the mantra that branch points in unit tests are bad practice, but I'd never tried to give specific reasons why it is bad practice. If you think about it, it is actually quite easy to see why. Let's look as a simple example (written using [GoogleTest](https://code.google.com/p/googletest/)).
 
 **Option 1**
 

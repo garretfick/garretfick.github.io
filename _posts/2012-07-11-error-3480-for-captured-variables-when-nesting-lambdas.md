@@ -9,7 +9,7 @@ Sometimes you need to nest C++ lambdas, for example if you have an outer and inn
 ```
 #include <algorithm>
 #include <vector>
- 
+
 int captured_val;
 std::vector<int> v1;
 std::for_each(std::begin(v1), std::end(v1), [captured_val](int val1)
@@ -39,7 +39,7 @@ Re-capturing means declaring a variable local to the outer lambda, assigning the
 ```
 #include <algorithm>
 #include <vector>
- 
+
 int captured_val;
 std::vector<int> v1;
 std::for_each(std::begin(v1), std::end(v1), [captured_val](int val1)

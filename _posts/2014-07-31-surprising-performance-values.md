@@ -13,7 +13,7 @@ There are two ways you can accomplish this:
 
 Is there a difference in performance? And if so, which one do you think executes faster?
 
-Intutitively, I though iterating over the key-value pairs should be faster because I expected the dictionary strores these, and so there might be less work to iterate over the key-value pairs.
+Intuitively, I though iterating over the key-value pairs should be faster because I expected the dictionary stores these, and so there might be less work to iterate over the key-value pairs.
 
 A quick program I wrote showed me how wrong I was.
 

@@ -10,7 +10,7 @@ I was recently asked for advice on taking a first step in to the real programmin
 
 Personality isn't quite the right word, but it's what came to mind quickly. I want to know if you will fit into the group. Are you someone who will require micromanaging or will you be largely self directed? How do you respond in the face of challenges? Do you give up too quickly and do you know when to ask for help?
 
-We evalute this by asking questions about your experiences in the past. The best way to prepare for this is, wait for it, have experiences to talk about. You get this by working on real projects, whether it be for work, school, or self-interest. There is no faking it here. If you don't have any experience, it is going to be impossible to answer these questions.
+We evaluate this by asking questions about your experiences in the past. The best way to prepare for this is, wait for it, have experiences to talk about. You get this by working on real projects, whether it be for work, school, or self-interest. There is no faking it here. If you don't have any experience, it is going to be impossible to answer these questions.
 
 If you really don't have any experience and you can't get a job, then you need to create your own experience. More on that in a second.
 

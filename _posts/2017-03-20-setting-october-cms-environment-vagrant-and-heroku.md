@@ -4,7 +4,7 @@ title: Setting up a October CMS environment with Vagrant and Heroku
 date: 2017-03-20
 ---
 
-OctoberCMS is an intersting CMS platform build on Laravel. There is a great official tutorial on how to setup OctoberCMS
+OctoberCMS is an interesting CMS platform build on Laravel. There is a great official tutorial on how to setup OctoberCMS
 with a Vagrant box using the quick install approach.
 
 That approach is great if you will use OctoberCMS's project management tools to update, install plugins, themes, etc.
@@ -21,7 +21,7 @@ with Heroku's ephemeral storage and across multiple instances.
 
 ## Get the Vagrantbox (Scotchbox)
 
-Open a terminal window. Execute the follwing to create directory
+Open a terminal window. Execute the following to create directory
 for your project and then clone the scotchbox repository into
 the directory.
 
@@ -261,10 +261,10 @@ At this point, you should be able to see the OctoberCMS backend running via your
 On your host machine, enter the IP address of your site followed by `/backend` (or URL if you are using the hostupdater Vagrant plugin). You should be able to login
 with the credientials you input above.
 
-### Commit your customizations to Git
+### Commit your customization to Git
 
 Assuming all of the above works, you are at a good checkpoint before we do some
-final customizations for Heroku.
+final customization for Heroku.
 
 In the terminal window, execute the following to stage and then commit your changes
 
@@ -279,14 +279,14 @@ sensitive and instance specific information.
 ## Setup Heroku
 
 Our goal was to setup the application so that you can deploy it to a PaaS provider
-such as Heroku. So far, we have a site that runs locally in a virtual matchine. Our
+such as Heroku. So far, we have a site that runs locally in a virtual machine. Our
 next step is to get things working on Heroku.
 
 I'll assume you have already installed the Heroku CLI. If you haven't, get that first.
 
 ### Create a new Heroku application
 
-Next, in the terminal window, exeucte the following to create a new Heroku
+Next, in the terminal window, execute the following to create a new Heroku
 application.
 
 ```
