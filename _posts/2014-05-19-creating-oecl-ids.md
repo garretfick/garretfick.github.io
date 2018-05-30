@@ -43,7 +43,7 @@ PackageBlueprint | `pkg`
 
 Let's look at the [LM7121 from Texas Instruments](http://www.ti.com/product/lm7121) as an example. It has multiple part numbers and it is available in multiple packages.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/creating-oecl-ids/lm7121_parts.png)
+![](/static/img/blog/creating-oecl-ids/lm7121_parts.png)
 
 The component would have the following IDs
 

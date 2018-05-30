@@ -6,7 +6,7 @@ date: 2013-01-14
 
 While at the gym this past week, one of the staff members kindly informed me that I was using weights in a room where weights were not allowed. Surprised, I inquired how I was supposed to know if weights were not allowed, and if the rules had changed recently. The staff member informed me that they had put up signs about a month earlier and he pointed near the door. I promised to return the weights when I was done and he moved on. Afterward, I went to look for the sign, and I to my amazement, I found that the sign I was disobeying was a sign I had read before.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/conventions-are-important-for-understanding/sign.jpg)
+![](/static/img/blog/conventions-are-important-for-understanding/sign.jpg)
 
 In large text, the sign says "Quiet Please." Following in small text, the sign says "This Room is for Quiet Stretch & Workout. Weights, Plates & Dumbbells are NOT allowed in this area."
 

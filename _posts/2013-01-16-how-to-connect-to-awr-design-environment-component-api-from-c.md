@@ -28,11 +28,11 @@ Now that we know everything is working from .NET, it's time to try things from C
 
 First, we need to find the type library. Rather than search for the library, our earlier C# application can help us find the type library. From the `Solution Explorer`, select the `MWOffice Reference`. In the `Properties` pane, find the `Identity` property, and copy the GUID.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/how-to-connect-to-awr-design-environment-component-api-from-c/tlb_guid.png)
+![](/static/img/blog/how-to-connect-to-awr-design-environment-component-api-from-c/tlb_guid.png)
 
 Next, launch the Registry Editor, and search for that GUID. The default value of the win32 registry key for the GUID gives the location of the type library on your system. In my case, this is `C:\Program Files (x86)\AWR\AWRDE\10\MWOffice.exe`.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/how-to-connect-to-awr-design-environment-component-api-from-c/tlb_location.png)
+![](/static/img/blog/how-to-connect-to-awr-design-environment-component-api-from-c/tlb_location.png)
 
 To use the type library, we add the `#import` directive to the precompiled header (other header files won't work, which if you think about it, actually makes sense). If you haven't made any other changes to the default file created by the project wizard, you'll have the following in `stdafx.h`:
 
@@ -85,6 +85,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
 There is nothing special here, except for how did I get the names of the objects? Where did `MWOffice::Application` and `MWOffice::IMWOffice` come from? They came from the C# project I created earlier. In Visual Studio, open up the `Object Browser` and select the `Application` class. From there, we can see the base type is` IMWOffice`.
 
-[](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/how-to-connect-to-awr-design-environment-component-api-from-c/object_browser.png)
+[](/static/img/blog/how-to-connect-to-awr-design-environment-component-api-from-c/object_browser.png)
 
 At this point, there's only one thing left to do. Compile and run.

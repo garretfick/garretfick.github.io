@@ -17,7 +17,7 @@ I'm probably not the first to dream up this strategy, but I haven't seen it onli
 
 The strategy is to manage state through a stack of small XML parsers (mini-parsers) created on demand. Events from the SAX parser are forwarded through the stack of parsers, from the base to the top of the stack. Only the parser at the top of the stack handles the events - the others simply pass along the data. Each mini-parser knows how to parse a small portion of the document, and the stack of mini-parsers automates the task of keeping track of state. Additionally, because the parsers are created on-demand, you can pass to them the appropriate parent object for the objects the parser is creating. Lastly, because each mini-parser is independent, it is easy to hook up unit testing. Graphically, it looks something like the following.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/design-pattern-for-event-based-parsing-of-hierarchical-data/mini-parser.png)
+![](/static/img/blog/design-pattern-for-event-based-parsing-of-hierarchical-data/mini-parser.png)
 
 I'll use an example to explain how this works. Let's imaging you need to parse the following XML document representing an online order:
 

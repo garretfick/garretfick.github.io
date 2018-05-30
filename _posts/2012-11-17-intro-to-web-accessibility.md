@@ -10,7 +10,7 @@ I'm at [Intro to Web Accessibility](http://sadecki.com/presentations/a11y-intro/
 
 Screen readers read the page title, which means if you include the website title, the reader will read out your site title every time someone visits your page. It's just annoying. Put the name of the content first, and optionally your site title second, the opposite of my site.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/intro-to-web-accessibility/bad_site_title.png)
+![](/static/img/blog/intro-to-web-accessibility/bad_site_title.png)
 
 ## Provide a "skip link"
 

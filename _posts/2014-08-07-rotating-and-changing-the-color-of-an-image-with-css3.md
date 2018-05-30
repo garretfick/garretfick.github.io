@@ -13,7 +13,7 @@ To make things more interesting, the color of the item changes when expanded, so
 
 Let's start with what this looks like:
 
-<iframe src="https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/rotating-and-changing-the-color-of-an-image-with-css3/click_rotate_animation.html"/>
+<iframe src="/static/img/blog/rotating-and-changing-the-color-of-an-image-with-css3/click_rotate_animation.html"/>
 
 This is actually quite easy, and you can achieve the effect with only a few lines. You need only
 
@@ -98,4 +98,4 @@ For browsers that don't support animation, they just don't get that part. The lo
 
 ## Summary
 
-That's all there is to it. If you like this, you can [download the full source](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/rotating-and-changing-the-color-of-an-image-with-css3/click_rotate_animation.html) and integrate it into your website.
+That's all there is to it. If you like this, you can [download the full source](/static/img/blog/rotating-and-changing-the-color-of-an-image-with-css3/click_rotate_animation.html) and integrate it into your website.

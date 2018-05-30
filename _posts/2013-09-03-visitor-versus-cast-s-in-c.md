@@ -8,7 +8,7 @@ Obviously C# is not C++, and so it is important to not simply assume that things
 
 A few things should affect the result. Most importantly, the speed of the cast approach depends on the number of `if` tests you have to do, or equivalently, the number of failed tests. The more classes you have to test, the slower things should be. The result might also depend on class hierarchy depth. To test this out, I designed the following class hierarchy.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/visitor-versus-cast-s-in-c/c-sharp-visitor.png)
+![](/static/img/blog/visitor-versus-cast-s-in-c/c-sharp-visitor.png)
 
 I then wrote to code to either cast via `is` or call a visitor function. Everything except the `Circle` class can be entirely removed from the code by conditional compiles. This way, I can test the effects of adding more classes or increating the class hierarchy depth and this is detailed in the table below.
 

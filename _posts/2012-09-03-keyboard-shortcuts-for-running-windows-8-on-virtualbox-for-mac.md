@@ -8,13 +8,13 @@ As soon Windows 8 was released, [at least for those of us with MSDN licenses](ht
 
 The software I wanted to run (initially [Visual Studio 2012](http://www.microsoft.com/visualstudio/11/en-us)) isn't a Metro app, and I quickly got stuck in the legacy desktop.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/keyboard-shortcuts-for-running-windows-8-on-virtualbox-for-mac/legacy_desktop.png)
+![](/static/img/blog/keyboard-shortcuts-for-running-windows-8-on-virtualbox-for-mac/legacy_desktop.png)
 
 I figured I needed to press the Windows button to access functionality, but it doesn't exist on the Mac. So, how do you run Windows 8 on a Mac-based virtual machine? There are two things you need.
 
 First, the command button to the right of the space bar is the equivalent of the Windows key.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/keyboard-shortcuts-for-running-windows-8-on-virtualbox-for-mac/mac_keyboard.png)
+![](/static/img/blog/keyboard-shortcuts-for-running-windows-8-on-virtualbox-for-mac/mac_keyboard.png)
 
 Then, you'll need to memorize a few shortcuts (many are not new). There is a complete list on an [MSDN blog](http://blogs.msdn.com/b/santhoshonline/archive/2012/08/05/windows8-desktop-keyboard-shortcuts.aspx), but the following are the most important.
 

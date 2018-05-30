@@ -34,6 +34,6 @@ The CSS then adds a background image with left padding so the text doesn't overl
 
 Home and an arrow, followed by blog and an arrow, etc
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/breadcrumbs-and-web-accessibility/breadcrumb_example.png)
+![](/static/img/blog/breadcrumbs-and-web-accessibility/breadcrumb_example.png)
 
 The lesson here is: if it's for presentation, keep it in the CSS.

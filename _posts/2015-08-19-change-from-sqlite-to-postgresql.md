@@ -23,15 +23,15 @@ First psycopg2. The easiest way to use psycopy2 on Windows (and have it work in 
 
 The stack so far contains Python 3.4.3 64-bit, and on the package page, [psycopy2-windows](https://github.com/nwcell/psycopg2-windows.git) lists the Git tag for Python 3.4 64-bit:
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/change-from-sqlite-to-postgresql/psycopy2-win-versions.png)
+![](/static/img/blog/change-from-sqlite-to-postgresql/psycopy2-win-versions.png)
 
 So far, so good. This library is a compile of a particular release of win-psycopg: 2.5.3 (documented on the package's page). Next, go the [win-psycopg page](http://www.stickpeople.com/projects/python/win-psycopg/). At the time of writing, it's latest version is 2.6.1, not 2.5.3.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/change-from-sqlite-to-postgresql/win-psycopg-version.png)
+![](/static/img/blog/change-from-sqlite-to-postgresql/win-psycopg-version.png)
 
 To get the information for 2.5.3, at the bottom of the page, there is a link to Previous 2.x version. Keep clicking "Previous 2.x versions" until [version 2.5.3](http://www.stickpeople.com/projects/python/win-psycopg/index.2.5.3.html) appears. The brightly coloured table tells which version of PostgreSQL this version of win-psycopg is for: 9.3.4.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/change-from-sqlite-to-postgresql/psycopy-postgresql-version.png)
+![](/static/img/blog/change-from-sqlite-to-postgresql/psycopy-postgresql-version.png)
 
 Let's summarize: pyscopg2-windows uses 2.5.3 of win-psycopg which uses PostgreSQL 9.3.4. Got that?
 
@@ -85,7 +85,7 @@ import dj_database_url DATABASES = {} DATABASES['default'] = dj_database_url.con
 
 *Note* You can determine the names of the capitalized varables using pgAdmin III. Open pgAdmin III, select the database, then click `Tools > Connect`. The highlighted boxes, from top to bottom, show HOSTADDRESS:HOSTPORT, DATABASENAME, and USERNAME.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/change-from-sqlite-to-postgresql/pgadmin.png)
+![](/static/img/blog/change-from-sqlite-to-postgresql/pgadmin.png)
 
 *Note* When deployed to Heroku, dj_database_url will automatically get the correct PostgreSQL connection URL because Heroku automatically creates the appropriate environment variable.
 

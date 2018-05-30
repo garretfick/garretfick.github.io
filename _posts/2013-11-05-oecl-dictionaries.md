@@ -33,4 +33,4 @@ The `SymbolBlueprint` element is referenced by a `ComponentBlueprint`, so it has
 
 Put together, the relationship between thinks looks like the following.
 
-[](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/oecl-dictionaries/oecl_relationships.png)
+[](/static/img/blog/oecl-dictionaries/oecl_relationships.png)

@@ -14,7 +14,7 @@ This guide will show you how to setup the following stack:
 
 and how you can develop on Windows and deploy to Heroku Linux.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/setting-up-django-locally-on-windows-and-deploy-to-heroku/stack_logos.png)
+![](/static/img/blog/setting-up-django-locally-on-windows-and-deploy-to-heroku/stack_logos.png)
 
 For this guide, I'll assume you are starting from scratch - as in you just installed a new copy of Windows. I'll also try to explain some of the why so when this guide becomes out of date, you can hopefully figure out how to handle new version numbers.
 

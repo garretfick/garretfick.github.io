@@ -15,6 +15,6 @@ Can you predict what happened next? The additional changes generated lots of dis
 
 In order to submit, the developer should only be reviewing the original code review plus the required changes to that code. All the additional changes should be grouped and treated separately. In this past, this was hard, but since many source control solutions have adopted shelving (or stashing), there is a really easy workflow to keep your changes small and independent.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/shelve-review-unshelve-workflow/shelve_review_workflow.png)
+![](/static/img/blog/shelve-review-unshelve-workflow/shelve_review_workflow.png)
 
 With this workflow, you keep your changes small and independent.

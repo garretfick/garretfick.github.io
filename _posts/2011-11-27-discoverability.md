@@ -8,7 +8,7 @@ I'm working on a new iPad app (sorry, I can't reveal yet what it is). The app is
 
 My problem was that first screen. A full screen showing a table would be ugly - even in portrait mode. I could add images, but in a table, the images would be difficult to differentiate, and the list might be very long. After a week of brainstorming, I came up with the idea of showing a preview of the second page, or at least the relevant parts.
 
-![](https://s3-us-west-2.amazonaws.com/ficksworkshop/media/blog/discoverability/transition.png)
+![](/static/img/blog/discoverability/transition.png)
 
 So now, select the item from the list and you get a preview, but how do you navigate to the second page? A button seems very out of place on iPad and a swipe gesture is difficult to find. I couldn't help but think that there is something wrong with the HIG. Why does it seem to discourage practices that would enhance discoverability?
 
