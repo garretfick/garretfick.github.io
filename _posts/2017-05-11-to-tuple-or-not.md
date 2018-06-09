@@ -11,5 +11,7 @@ Because they are "cheap to write" it is temping to use them instead of writing a
 So, when should use these tuple types and when should you write your struct/class? I give the following advice:
 
 > If the struct/class you would write would have member names like file1 and file2, then use a tuple type. This usually happens when the types of the objects are the same.
+
 > Else if the type is used only within a single function, then use a tuple type.
+
 > Otherwise, create your own class/struct.
