@@ -1,0 +1,220 @@
+---
+layout: default
+title: Portfolio
+---
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div><i class="fa fa-users fa-fw" aria-hidden="true"></i><strong>Leadership</strong></div>
+            <div>Globally diverse and distributed teams are different from those that are 
+                located together. With technology and business leadership experience in Canada,
+                China and the US working with teams spread across the globe, I bring a wealth of
+                nuanced experience.
+            </div>
+            <div><a href="#leadership">More</a></div>
+        </div>
+        <div class="col-md-4">
+            <div><i class="fa fa-wrench fa-fw" aria-hidden="true"></i><strong>Technology</strong></div>
+            <div>I combine both an engineering background and a passion for everything computing.
+                In fact, I wrote <a href="https://web.archive.org/web/20000902183420/http://www.geocities.com:80/CapeCanaveral/Hall/3230/">my first website</a>
+                around 1997. Since then, I have developed technologies for embedded systems,
+                desktop applications, mobile and back to web and cloud.
+            </div>
+            <div><a href="#technology">More</a></div>
+        </div>
+        <div class="col-md-4">
+            <div><i class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></i><strong>Vision</strong></div>
+            <div>Vision is one part instinct and two parts engagement. Filtering out the hype
+                is often more important than catching early trends. In addition to leading
+                research in multiple roles, I've also developed novel technologies to give
+                companies a competitive edge.
+            </div>
+            <div><a href="#vision">More</a></div>
+        </div>
+    </div>
+
+    <div class="row" id="leadership">
+        <h2><i class="fa fa-users fa-fw" aria-hidden="true"></i>Leadership</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <p>
+                At ChinaNetCloud, I directly managed a team of up to 10 people, interfacing
+                between the founder and the core development group. I help navigate
+                through multiple restructuring events.
+            </p>
+            <p>
+                At SnapEDA, I built an effective international R&amp;D team consisting of
+                developers, UX, electrical engineers and other domain experts. The team
+                organized around Kanban boards, allowing me to spend time understanding
+                our customers.
+            </p>
+        </div>
+    </div>
+
+    <div class="row" id="technology">
+        <h2><i class="fa fa-wrench fa-fw" aria-hidden="true"></i>Technology</h2>
+    </div>
+
+    <div class="row">
+        <h3>Process</h3>
+        <p>
+            Process is the way software development teams and stakeholders organize in order to achieve
+            objectives.
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            <i class="fa fa-caret-right fa-2x" aria-hidden="true"></i>
+        </div>
+        <div class="col-md-8">
+            <p>
+                As the CTO at SnapEDA, I implemented
+                a <a href="https://en.wikipedia.org/wiki/Kanban_(development)">Kanban-based</a>
+                process using Trello for all R&amp;D tasks. The process is <a href="https://www.ficksworkshop.com/blog/practical-trello-for-small-team-software-development">
+                detailed on my blog</a>, with example boards in Trello. I also transformed the development
+                process, eliminating the need to test in production by developing automated build,
+                test environments.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            <i class="fa fa-caret-right fa-2x" aria-hidden="true"></i>
+        </div>
+        <div class="col-md-8">
+            <p>
+                At ChinaNetCloud, I drove experimentation with several Agile processes, including
+                Scrum and Kanban over a half year, eventually settling on Kanban as the best
+                process to support stakeholder objectives, especially a desire to release often.
+            </p>
+            <p>
+                Recognizing the need for the startup to be able to respond quickly to validated
+                learning and move quickly, I directed the team to progressively reducing the release
+                cadence, starting from every two weeks and ending at multiple times a week through
+                a steady focus on reducing friction in the software development process.
+            </p>
+        </div>
+    </div>
+
+    
+    <div class="row">
+        <h3>Language</h3>
+            <p>
+                Software isn't about the language - it is about the ideas and the language is how you express
+                your ideas in a concrete way. Still, it is one of the first questions we ask.
+            </p>
+        </div>
+    
+        {% for language in site.data.languages %}
+            <div class="row mt-3">
+                <div class="col-md-2">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ language.skill }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ language.skill }}%;">
+                            <span class="sr-only">{{ language.skill }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1"><strong>{{ language.name }}</strong></div>
+                <div class="col-md-6">
+                    {{ language.desc }}
+                    {% if language.projects %}
+                        {% for project in language.projects %}
+                            <div><a href="{{ project.href }}" data-toggle="tooltip" title="{{ project.desc }}">{{ project.name }}</a></div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    
+        <div class="row mt-3">
+            <div class="col-md-2 center-block">
+                <i class="fa fa-square-o fa-2x" aria-hidden="true"></i>
+                <i class="fa fa-square-o fa-2x" aria-hidden="true"></i>
+                <i class="fa fa-square-o fa-2x" aria-hidden="true"></i>
+            </div>
+            <p class="col-md-6 col-md-offset-1">
+                Didn't find what you were looking for? I've also completed commercial projects in
+                Objective-C, MATLAB, IEC 61131, VHDL, Perl, VB.NET and probably more that I've
+                forgotten.
+            </p>
+        </div>
+
+    <div class="row" id="vision">
+        <h2><i class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></i>Vision</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+            <i class="fa fa-caret-right fa-2x" aria-hidden="true"></i>
+        </div>
+        <div class="col-md-8">
+            <p>Smarter Grid Solutions - Packaging for IEC 61131</p>
+            <p>
+                Industrial software systems are often neglected and the tools and systems
+                often have only rudimentary support for software engineering's best practices.
+            </p>
+            <p>
+                At Smarter Grid Solutions, we are transforming our software development process
+                for embedded devices to take full advantage of best practices. For our differentiated
+                control applications, we have developed fully automated pipelines that take
+                <a href="https://www.mathworks.com/products/stateflow.html">Simulink-defined state
+                machines</a> and enable developers to compose solutions and
+                automatically deploy then on all major PLC runtimes.
+            </p>
+            <p>The result? An efficient platform for embedded systems innovation.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+            <i class="fa fa-caret-right fa-2x" aria-hidden="true"></i>
+        </div>
+        <div class="col-md-8">
+            <p>SnapEDA - Part Validations</p>
+            <p>
+                Details in circuit board manufacturing are absolutely critical. Sub-millimeter mistakes 
+                can result in poor soldering, bad boards, or even boards that are impossible to assemble.
+                This presents a barrier to acquiring data from 3rd parties such as SnapEDA.
+            </p>
+            <p>
+                At SnapEDA, I invented a patent-pending verification system that identifies data problems.
+                What makes this powerful was recognizing that the same information is often specified
+                in multiple ways that should be self-consistent. The verification system is able to 
+                answer the question of "does this make sense?" and present the results in an
+                easy-to-understand format.
+            </p>
+            <p><img src="/static/img/portfolio/verifications.png" alt="" style="max-width: 600px;"/></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+            <i class="fa fa-caret-right fa-2x" aria-hidden="true"></i>
+        </div>
+        <div class="col-md-8">
+            <p>ChinaNetCloud - Adoption of React</p>
+            <p>
+                OpsStack is ChinaNetCloud's Operations as a Service (OaaS) stack management system.
+                As the software architect, I recognized that jQuery was not going to be an efficient
+                way to develop and maintain future requirements.
+            </p>
+            <p>
+                I evaluated several frameworks, ultimately selecting <a href="https://reactjs.org/">React</a>
+                over alternatives such as <a href="https://angularjs.org/">AngularJS</a> and others. This
+                evaluation included a migration strategy so that we could change the front end piecewise
+                and training plans for developers.
+            </p>
+            <p>
+                I have spoken about the migration in
+                <a href="https://www.slideshare.net/garretfick/evolving-an-application-architecture">
+                &quot;Evolving an application architecture&quot;</a>.
+            </p>
+            <p><img src="/static/img/portfolio/evolving-app-arch.png" alt="" style="max-width: 400px;"/></p>
+        </div>
+    </div>
+
+
+    
+</div>

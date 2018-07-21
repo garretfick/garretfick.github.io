@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <title>{{ page.title }}</title>
@@ -12,12 +12,17 @@
         <link href="/static/css/vendor.css" rel="stylesheet">
         <link href="/static/css/theme.css" rel="stylesheet">
         <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+        <style>
+            .mt-3 {
+                margin-top: 3px;
+            }
+        </style>
     </head>
     <body>
         <!-- Header -->
         <header id="layout-header">
             <!-- Nav -->
-            <nav id="layout-nav" class="navbar navbar-inverse navbar-fixed-top navbar-autohide" role="navigation">
+            <nav id="layout-nav" class="navbar navbar-inverse navbar-fixed-top navbar-autohide">
                 <div class="container">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
@@ -33,7 +38,8 @@
                             <li class="separator hidden-xs"></li>
                             <li class=""><a href="/about" title="Learn about Garret&apos;s experience">About</a></li>
                             <li class=""><a href="/blog" title="Read Garret&apos;s blog">Blog</a></li>
-                            <li class=""><a href="/talks" title="Expore Garret&apos;s talks">Talks</a></li>
+                            <li class=""><a href="/talks" title="Explore Garret&apos;s talks">Talks</a></li>
+                            <li class=""><a href="/portfolio" title="See Garret&apos;s work history">Portfolio</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="https://github.com/garretfick" title="View Garret&apos;s code on GitHub" rel="me"><span class="fa fa-github fa-lg" aria-hidden="true"></span></a></li>
@@ -69,19 +75,17 @@
         <script src="/static/js/framework.extras.js"></script>
         <link rel="stylesheet" property="stylesheet" href="/static/css/framework.extras.css">
         
+        <script>
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-21214642-2']);
+            _gaq.push(['_trackPageview']);
+          
+            (function() {
+              var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+              ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+          
+          </script>
     </body>
-    
-    <script type="text/javascript">
-	
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-21214642-2']);
-	  _gaq.push(['_trackPageview']);
-	
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-	
-    </script>
 </html>

@@ -1,0 +1,56 @@
+- name: C/C++
+  desc: 6 years and countless lines of code later, C++ keeps a place in my heart. I have used C/C++ to build Linux embedded and Windows desktop applications.
+  skill: 100
+  years: 6
+  projects:
+    - name: xmlstack (BitBucket)
+      desc: I developed an easy to test approach to XML parsing complex XML documents. See my blog for details.
+      href: https://bitbucket.org/garretfick/xmlstack
+
+- name: Python
+  desc: My go to language for rapid development. It isn't just for scripting, I have built websites and full desktop applications in Python.
+  skill: 100
+  years: 4
+  projects:
+    - name: pcb-tools (GitHub)
+      desc: I contributed back more than 50 bug fixes and vastly improved support for NC Drill files and aperture macros.
+      href: https://github.com/curtacircuitos/pcb-tools
+    - name: win-lin-django (BitBucket)
+      desc: A complete example of how to develop Django on Windows.
+      href: https://bitbucket.org/garretfick/win-lin-django
+
+- name: Java
+  desc: I am currently rediscovering Java at Smarter Grid Solutions. Previously, I developed several Android applications and even a desktop application in Swing.
+  skill: 70
+  years: 3
+
+- name: JS/TS
+  desc: JS has come a long way from my first exposure in the late 90s. Since then, I have built backend applications, mobile and single page applications using ES6 and TS in React and AngularJS.
+  skill: 80
+  years: 4
+  projects:
+    - name: easyeda-importer (GitHub)
+      desc: As a freelance developer, I developed import capabilities for EasyEDA.
+      href: https://github.com/garretfick/easyeda-importer
+    - name: xss-by-example (GitHub)
+      desc: Code examples I used to demonstrate XSS vulnerabilities.
+      href: https://github.com/garretfick/xss-by-example
+
+- name: PHP
+  desc: My first experience was developing a Wordpress plugin. Since then, I built backends for ChinaNetCloud in PHP using Laravel.
+  skill: 50
+  years: 1.5
+  projects:
+    - name: trustedproxies (GitHub)
+      desc: OctoberCMS extension for setting trusted proxy HTTP headers.
+      href: https://github.com/garretfick/trustedproxies 
+
+- name: C#
+  desc: I dabbled in C# and MEF for a couple of years at National Instruments for LabVIEW.
+  skill: 30
+  years: 3
+
+- name: HTML
+  desc: Last, but not least, I first wrote HTML nearly 20 years ago. I have built web applications for SnapEDA, ChinaNetCloud, and others.
+  skill: 80
+  years: 18
