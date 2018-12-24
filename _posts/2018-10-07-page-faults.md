@@ -7,8 +7,6 @@ date: 2018-10-07
 What happens when there is a page fault?
 
 ```
-
-```
              (start)
                 │                ┌───────────┐                ┌───────────┐
                 │ VPN            │   ┌───────┴────────┐       │   ┌───────┴────────┐
