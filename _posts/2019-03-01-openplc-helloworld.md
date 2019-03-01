@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hello World for OpenPLC and Modbus
+title: Hello World for OpenPLC and Modbus on Windows SoftPLC
 date: 2019-03-01
 ---
 
