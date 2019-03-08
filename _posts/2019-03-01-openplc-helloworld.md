@@ -13,6 +13,7 @@ and deployed to the SoftPLC running on my machine. However, when I created the p
 a different mapping for the IO so that I would be able to control them from Python.
 
 | Name  | Location  | Alternative Location |
+|-------|-----------|----------------------|
 | `PB1` | `%IX0.0`  | `%QX0.1`             |
 | `PB2` | `%IX0.1`  | `%QX0.2`             |
 | `LED` | `%IX0.0`  | `%QX0.0` (unchanged) |
