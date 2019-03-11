@@ -4,24 +4,21 @@ title: OpenPLC DNP3 Master Mappings
 date: 2019-03-08
 ---
 
-_This post describes the model of the world as I currently understand it.
-I don't guarantee my model is right, but it is useful._
-
 OpenPLC supports DNP3 on the SoftPLC platform (except for Windows). This post describes how I was
 able to interact with the DNP3 slave (outstation) running on Linux SoftPLC. This post follows the
 same work I did with Modbus, but using DNP3.
 
-The first thing to note is that we cannot use bidirectional registers. You need to separate inputs
-and outputs since that's what DNP3 requires. No more fudging. This means updating our design to 
-properly designate binary inputs (1) using `%IX...` and binary output statuses (1) using `%QX...`.
+The HelloWorld project is designed for reading inputs from physical hardware, but we will toggle
+inputs over DNP3, so we need to change the location mapping to points that we can write to. This
+is the same as what we did with Modbus.
 
 Update the design as follows:
 
 | Name  | Location | DNP3 Group | DNP3 Variation | DNP3 Index |
 |-------|----------|------------|----------------|------------|
-| `PB1` | `%IX0.0` | 10         | 2              | 0          |
-| `PB2` | `%IX0.1` | 10         | 2              | 1          |
-| `LED` | `%QX0.0` | 1          | 2              | 0          |
+| `PB1` | `%QX0.1` | 12         | 2              | 1          |
+| `PB2` | `%QX0.2` | 12         | 2              | 2          |
+| `LED` | `%QX0.0` | 10         | 2              | 0          |
 
 Upload the program as per normal using the web interface. By default, Modbus is enabled and DNP3 is disabled. In the web interface:
 
@@ -55,7 +52,7 @@ manager = asiodnp3.DNP3Manager(1, log_handler)
 # standard DNP3 port.
 retry = asiopal.ChannelRetry().Default()
 listener = asiodnp3.PrintingChannelListener().Create()
-channel = manager.AddTCPClient('client', opendnp3.levels.NORMAL, retry, '127.0.0.1', '0.0.0.0', 20000, listener)
+channel = manager.AddTCPClient('client', opendnp3.levels.NOTHING, retry, '127.0.0.1', '0.0.0.0', 20000, listener)
 
 # OpenDNP3 is very much object-oriented. In order for use to read the actual
 # binary values, we must implement the visitor. This visitor just stores all
@@ -77,7 +74,7 @@ class SOEHandler(opendnp3.ISOEHandler):
         super(SOEHandler, self).__init__()
 
     def Process(self, info, values):
-        if (type(values) == opendnp3.ICollectionIndexedBinaryOutputStatus):
+        if (values.Count() == 4 and type(values) == opendnp3.ICollectionIndexedBinaryOutputStatus):
             class BOSVisitor(opendnp3.IVisitorIndexedBinaryOutputStatus):
                 def __init__(self):
                     super(BOSVisitor, self).__init__()
@@ -118,7 +115,7 @@ time.sleep(SLEEP_SECONDS)
 # for a while once we have made the request to read.
 #master.ScanClasses(opendnp3.ClassField(opendnp3.ClassField.CLASS_0))
 print('\nReading initial status')
-NUMBER_OF_OUTPUTS = 2
+NUMBER_OF_OUTPUTS = 3
 group_variation = opendnp3.GroupVariationID(10, 2)
 master.ScanRange(group_variation, 0, NUMBER_OF_OUTPUTS)
 time.sleep(SLEEP_SECONDS)
@@ -128,15 +125,15 @@ time.sleep(SLEEP_SECONDS)
 print('\nToggling the switch to turn on the LED')
 command_callback = asiodnp3.PrintingCommandCallback.Get()
 command_set = opendnp3.CommandSet([
-    opendnp3.WithIndex(opendnp3.ControlRelayOutputBlock(opendnp3.ControlCode.LATCH_ON), 0),
+    opendnp3.WithIndex(opendnp3.ControlRelayOutputBlock(opendnp3.ControlCode.LATCH_ON), 1),
 ])
 master.DirectOperate(command_set, command_callback)
 time.sleep(SLEEP_SECONDS)
 
-print('\nToggling the switch to turn on the LED')
+print('\nToggling the switch to turn on the LED - latch off')
 command_callback = asiodnp3.PrintingCommandCallback.Get()
 command_set = opendnp3.CommandSet([
-    opendnp3.WithIndex(opendnp3.ControlRelayOutputBlock(opendnp3.ControlCode.LATCH_OFF), 0)
+    opendnp3.WithIndex(opendnp3.ControlRelayOutputBlock(opendnp3.ControlCode.LATCH_OFF), 1)
 ])
 master.DirectOperate(command_set, command_callback)
 time.sleep(SLEEP_SECONDS)
@@ -149,7 +146,15 @@ time.sleep(SLEEP_SECONDS)
 print('\nToggling the swtich to turn off the LED')
 command_callback = asiodnp3.PrintingCommandCallback.Get()
 command_set = opendnp3.CommandSet([
-    opendnp3.WithIndex(opendnp3.ControlRelayOutputBlock(opendnp3.ControlCode.LATCH_ON), 1)
+    opendnp3.WithIndex(opendnp3.ControlRelayOutputBlock(opendnp3.ControlCode.LATCH_ON), 2)
+])
+master.DirectOperate(command_set, command_callback)
+time.sleep(SLEEP_SECONDS)
+
+print('\nToggling the switch to turn on the LED - latch off')
+command_callback = asiodnp3.PrintingCommandCallback.Get()
+command_set = opendnp3.CommandSet([
+    opendnp3.WithIndex(opendnp3.ControlRelayOutputBlock(opendnp3.ControlCode.LATCH_OFF), 2)
 ])
 master.DirectOperate(command_set, command_callback)
 time.sleep(SLEEP_SECONDS)
@@ -166,4 +171,43 @@ master = None
 channel.Shutdown()
 channel = None
 manager.Shutdown()
+
+```
+
+My my machine, this produces the following:
+
+```
+ms(1552335400119) INFO    manager - Starting thread (0)
+channel state change: OPENING
+channel state change: OPEN
+
+Reading initial status
+(0, False)
+(1, False)
+(2, False)
+
+Toggling the switch to turn on the LED
+Received command result w/ summary: SUCCESS
+Header: 0 Index: 1 State: SUCCESS Status: SUCCESS
+Toggling the switch to turn on the LED - latch off
+Received command result w/ summary: SUCCESS
+Header: 0 Index: 1 State: SUCCESS Status: SUCCESS
+Reading status after turning on the LED
+(0, True)
+(1, False)
+(2, False)
+
+Toggling the swtich to turn off the LED
+Received command result w/ summary: SUCCESS
+Header: 0 Index: 2 State: SUCCESS Status: SUCCESS
+Toggling the switch to turn on the LED - latch off
+Received command result w/ summary: SUCCESS
+Header: 0 Index: 2 State: SUCCESS Status: SUCCESS
+Reading status after turning on the LED back off
+(0, False)
+(1, False)
+(2, False)
+channel state change: CLOSED
+channel state change: SHUTDOWN
+ms(1552335440148) INFO    manager - Exiting thread (0)
 ```
