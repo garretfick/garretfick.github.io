@@ -45,4 +45,6 @@ services:
     
 ```
 
+Once things are up an running, you can login to the UI from [http://localhost:8090/](). You can then login with the default credentials listed in the [Dependency Track documentation](https://docs.dependencytrack.org/getting-started/initial-startup/).
+
 This isn't sufficient for a production system (you probably want LDAP, SSH, etc). But this is enough for local evaluation.
