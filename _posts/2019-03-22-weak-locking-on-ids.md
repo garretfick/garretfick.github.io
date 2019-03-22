@@ -1,0 +1,152 @@
+---
+layout: post
+title: Locking on IDs in Java with WeakHashMap
+date: 2019-03-22
+---
+
+In the context of a review, I noticed a memory leak generating locks so that we can lock on IDs that
+are added at runtime. The leak was that the cache would never decrease in size. I came up with a
+solution using atomics, but a more clever engineer proposed a solution using WeakHashMap.
+
+I decided to try it out and prove (at least to myself) that WeakHashMap is up to the job. I quickly wrote
+up the following as a test to prove out the simple idea.
+
+```
+package com.ficksworkshop;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.WeakHashMap;
+import java.util.function.BooleanSupplier;
+
+public class Main {
+
+    /**
+     * The cache of locks that we want to test out. This is synchronized for adding items into the cache
+     * and a weak hash map so locks (the value) are automatically purged when there are no more references to the lock.
+     *
+     * The key is the ID that we want to lock on and the value is the locking object for synchronized.
+     */
+    private static final Map<Object, Object> lockCache = Collections.synchronizedMap(new WeakHashMap<>());
+
+    /**
+     * Signal so that we can test if anyone else has the lock already.
+     */
+    private static final Set<Object> testSet = Collections.synchronizedSet(new HashSet<>());
+
+    /**
+     * This worker runs for a fixed period of time (specified in the constructor). During that time
+     * it repeatedly tries to acquire a lock for it's ID (with the ID being either "10" or "2"). It tries
+     * to do that as often as possible. Each time time it gets the lock, it adds a flag into testSet so that
+     * we can detect if two threads got the same lock at the same time (which would mean this code fails).
+     */
+    public static class Worker extends Thread {
+        /**
+         * The ID we want a lock for.
+         */
+        private final String id;
+
+        /**
+         * When does this thread end.
+         */
+        private final LocalDateTime endTime;
+
+        /**
+         * For interest, just track how many times we acquire the lock.
+         */
+        private int numAcquires = 0;
+
+        /**
+         * Construct a new worker that will try to lock on the specified ID and run until the specified end time.
+         * @param id The ID to lock on.
+         * @param endTime How long to run on.
+         */
+        public Worker(String id, LocalDateTime endTime) {
+            this.id = id;
+            this.endTime = endTime;
+        }
+        public void run() {
+            System.out.println("Starting thread");
+
+            // We want to run until the specified time.
+            while (LocalDateTime.now().isBefore(this.endTime)) {
+
+                // Get the object that we will use for locking. This is a synchronized
+                // collection, so we can do this outside any synchronization.
+                Object lock = lockCache.computeIfAbsent(id, k -> new Object());
+                synchronized (lock) {
+                    // Got the lock. Check that no one else currently has the lock for the specified ID.
+                    if (!testSet.add(this.id)) {
+                        System.out.println("Item already existed - lock failed");
+                    }
+
+                    // Yield just so that someone else can get an opportunity to do try to wait
+                    Thread.yield();
+
+                    // We are about to be done with the lock, so remove it from the set
+                    testSet.remove(this.id);
+                    this.numAcquires += 1;
+                }
+                // Don't loop back right away - let someone else get the lock first.
+                Thread.yield();
+            }
+
+            System.out.println("ID " + this.id + " completed with " + numAcquires);
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println("Starting test");
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        // Create a list of workers. The IDs represent both the the string
+        // we want to lock on and how long we will use that ID for. So, we
+        // have IDs that are "10" and "2" which will have threads that run
+        // for 10 and 2 seconds respectively.
+        int[] ids = {10, 10, 10, 10, 10, 2, 2, 2};
+        ArrayList<Worker> ws = new ArrayList<>();
+        for (int id : ids) {
+            Worker w = new Worker(Integer.toString(id), currentTime.plus(id, ChronoUnit.SECONDS));
+            w.start();
+            ws.add(w);
+        }
+
+        // Wait until we have something in our hashmap
+        await(5, ChronoUnit.SECONDS, () -> lockCache.size() == 2);
+        System.out.println("Have two items in our cache");
+
+        // Wait until we have
+        await(5, ChronoUnit.SECONDS, () -> lockCache.size() == 1);
+        System.out.println("Have one item in our cache");
+
+        // Wait for everyone to finish.
+        for (Worker w : ws) {
+            w.join();
+        }
+
+        System.out.println("Test completed");
+    }
+
+    /**
+     * Simple function so we can await for conditions and make sure that GC is running since have
+     * multiple threads that will try to consume all available resources.
+     * @param atMost How long to wait.
+     * @param unit The unit of waiting.
+     * @param test The condition that says move on.
+     * @throws Exception
+     */
+    private static void await(int atMost, ChronoUnit unit, BooleanSupplier test) throws  Exception {
+        LocalDateTime endTime = LocalDateTime.now().plus(atMost, unit);
+        while (LocalDateTime.now().isBefore(endTime) && !test.getAsBoolean()) {
+            Thread.sleep(100);
+            System.gc();
+        }
+    }
+}
+
+```
