@@ -4,6 +4,11 @@ title: Locking on IDs in Java with WeakHashMap
 date: 2019-03-22
 ---
 
+**WARNING** This code has a bug that I haven't fixed. The problem is that the WeakHashMap holds
+a weak reference only on the key and the Worker class was keeping the key around. I've updated the
+code to demonstrate the bug, but haven't fixed it yet. I think it is possible with a WeakSet, but need to
+prove it first.
+
 In the context of a review, I noticed a memory leak generating locks so that we can lock on IDs that
 are added at runtime. The leak was that the cache would never decrease in size. I came up with a
 solution using atomics, but a more clever engineer proposed a solution using WeakHashMap.
@@ -49,7 +54,7 @@ public class Main {
         /**
          * The ID we want a lock for.
          */
-        private final String id;
+        private final int id;
 
         /**
          * When does this thread end.
@@ -78,7 +83,7 @@ public class Main {
 
                 // Get the object that we will use for locking. This is a synchronized
                 // collection, so we can do this outside any synchronization.
-                Object lock = lockCache.computeIfAbsent(id, k -> new Object());
+                Object lock = lockCache.computeIfAbsent(Integer.toString(id), k -> new Object());
                 synchronized (lock) {
                     // Got the lock. Check that no one else currently has the lock for the specified ID.
                     if (!testSet.add(this.id)) {
@@ -111,7 +116,7 @@ public class Main {
         int[] ids = {10, 10, 10, 10, 10, 2, 2, 2};
         ArrayList<Worker> ws = new ArrayList<>();
         for (int id : ids) {
-            Worker w = new Worker(Integer.toString(id), currentTime.plus(id, ChronoUnit.SECONDS));
+            Worker w = new Worker(id, currentTime.plus(id, ChronoUnit.SECONDS));
             w.start();
             ws.add(w);
         }
