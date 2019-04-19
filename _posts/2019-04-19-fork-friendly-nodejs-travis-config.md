@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Fork-Friendly Node.js Travis CI Configuration
-date: 2019-14-19
+date: 2019-04-19
 ---
 
 I've been recently contributing to [CloudSploit's scans](https://github.com/cloudsploit/scans)
