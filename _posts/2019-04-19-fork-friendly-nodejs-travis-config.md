@@ -75,7 +75,7 @@ deploy:
 Then in your Travis CI build, define the environment variables that we'll use. For my
 CloudSploit fork, they are:
 
-![](static/img/blog/2019-04-19-travis-ci-npm-scoped-package.png)
+![](/static/img/blog/2019-04-19-travis-ci-npm-scoped-package.png)
 
 By making things configurable, you are able to publish both a default package and
 scoped packages easily, the difference being applied only through some environment
