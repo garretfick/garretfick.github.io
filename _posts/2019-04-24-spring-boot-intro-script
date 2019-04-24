@@ -1,0 +1,515 @@
+## Spring initializer, web and devtools
+## Create project from source
+## Readme
+
+```
+# Spring Boot Example
+
+This project demonstrates how you can use Spring Boot to create a small and simple
+service that stores information about aggregations.
+
+It supports a RESTful HTTP interface and persists data in one of several backends.
+
+The project follows standard Spring Boot conventions, so this may be a good place to
+look if you are starting out with a new project. That is, the author is still
+relatively new with Spring Boot and may have missed something. You have been warned.
+```
+
+## Build the tests
+
+## Notice the spring logo, lets change that
+
+```
+Banner
+```
+banner.txt
+
+Lesson is that spring has a default way of doing things. You will be happier if you follow
+those conventions.
+
+## The group controller
+
+```
+package com.ficksworkshop.lab.group.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collections;
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/groups")
+public class GroupController {
+    @GetMapping
+    public ResponseEntity<List<String>> getAll() {
+        return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
+    }
+}
+```
+
+## Create a first test
+
+```
+package com.ficksworkshop.lab.group.controller;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@RunWith(SpringRunner.class)
+@WebMvcTest
+public class GroupControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    public void getAllWhenNoneReturnsEmptyList() throws Exception {
+        this.mockMvc.perform(get("/groups"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("[]")));
+    }
+}
+```
+
+## Get a specific group
+
+```
+@GetMapping("/{id}")
+public ResponseEntity<String> findById(@PathVariable String id) {
+    return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+}
+```
+
+Plus add a test
+
+```
+@Test
+public void findByIdWhenIdInvalidReturns404() throws Exception {
+    this.mockMvc.perform(get("/groups/badmrid"))
+            .andExpect(status().isNotFound());
+}
+```
+
+## Want to have a real groups
+
+```
+@Test
+public void findByIdWhenIdExistsReturnsTheGroup() throws Exception {
+    this.mockMvc.perform(get("/groups/realmrid"))
+            .andExpect(status().isOk());
+}
+```
+
+Add dependency
+
+```
+<dependency>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-keyvalue</artifactId>
+    <version>2.1.0.RELEASE</version>
+</dependency>
+```
+
+Create the repository
+
+```
+package com.ficksworkshop.lab.group.repository;
+
+import org.springframework.data.repository.CrudRepository;
+
+public interface GroupRepository extends CrudRepository<String, String> {
+}
+```
+
+Add the reference in the controller
+
+```
+    private final GroupRepository groupsRepo;
+
+    // This is actually not required because we only have one constructor
+    // this is also not the only way to inject, but it works nicely because
+    // it makes it obvious what you need to construct the object.
+    @Autowired
+    public GroupController(GroupRepository groupsRepo) {
+        this.groupsRepo = groupsRepo;
+    }
+```
+
+Add guava because that's nice
+
+```
+<dependency>
+    <groupId>com.google.guava</groupId>
+    <artifactId>guava</artifactId>
+    <version>26.0-jre</version>
+</dependency>
+```
+
+And fix up the controller
+
+```
+return new ResponseEntity<>(Lists.newArrayList(groupsRepo.findAll()), HttpStatus.OK);
+```
+
+
+Run the tests, but fail
+
+```
+@MockBean
+private GroupRepository groupsRepository;
+```
+
+## Creating a first model
+
+```
+public class Group {
+
+    /**
+     * The MRID of the group.
+     */
+    private String mrid;
+
+    /**
+     * A user defined name for the group.
+     */
+    private String name;
+}
+```
+
+Add lombok dependency
+
+```
+<!-- To write less code -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.2</version>
+</dependency>
+```
+
+Add the lombok.config
+
+```
+lombok.addLombokGeneratedAnnotation = true
+```
+
+Annotate the model
+
+```
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class Group {
+
+    /**
+     * The MRID of the group.
+     */
+    @Id
+    @NotNull
+    private String mrid;
+
+    /**
+     * A user defined name for the group.
+     */
+    @NotNull
+    private String name;
+}
+```
+
+Update the repository to use the group
+
+```
+public interface GroupRepository extends CrudRepository<Group, String> {
+```
+
+Fix the controller and test to compile
+
+```
+Group group = new Group("realmrid", "name");
+when(this.groupsRepository.findById("realmrid")).thenReturn(Optional.of(group));
+```
+
+## That's all nice, let's check the body
+
+```
+.andDo(print())
+```
+
+add the che k
+
+```
+.andExpect(content().json("{'mrid':'realmrid','name':'name'}"));
+```
+
+## How to we test with that real repo that we created?
+
+Let's create a bigger integration test
+
+```
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
+public class GroupControllerIntegrationTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    public void createThenGetReturnsTheCreatedObject() throws Exception {
+        this.mockMvc.perform(post("/groups").contentType("application/json").content("{\"mrid\": \"themrid\", \"name\": \"myname\"}"))
+                .andExpect(status().isCreated());
+
+        this.mockMvc.perform(get("/groups/themrid"))
+                .andExpect(status().isOk());
+    }
+}
+```
+
+
+Notice that this fails because it couldn't create the bean. We need to tell spring boot how to create this. Remember that we added a crud repository, but it was just
+and interface and we never told spring how to create it.
+
+
+Create KeyValueConfig
+
+```
+@EnableMapRepositories("com.ficksworkshop.lab.group.repository")
+@Configuration
+public class KeyValueConfig {
+}
+
+```
+
+Now we need enable creating a group
+
+```
+@PostMapping
+public ResponseEntity<Group> create(@RequestBody Group group) {
+    Group created = groupsRepo.save(group);
+
+    return new ResponseEntity<>(created, HttpStatus.CREATED);
+}
+```
+
+## What about Couchbase?
+
+First we need to add to the POM
+
+```
+<dependency>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-couchbase</artifactId>
+    <version>3.1.1.RELEASE</version>
+</dependency>
+```
+
+Add the config
+
+```
+
+@Configuration
+@EnableCouchbaseRepositories("com.ficksworkshop.lab.group.repository")
+public class CouchbaseConfig extends AbstractCouchbaseConfiguration {
+
+    @Override
+    protected String getUsername() {
+        return "Administrator";
+    }
+
+    @Override
+    protected List<String> getBootstrapHosts() {
+        return Arrays.asList("127.0.0.1");
+    }
+
+    @Override
+    protected String getBucketName() {
+        return "strata";
+    }
+
+    @Override
+    protected String getBucketPassword() {
+        return "password";
+    }
+}
+
+```
+
+Just adding that causes our preivously passing test to fail. Now our tests suddenly
+depend on Couchbase :(
+
+Add
+
+```
+@Profile
+```
+
+and then 
+
+```
+@ActiveProfiles("keyvalue")
+```
+
+How can we test this externally? Let's use postman
+
+First lets set the default profile so that when we start we have couchbase
+
+```
+spring.profiles.active=couchbase
+```
+
+Start the service from the command line
+
+```
+mvn spring-boot:run 
+```
+
+Add 
+
+```
+@Document
+```
+
+We are running on port 8080
+
+```
+http://localhost:8080/groups
+```
+
+Add the following to the repo
+
+```
+// This view is needed so that we have findAll
+@ViewIndexed(designDoc = "groups")
+```
+
+
+Then to couchbase config
+
+```
+/**
+    * Configure the IndexManager for deployment.
+    *
+    * <p>
+    *     Views will still need to be created beforehand in production.
+    *     Note: See 5.3.2 and 5.3.3 in the Spring Data Couchbase reference manual:
+    *     https://docs.spring.io/spring-data/couchbase/docs/current/reference/html/#couchbase.repository.views
+    *
+    *      "n order for the CRUD operations to work, the adequate view must have been created beforehand,
+    *      and this is usually left for the user to do. First because view creation (and index creation)
+    *      is an expensive operation that can take quite some time if the quantity of documents is high.
+    *      Second, because in production it is considered best practice to avoid administration of the
+    *      cluster elements like buckets, indexes and view by an application code.
+    * </p>
+    *
+    * @return The configured IndexManager.
+    */
+@Override
+public IndexManager indexManager() {
+    return new IndexManager(true, false, false);
+}
+```
+
+
+
+## Some issue here - sad
+
+
+
+
+## Add some docs
+
+```
+ <!-- Documentation production -->
+        <asciidoctor.maven.plugin.version>1.5.7.1</asciidoctor.maven.plugin.version>
+        <asciidoctorj.version>1.5.7</asciidoctorj.version>
+        ```
+
+```
+<plugin>
+    <groupId>org.asciidoctor</groupId>
+    <artifactId>asciidoctor-maven-plugin</artifactId>
+    <version>${asciidoctor.maven.plugin.version}</version>
+    <configuration>
+        <sourceDirectory>src/docs/asciidoc</sourceDirectory>
+        <attributes>
+            <sourcedir>${project.build.sourceDirectory}</sourcedir>
+            <project-version>${project.version}</project-version>
+        </attributes>
+    </configuration>
+    <executions>
+        <execution>
+            <id>asciidoc-to-html</id>
+            <phase>generate-resources</phase>
+            <goals>
+                <goal>process-asciidoc</goal>
+            </goals>
+            <configuration>
+                <backend>html5</backend>
+                <sourceHighlighter>coderay</sourceHighlighter>
+                <attributes>
+                    <imagesdir>./images</imagesdir>
+                    <toc>left</toc>
+                    <icons>font</icons>
+                    <sectanchors>true</sectanchors>
+                    <!-- set the idprefix to blank -->
+                    <idprefix />
+                    <idseparator>-</idseparator>
+                    <docinfo1>true</docinfo1>
+                </attributes>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+Add file at
+
+```
+src/docs/asciidoc/manual.adoc
+```
+
+Content is
+
+```
+= Grouping Demo Project
+{localdate}
+:revnumber: {project-version}
+
+== Introduction
+
+This is a project to demonstrate some things in Spring Boot.
+```
+
+Then run
+
+```mvn process-resources```
+
+
+
+
+
+
+
+## Questions
+
+When to create components? Carefully and with thought
+
+
+* cover a non-rest application (let's imagine a real-time control algorithm using DDS)
+* was how to handle auth on the rest interfaces (even a trivial example with users hard-coded)
