@@ -1,0 +1,75 @@
+---
+layout: post
+title: Development Mistakes
+date: 2019-05-15
+---
+
+Learning from Mistakes
+
+Making mistakes is not fun but it turns out that mistakes are often very good learning opportunities. While on vacation,
+I got to spend some time thinking about some mistakes I've made. (For interest, the particular prompt was "CRUD only when
+you can afford it" which led to a little reminiscing.) As a bit of a change from my normal post topics, I present some
+classic software engineering mistakes and what I've learned from them.
+
+## Eating Dog Food When You're a Vegetarian
+
+NIH (not invented here) syndrome is a pretty common problem for software organizations. It's more fun to develop everything
+from scratch and there is a sometimes true belief that a better solution is found by focusing only on your particular use case.
+
+At National Instruments, my first major project was to replace our nightly automated regression system. As a company that
+also produces software for automated testing, I decided that we should use NI TestStand as the execution engine,
+a great product for automating hardware testing. It also turned out our group manager at the time was the former manager of
+NI TestStand.
+
+Things initially went well. I was able to get something up and running pretty quickly.
+In addition the execution engine itself (which processed tests described in XML), there was a multi-agent execution manager and
+monitor, a backend for storing results, and a web front end for viewing/interacting with results. This all connected with the
+build system or could be run locally. Reasonably complex and with how little I knew at the time, it's amazing it worked.
+
+It did work and we eventually transitioned to it but I don't think it ever worked well. The reasons are complex, but a significant
+reason was using the wrong tool for the job. Using an existing test framework - great idea. Using an existing test framework not
+typically used for software testing that had complex shared dependencies with the software under test, was missing important
+capabilities that needed to be written from scratch - bad idea.
+
+When the project was starting, I had looked for other frameworks and even found other open source frameworks that were far more purpose
+built, but I shelved those thinking that I should be supporting (my naïve view of) NI's broader vision. I believe our use case didn't
+fit with TestStand vision at the time. NI didn't reap benefits from eating our own dog food and having to extend the system in many
+ways consumed valuable development capacity. Twice the loss!
+
+It's important to support organization objectives, but you can only do that if there is either a good fit or high-level support for
+making it a good fit. Absent those, you might as well be feeding a diet of meat to an herbivore.
+
+## The Overly Ambitious Refactor
+
+Fast forward a number of years, I found myself having extra time in our project plan having completed my features early. (This is when
+waterfall was still in vogue). Another developer had been on a complex and risky architecture project aiming to split the application
+into two processes - one for the simulator and one for the user interface. They would be able to exchange data through some API.
+
+```
+-------------    ------------------
+| simulator |<-->| user interface |
+-------------    ------------------
+```
+
+I took a look at the project and concluded that half the work was wasted effort because automated test results were meaningless.
+The actual structure looked more like the following:
+
+```
+-----------------------       -------------------
+|           | XML     | <-->  | automated tests |
+|           -----------       -------------------
+| simulator           |
+|           -----------       -------------------
+|           | binary  | <-->  | user interface  |
+-----------------------       -------------------
+```
+
+The simulator provided two interfaces - one based encoded as XML and another encoded in binary. The belief in correctness was based
+on the XML encoding, but that shared almost nothing with the binary serialization. Which data members were serialized and how was
+entirely different.
+
+
+Sufficiently agile
+
+
+
