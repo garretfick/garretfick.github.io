@@ -3,6 +3,9 @@
   skill: 100
   years: 6
   projects:
+    - name: OpenPLC (GitHub)
+      desc: Developed flexible application architecture, build systems, test automation, …
+      href: https://github.com/thiagoralves/OpenPLC_v3
     - name: xmlstack (BitBucket)
       desc: I developed an easy to test approach to XML parsing complex XML documents. See my blog for details.
       href: https://bitbucket.org/garretfick/xmlstack
@@ -29,6 +32,9 @@
   skill: 80
   years: 4
   projects:
+    - name: VIGSI (GitHub)
+      desc: I developed innovative tools for visualizing solar irradiance data sets.
+      href: https://github.com/vigsi/vigsi
     - name: easyeda-importer (GitHub)
       desc: As a freelance developer, I developed import capabilities for EasyEDA.
       href: https://github.com/garretfick/easyeda-importer
@@ -51,6 +57,6 @@
   years: 3
 
 - name: HTML
-  desc: Last, but not least, I first wrote HTML nearly 20 years ago. I have built web applications for SnapEDA, ChinaNetCloud, and others.
+  desc: Last, but not least, I first wrote HTML nearly 20 years ago. I have built web applications for Smarter Grid Solutions, SnapEDA, ChinaNetCloud, and others.
   skill: 80
   years: 18
