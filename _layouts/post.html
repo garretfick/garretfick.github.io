@@ -1,17 +1,35 @@
 ---
 layout: base
 ---
-<section id="layout-content">
-    <div class="page-header">
-        <div class="container">
-            <h1>{{ page.title }}</h1>
-            <p class="meta">{{ page.date | date_to_string }}</p>
-        </div>
-    </div>
 
-    <div class="container">
-      <div class="content">
-          {{ content }}
-      </div>
-    </div>
-</section>
+{% assign readCalc = content | number_of_words | divided_by: 180 | round %}
+{% if readCalc == 0 %}
+  {% assign readTime = "Less than one" %}
+{% elsif readCalc == 1 %}
+  {% assign readTime = "One" %}
+{% elsif readCalc == 2 %}
+  {% assign readTime = "Two" %}
+{% elsif readCalc == 3 %}
+   {% assign readTime = "Three" %}
+{% elsif readCalc == 4 %}
+   {% assign readTime = "Four" %}
+{% elsif readCalc == 5 %}
+   {% assign readTime = "Five" %}
+{% elsif readCalc == 6 %}
+  {% assign readTime = "Six" %}
+{% elsif readCalc == 7 %}
+   {% assign readTime = "Seven" %}
+{% elsif readCalc == 8 %}
+   {% assign readTime = "Eight" %}
+{% elsif readCalc == 9 %}
+   {% assign readTime = "Nine" %}
+{% else %}
+   {% assign readTime = readCalc %}
+{% endif %}
+
+<article class="inset">
+    <h1>{{ page.title }}</h1>
+    <p class="meta">{{ page.date | date_to_string }} | {{ readTime }}-minute read</p>
+    <hr />
+    {{ content }}
+</article>

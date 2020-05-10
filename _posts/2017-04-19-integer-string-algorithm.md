@@ -6,7 +6,7 @@ date: 2017-04-19
 
 The following is a simple example for now to convert an integer to a string (doesn't include error checking, sign detection, non-base 10).
 
-```
+```c++
 #include <cstdint>
 #include <iostream>
 #include <string>

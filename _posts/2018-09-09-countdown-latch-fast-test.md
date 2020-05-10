@@ -17,7 +17,7 @@ Enter [`CountDownLatch`](https://docs.oracle.com/javase/7/docs/api/java/util/con
 How can you use this in testing of reactive programming? Put the asserts in in callback
 clause and at the end, countdown the latch.
 
-```
+```java
 package com.ficksworkshop.junitcountdownlatch;
 
 import org.junit.Test;

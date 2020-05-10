@@ -12,7 +12,7 @@ After a few failures, I decided to just install CentOS 7 into Hyper-V (mostly be
 run CentOS in Hyper-V and was curious what I would find). Well, it was more complex than I thought. For
 reference, the particular version I had was:
 
-```
+```sh
 $ cat /etc/centos-release
 CentOS Linux release 7.6.1810 (Core)
 ```
@@ -27,13 +27,13 @@ post)[https://unix.stackexchange.com/questions/17436/centos-on-hyperv-eth0-not-i
 1. Run the install script
    `sudo /media/install.sh`
 1. Edit `/etc/sysconfig/network-scripts/ifcfg-eth0` so that it contains at least the following:
-   ```
+   ```sh
    DEVICE=eth0
    BOOTPROTO=dhcp
    ONBOOT=yes
    ```
 1. Edit `/etc/sysconfig/network` so that it contains at least the following:
-   ```
+   ```sh
    NETWORKING=yes
    HOSTNAME=your.choise.lan
    ```
@@ -52,19 +52,19 @@ Next, install `pip`, `git`, and the `aws cli`
 
 Configure AWS CLI in the usual way with
 
-```
+```sh
 aws configure
 ```
 
 Next install prowler
 
-```
+```sh
 git clone https://github.com/Alfresco/prowler
 cd prowler
 ```
 
 And finally run prowler
 
-```
+```sh
 ./prowler
 ```

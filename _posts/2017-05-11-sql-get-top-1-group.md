@@ -20,7 +20,7 @@ id | category
 3  | cat2
 4  | cat3
 
-```
+```sql
 SELECT i1.category, i1.id
 FROM items i1
 # Join the table with itself
@@ -35,7 +35,7 @@ HAVING COUNT(*) < 2;
 
 Finally, what you really want is the columns, so use that as a sub-query to get the data you really care about.
 
-```
+```sql
 SELECT * from items WHERE id IN (
 SELECT i1.id
 FROM items i1

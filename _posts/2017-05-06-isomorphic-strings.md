@@ -10,7 +10,7 @@ This example uses a simple "bitmap" to define and check the mapping between the 
 
 As with other examples, the purpose of this example is to show a simple way to solve the problem. I have generally excluded boundary condition testing, use of templates, and other things you might do to make this generally more useful.
 
-```
+```c++
 #include <algorithm>
 #include <cstdint>
 #include <iostream>

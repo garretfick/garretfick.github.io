@@ -25,7 +25,7 @@ Open a terminal window. Execute the following to create directory
 for your project and then clone the scotchbox repository into
 the directory.
 
-```
+```sh
 mkdir octobercms && cd octobercms
 git clone https://github.com/scotch-io/scotch-box .
 ```
@@ -83,7 +83,7 @@ installing OctoberCMS.
 We will install OctoberCMS within the Vagrant box. In the terminal windown, execute the follwing to start and connect to the virtual
 machine.
 
-```
+```sh
 vagrant up && vagrant ssh
 ```
 
@@ -91,7 +91,9 @@ vagrant up && vagrant ssh
 
 Composer, how we will get and install OctoberCMS gets regular updates. If desired, update composer so you have a recent version.
 
+```sh
 sudo /usr/local/bin/composer self-update
+```
 
 ### Create an OctoberCMS project
 
@@ -99,7 +101,7 @@ We want to install OctoberCMS using composer. However, composer will only
 install into an empty directory which is incompatible with how Heroku expects to find your project. So, we will create the the project in a
 temporary directory, then move the files into the desired location.
 
-```
+```sh
 cd /var/www/public
 composer create-project october/october temp dev-master --prefer-dist
 ```

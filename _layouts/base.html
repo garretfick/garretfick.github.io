@@ -8,8 +8,10 @@
         <meta name="author" content="Garret Fick">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/png" href="/static/img/favicon.png">
-        <link href="/static/css/vendor.css" rel="stylesheet">
-        <link href="/static/css/theme.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/pure-min.css">
+        <link rel="stylesheet" href="/static/css/grids-responsive-min.css">
+        <link rel="stylesheet" href="/static/css/theme.css">
+        <link rel="stylesheet" href="/static/css/syntax.css">
         <link rel="stylesheet" href="/static/css/font-awesome.min.css">
         <style>
             .mt-3 {
@@ -19,63 +21,19 @@
     </head>
     <body>
         <!-- Header -->
-        <header id="layout-header">
-            <!-- Nav -->
-            <nav id="layout-nav" class="navbar navbar-inverse navbar-fixed-top navbar-autohide">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div class="collapse navbar-collapse navbar-main-collapse">
-                        <ul class="nav navbar-nav">
-                            <li><a href="/">Home</a></li>
-                            <li class="separator hidden-xs"></li>
-                            <li class=""><a href="/about" title="Learn about Garret&apos;s experience">About</a></li>
-                            <li class=""><a href="/blog" title="Read Garret&apos;s blog">Blog</a></li>
-                            <li class=""><a href="/talks" title="Explore Garret&apos;s talks">Talks</a></li>
-                            <li class=""><a href="/portfolio" title="See Garret&apos;s work history">Portfolio</a></li>
-                            <li class=""><a href="/opensource" title="See Garret&apos;s open source contributions">Open Source</a></li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="https://github.com/garretfick" title="View Garret&apos;s code on GitHub" rel="me"><span class="fa fa-github fa-lg" aria-hidden="true"></span></a></li>
-                            <li><a href="https://bitbucket.org/garretfick" title="View Garret&apos;s code on Bitbucket" rel="me"><span class="fa fa-bitbucket fa-lg" aria-hidden="true"></span></a></li>
-                            <li><a href="https://slideshare.net/garretfick" title="Read previous talks on SlideShare" rel="me"><span class="fa fa-slideshare fa-lg" aria-hidden="true"></span></a></li>
-                            <li><a href="https://linkedin.com/in/garretfick" title="Connect on with Garret on LinkedIn"  rel="me"><span class="fa fa-linkedin fa-lg" aria-hidden="true"></span></a></li>
-                            <li><a href="https://twitter.com/garretfick" title="Follow Garret on Twitter" rel="me"><span class="fa fa-twitter fa-lg" aria-hidden="true"></span></a></li>
-                            <li><a href="https://facebook.com/garret.fick" title="Connect with Garret on Facebook" rel="me"><span class="fa fa-facebook fa-lg" aria-hidden="true"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
+        {% include header.html %}
 
         <!-- Content -->
-        {{ content }}
+        <main>
+            {{ content }}
+        </main>
 
         <!-- Footer -->
-        <footer id="layout-footer">
-            <div id="footer">
-                <div class="container">
-                    <hr />
-                    <p class="muted credit"><a href="/copyright">&copy; 2012 - 2020 Garret Fick.</a></p>
-                </div>
-            </div>
-        </footer>
+        {% include footer.html %}
 
         <!-- Scripts -->
-        <script src="/static/js/jquery.js"></script>
-        <script src="/static/js/bootstrap.js"></script>
-        <script src="/static/js/app.js"></script>
-        <script src="/static/js/framework.js"></script>
-        <script src="/static/js/framework.extras.js"></script>
-        <link rel="stylesheet" property="stylesheet" href="/static/css/framework.extras.css">
+        <script src="/static/js/menu.js"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-        
         <script>
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', 'UA-21214642-2']);

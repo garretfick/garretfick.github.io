@@ -23,7 +23,7 @@ As above, this maps all items to coils that support both read and write.
 The next step is to connect to it via Modbus. To do this, I write a simple Modbus client using
 [pymodbus](https://github.com/riptideio/pymodbus).
 
-```
+```python
 from pymodbus.client.sync import ModbusTcpClient as ModbusClient
 import time
 

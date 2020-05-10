@@ -1,0 +1,74 @@
+- name: OWASP SCVS
+  links:
+    - name: Website
+      icon: fa-link
+      title: View the OWASP SCVS website
+      href: https://owasp.org/www-project-software-component-verification-standard
+    - name: GitHub
+      icon: fa-github
+      title: View SCVS on GitHub
+      href: https://github.com/OWASP/Software-Component-Verification-Standard
+  content:
+    - I'm one of the contributors to the OWASP Software Component Verification Standard. SCVS defines controls for evaluating risk in your software supply chain.
+
+- name: OpenPLC
+  links:
+    - name: GitHub
+      icon: fa-github
+      title: View OpenPLC on GitHub
+      href: https://github.com/thiagoralves/OpenPLC_v3
+    - name: Website
+      icon: fa-link
+      title: View the OpenPLC project website
+      href: https://www.openplcproject.com
+    - name: Gitter
+      icon: fa-comments
+      title: Discuss OpenPLC on Gitter
+      href: https://gitter.im/openPLCProjectx/community
+  content:
+    - OpenPLC Project is a complete solution for programming programable logic controllers (PLCs) using IEC 61131-3 languages (such as structured text and ladder diagrams).
+    - I am presently active in the project working on code runtime improvements and automated testing. You can usually find me on the Gitter channel.
+
+- name: pyopendnp3
+  links:
+    - name: GitHub
+      icon: fa-github
+      title: View pyopendnp3 on GitHub
+      href: https://github.com/garretfick/pydnp3
+    - name: PyPI
+      icon: fa-link
+      title: View pyopendnp3 on PyPI
+      href: https://pypi.org/project/pyopendnp3
+  content:
+    - pyopendnp3 is a fork of pydnp3 where I maintain support for Windows capabilities including producing wheels that all you to use DNP3 in Python on Windows without needing a C++ compiler.
+
+- name: openfmb-device-simulator
+  links:
+    - name: GitHub
+      icon: fa-github
+      title: View on GitHub
+      href: https://github.com/smartergridsolutions/openfmb-device-simulator
+    - name: Website
+      icon: fa-link
+      title: View the OpenFMB device simulator project website
+      href: https://smartergridsolutions.github.io/openfmb-device-simulator
+    - name: Gitter
+      icon: fa-comments
+      title: Discusss OpenFMB device simulator on Gitter
+      href: https://gitter.im/smartergridsolutions/openfmb-device-simulator
+  content:
+    - "openfmb-device-simulator is a simple application to bootstrap development of
+      OpenFMB messaging capabilities with NATS. It creates several simple devices that
+      publish and subscribe to NATS channels using the OpenFMB information model and is
+      the fastest way to get started with OpenFMB."
+
+- name: pcb-tools
+  links:
+    - name: GitHub
+      icon: fa-github
+      title: View pcb-tools on GitHub
+      href: https://github.com/curtacircuitos/pcb-tools
+  content:
+    - "pcb-tools is Python library for parsing and manipulating Gerber (RS-274) and Excellon
+      files that are the defacto standard used for printed circuit board (PCB) manufacturing.
+      I contributed support for aperture macros, drill files, and countless bug fixes. "

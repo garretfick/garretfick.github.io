@@ -13,7 +13,7 @@ $$
 
 We can evaluate the accuracy for a few values of x. With the following script:
 
-```
+```java
 // The factorial way
 var factorial = 1;
 var curValue = input;

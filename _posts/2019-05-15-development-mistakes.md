@@ -4,8 +4,6 @@ title: Development Mistakes
 date: 2019-05-15
 ---
 
-Learning from Mistakes
-
 Making mistakes is not fun but it turns out that mistakes are often very good learning opportunities. While on vacation,
 I got to spend some time thinking about some mistakes I've made. (For interest, the particular prompt was "CRUD only when
 you can afford it" which led to a little reminiscing.) As a bit of a change from my normal post topics, I present some
@@ -83,10 +81,10 @@ validate that the functionality was unchanged, then move on.
 
 Fast forward a few years, I was working at ChinaNetCloud where I had been hired to develop a new web portal for managing operations as a
 service (OaaS). The portal was to be written in PHP using Laravel - a framework and language both new to me. Not only that, but I had
-joined the company perhaps 3 weeks prior, so I was still getting familar with the business.
+joined the company perhaps 3 weeks prior, so I was still getting familiar with the business.
 
-Perhaps becauase I was new, I agreed that I would get a week to learn the framework, and the we would throw a team of about 5 developers
-at it. We set a goal of reimplementing a  help-desk ticket system in 2 weeks. It involved carefully dividing up the work, which we
+Perhaps because I was new, I agreed that I would get a week to learn the framework, and the we would throw a team of about 5 developers
+at it. We set a goal of re-implementing a  help-desk ticket system in 2 weeks. It involved carefully dividing up the work, which we
 did successfully. And in 2 weeks, we had replicated the functionality we had planned in a mess of code.
 
 In the race to implement, few decisions about the architecture had been made. Coding standards were not established. We didn't have
