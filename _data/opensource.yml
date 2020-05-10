@@ -27,7 +27,7 @@
       href: https://gitter.im/openPLCProjectx/community
   content:
     - OpenPLC Project is a complete solution for programming programable logic controllers (PLCs) using IEC 61131-3 languages (such as structured text and ladder diagrams).
-    - I am presently active in the project working on code runtime improvements and automated testing. You can usually find me on the Gitter channel.
+    - I am presently active in the project working on core runtime improvements, automated testing, and a GitHub Pages website. You can often find me on the Gitter channel.
 
 - name: pyopendnp3
   links:
