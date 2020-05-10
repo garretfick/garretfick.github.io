@@ -9,7 +9,7 @@ The following is a simple algorithm to merge two sorted arrays. Merging two sort
 If you were implementing this in a real project, you would probably was to use templates so this
 could work with any type. I've restricted this to only unsigned ints to focus on the algorithm.
 
-```
+```c++
 #include <iostream>
 #include <cstdint>
 #include <vector>

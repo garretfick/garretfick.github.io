@@ -29,7 +29,7 @@ Yes - use custom sequences to increment by more than 1 and then set each master 
 
 In PostgreSQL
 
-```
+```sql
 CREATE TABLE currentvalues (
 idcurrent bigint primary key
 CREATE SEQUENCE currentvalues_seq INCREMENT 10 OWNED BY currentvalues.idcurrent USING local;

@@ -32,7 +32,7 @@ As far as I know, it is not available via PIP, so you need to get the code and s
 
 Finally, we can connect to the oustation via DNP3 to control the device.
 
-```
+```python
 from pydnp3 import opendnp3, openpal, asiopal, asiodnp3
 import time
 

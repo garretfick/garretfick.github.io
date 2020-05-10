@@ -12,7 +12,7 @@ One lesson is that you need a real database such as Postgres. The compose file b
 will get you started with Dependency Track connected to Postgress running in another
 container.
 
-```
+```yml
 version: '3.1'
 services:
   dtrack:
@@ -42,7 +42,6 @@ services:
     - '5432:5432'
     volumes:
       - ./db:/var/lib/postgresql
-    
 ```
 
 Once things are up an running, you can login to the UI from [http://localhost:8090/](). You can then login with the default credentials listed in the [Dependency Track documentation](https://docs.dependencytrack.org/getting-started/initial-startup/).

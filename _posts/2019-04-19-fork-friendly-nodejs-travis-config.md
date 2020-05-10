@@ -29,7 +29,7 @@ Requirements:
 You can satify these all with Travis CI. Thus, my YML file looks like the following (your package would
 need to replace "cloudsploit" with the right package name.
 
-```
+```yml
 language: node_js
 node_js:
   - "stable"

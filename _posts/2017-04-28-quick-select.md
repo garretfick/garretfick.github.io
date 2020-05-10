@@ -8,7 +8,7 @@ Quick select is an efficient algorithm for finding the k-th item in a list. The 
 
 I've kept the example simple and concrete (instead of with templates) to focus on the algorithm.
 
-```
+```c++
 #include <iostream>
 #include <cmath>
 #include <utility>

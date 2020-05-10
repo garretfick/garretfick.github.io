@@ -38,7 +38,7 @@ The content of these files is similar to the Heroku documentation - the biggest 
 
 `connection.py` contains the common connection information for connecting to Redis
 
-```
+```python
 import os
 import redis
 import urlparse
@@ -51,7 +51,7 @@ conn = redis.StrictRedis(host=url.hostname, port=url.port, password=url.password
 
 `worker.py` processes the items in the queue
 
-```
+```python
 from rq import Worker, Queue, Connection
 from django.core.management.base import BaseCommand
 from apps.worker.connection import conn, listen
@@ -64,7 +64,7 @@ class Command(BaseCommand):
 
 `scheduler.py` adds items to the queue
 
-```
+```python
 from rq import  Queue
 from apps.worker.connection import conn
 from django.core.management.base import BaseCommand
@@ -80,13 +80,13 @@ If everthing is setup correctly, you can start the worker and then schedule task
 
 Run the following to start the worker listener:
 
-```
+```sh
 $python manage.py worker
 ```
 
 Then in another terminal, run the following to schedule some tasks:
 
-```
+```sh
 $python manage.py scheduler
 ```
 
@@ -96,7 +96,7 @@ If your tasks produce any outut, you will see them in the worker's terminal.
 
 In order to be able to use [RedisToGo](https://elements.heroku.com/addons/redistogo) on Heroku, you need to povision the addon. Run the following to provision the addon:
 
-```
+```sh
 heroku addons:create redistogo:nano
 ```
 
@@ -104,13 +104,13 @@ With that in place, you should be able to run both the worker and scheduler on H
 
 Execute the following to run the worker:
 
-```
+```sh
 heroku run python manage.py worker
 ```
 
 Execute the following to run the scheduler:
 
-```
+```sh
 heroku run python manage.py scheduler
 ```
 
@@ -134,7 +134,7 @@ heroku ps:scale worker=1
 
 The final piece is to regularly add tasks the to queue (that's what the scheduler does). An easy way do to that is via the Heroku Scheduler Add-on
 
-```
+```sh
 heroku addons:create scheduler:standard
 ```
 

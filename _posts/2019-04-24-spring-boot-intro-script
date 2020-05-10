@@ -29,7 +29,7 @@ those conventions.
 
 ## The group controller
 
-```
+```java
 package com.ficksworkshop.lab.group.controller;
 
 import org.springframework.http.HttpStatus;
