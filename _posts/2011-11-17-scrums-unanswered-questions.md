@@ -12,7 +12,7 @@ How can you always develop something useful in a sprint when some features might
 
 But I still have three questions that remain unanswered:
 
-1. Scrum aims to create defect free code ([something I'd love to see](blog/posts/bugs-are-toxic)), but what about products that already exist with a significant number of defects? When do you fix these existing defects? What is the user story?
+1. Scrum aims to create defect free code ([something I'd love to see](/blog/bugs-are-toxic)), but what about products that already exist with a significant number of defects? When do you fix these existing defects? What is the user story?
 2. Scrum aims to produce unit-tested code, but what about products that are currently not unit tested? I know from experience making code amenable to unit testing is a time-consuming process. How can you produce potentially shippable software at the end of each spring when the majority of the software is not unit tested?
 3. Are there projects that are not amenable to scrum? For example, suppose you wanted to make an existing project available on a new platform (as a Mac user, I want to use product X on a Mac). Suppose too that you decide to migrate from a single-platform UI library (e.g. MFC) to a cross-platform UI library (e.g. QT) in order to share as much code as possible between platforms. How would you approach this with scrum?
 

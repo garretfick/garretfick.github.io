@@ -13,7 +13,7 @@ To make things more interesting, the color of the item changes when expanded, so
 
 Let's start with what this looks like:
 
-<iframe src="/static/img/blog/rotating-and-changing-the-color-of-an-image-with-css3/click_rotate_animation.html"/>
+<iframe src="/static/img/blog/rotating-and-changing-the-color-of-an-image-with-css3/click_rotate_animation.html"></iframe>
 
 This is actually quite easy, and you can achieve the effect with only a few lines. You need only
 
