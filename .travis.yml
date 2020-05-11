@@ -1,6 +1,7 @@
 language: ruby
 
 install:
+ - bundle install
  - pip3 install html5validator
 
 script:
