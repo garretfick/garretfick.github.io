@@ -1,10 +1,7 @@
 language: ruby
 
-before_install:
- - phpenv global 7.0
-
 install:
- - php install html5validator
+ - pip install html5validator
 
 script:
  - bundle exec rake test
