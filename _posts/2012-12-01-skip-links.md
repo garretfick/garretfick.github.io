@@ -37,7 +37,8 @@ left: 5px;
 
 The important part is the testing. This wasn't my first approach, but it was the first and simplest that works in all scenarios I tested. This approach works in at least the following cases.
 
-<table border="0" summary="Whether this approach works using some operating systems, screen readers, and brower combinations.">
+<figure>
+<table>
 <tbody>
 <tr><th scope="col" abbr="os">Operating System</th><th scope="col" abbr="reader">Screen Reader</th><th scope="col">Browser</th><th scope="col">Status</th></tr>
 <tr>
@@ -66,5 +67,7 @@ The important part is the testing. This wasn't my first approach, but it was the
 </tr>
 </tbody>
 </table>
+<figcaption>Whether this approach works using some operating systems, screen readers, and brower combinations.</figcaption>
+</figure>
 
 For things not in the table, such as Firefox, Android, iOS, etc, I simply don't know. If it works (or if it doesn't) let me know and help me populate the table.
