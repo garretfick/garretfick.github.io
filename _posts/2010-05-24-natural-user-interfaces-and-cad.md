@@ -6,7 +6,7 @@ date: 2010-05-24
 
 There is a lot of recent interest in user interface design driven by multiple factors, primarily the pervasive mobile device, but also other factors such as increasing software capabilities. This has me thinking about the user interfaces to [CAD software](http://en.wikipedia.org/wiki/Computer-aided_design) which is important to me for economic reasons. Generally, the CAD software interface is menu driven, although there are examples that try to break this mold, such as a [touch-enabled interface](http://www.youtube.com/watch?v=kdkxqgbXaSI) by [SpaceClaim](http://www.spaceclaim.com/).
 
-<iframe title="YouTube video player" width="480" height="390" src="https://www.youtube.com/watch?v=kdkxqgbXaSI" frameborder="0" allowfullscreen></iframe>
+<iframe title="YouTube video player" width="480" height="390" src="https://www.youtube.com/watch?v=kdkxqgbXaSI" allowfullscreen></iframe>
 
 If you watch the video, you’ll see there is nothing innovative there. [PCB123](http://www.pcb123.com/), another recent CAD software, also generally sticks within the existing mold. With all of the interface improvements of late, in particular [natural user interfaces](http://en.wikipedia.org/wiki/Natural_user_interface), would CAD software developed from scratch today be any different from current designs?
 
