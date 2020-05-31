@@ -21,7 +21,7 @@ The strategy is to manage state through a stack of small XML parsers (mini-parse
 
 I'll use an example to explain how this works. Let's imaging you need to parse the following XML document representing an online order:
 
-```
+```xml
 <Order>
    <CustomerInfo>
       <Contact firstName="P" lastName="Sherman"/>
@@ -38,9 +38,9 @@ I'll use an example to explain how this works. Let's imaging you need to parse t
 
 In this fictitious sample, there are essentially 3 highly related pieces of data: customer info, payment info, and items. (I've intentionally structured it this way as an example - not as the best possible structure.) Each of these will be parsed separately using a mini-parser. These are automatically created by the main parser that registers itself for SAX events.
 
-Let's assume we have a class OrderParser, and the methods startElement and endElement are registered to handle the relevant SAX events. (To keep things simple, I'm only interested in elements, skipping over character data, but there are obvious extensions.) In C++, the header looks something like:
+Let's assume we have a class `OrderParser`, and the methods `startElement` and `endElement` are registered to handle the relevant SAX events. (To keep things simple, I'm only interested in elements, skipping over character data, but there are obvious extensions.) In C++, the header looks something like:
 
-```
+```cpp
 class OrderParser
 {
 public:
@@ -53,9 +53,9 @@ private:
 };
 ```
 
-The role of the OrderParser is to pass events down to the correct mini-parser. So what does the mini-parser look like?
+The role of the `OrderParser` is to pass events down to the correct mini-parser. So what does the mini-parser look like?
 
-```
+```cpp
 class IMiniParser
 {
 public:
@@ -66,9 +66,9 @@ public:
 };
 ```
 
-With that covered, let's look at the implementation of OrderParser. Remember, the job of the main parser is to forward SAX events to the appropriate mini-parser.
+With that covered, let's look at the implementation of `OrderParser`. Remember, the job of the main parser is to forward SAX events to the appropriate mini-parser.
 
-```
+```cpp
 void OrderParser::startElement(string& elementName, attributeMap& attrs)
 {
    ++_depth;
@@ -110,9 +110,9 @@ void OrderParser::endElement(string& elementName)
 }
 ```
 
-The mini-parsers work in essentially the same way, handling the elements they know about, creating mini-parsers for further sub-elements, and passing the most appropriate parent object (a child of the Order object). For example, the implementation of the CustomerInfoMiniParser would look something like
+The mini-parsers work in essentially the same way, handling the elements they know about, creating mini-parsers for further sub-elements, and passing the most appropriate parent object (a child of the Order object). For example, the implementation of the `CustomerInfoMiniParser` would look something like
 
-```
+```cpp
 void CCustomerInfoMiniParser::CCustomerInfoMiniParser(Order* order)
    : _owner(order)
 {
@@ -191,9 +191,9 @@ void CustomerInfoMiniParser::endElement(string& elementName)
 
 ## Unknown Elements
 
-One of the challenges of event-based parsers is handling state, particularly if items have the same name. How does the mini-parser pattern handle these? Perhaps surprisingly, unknown elements are trivially handled with a null mini-parser. Then null mini-parser does nothing except eat SAX events until the element and all of it's children are done. Essentially, we modify all places where we handle start elements adding an else statement for any unknown element. For example, the startElement member in the OrderParser becomes
+One of the challenges of event-based parsers is handling state, particularly if items have the same name. How does the mini-parser pattern handle these? Perhaps surprisingly, unknown elements are trivially handled with a null mini-parser. Then null mini-parser does nothing except eat SAX events until the element and all of it's children are done. Essentially, we modify all places where we handle start elements adding an else statement for any unknown element. For example, the `startElement` member in the `OrderParser` becomes
 
-```
+```cpp
 void OrderParser::startElement(string& elementName, attributeList& attrs)
 {
    ++_depth;
@@ -225,9 +225,9 @@ void OrderParser::startElement(string& elementName, attributeList& attrs)
 
 ## Unit Testing
 
-Event-based parsers can be hard to unit test because you need to put the parser into the correct. This architecture makes it easy to unit test because you can test each mini-parser individually by emulating the events. Construct the mini-parser in your test envionment, the call beginHandler, startElement, endElement, endHandler in the expected order. The details will depend on your test environment. A test for the for the CustomerInfoMiniParser might look like
+Event-based parsers can be hard to unit test because you need to put the parser into the correct. This architecture makes it easy to unit test because you can test each mini-parser individually by emulating the events. Construct the mini-parser in your test environment, the call `beginHandler`, `startElement`, `endElement`, `endHandler` in the expected order. The details will depend on your test environment. A test for the for the `CustomerInfoMiniParser` might look like
 
-```
+```cpp
 void CustomerInfoMiniParserTest()
 {
    //Construct attribute maps with appropriate values (you'll need one for

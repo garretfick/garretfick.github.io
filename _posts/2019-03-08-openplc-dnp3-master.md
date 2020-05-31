@@ -30,7 +30,7 @@ the master. You can implement this in a number of languages, and for this demons
 
 As far as I know, it is not available via PIP, so you need to get the code and set it up yourself (and your already on Linux already because that's the supported platform for DNP3 and OpenPLC). Get the code from https://github.com/ChargePoint/pydnp3 and follow the instructions in the readme to setup your system.
 
-Finally, we can connect to the oustation via DNP3 to control the device.
+Finally, we can connect to the outstation via DNP3 to control the device.
 
 ```python
 from pydnp3 import opendnp3, openpal, asiopal, asiodnp3

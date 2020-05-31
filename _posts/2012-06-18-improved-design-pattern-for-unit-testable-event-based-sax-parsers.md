@@ -10,7 +10,7 @@ First, what was the problem with the initial design? If you recall, the pattern 
 
 An alternative and better approach is to use a delegate function/object to handle the generated data. In this way, the logic to handle the generated data can vary depending on the object.
 
-Additionally, with this approach, we can omit the separate begin/finish functions, handling everything in startElement and endElement.
+Additionally, with this approach, we can omit the separate begin/finish functions, handling everything in `startElement` and `endElement`.
 
 ```
 void CCustomerInfoMiniParser::CCustomerInfoMiniParser(std::function<void(Order*)> set_contact_delegate)
@@ -77,7 +77,7 @@ void CustomerInfoMiniParser::endElement(string& elementName)
 }
 ```
 
-Then when you create the CustomerInfoMiniParser, supply the delegate using an lambda. For example,
+Then when you create the `CustomerInfoMiniParser`, supply the delegate using an lambda. For example,
 
 ```
 void OrderParser::startElement(string& elementName, attributeMap&; attrs)
@@ -105,4 +105,4 @@ void OrderParser::startElement(string& elementName, attributeMap&; attrs)
 }
 ```
 
-Although things seem complex, with an appropriate abstract implementation of the IMiniParser interface, things get incredibly simple. I'm working on publishing the fully implemented example. Just be patient.
+Although things seem complex, with an appropriate abstract implementation of the `IMiniParser` interface, things get incredibly simple. I'm working on publishing the fully implemented example. Just be patient.

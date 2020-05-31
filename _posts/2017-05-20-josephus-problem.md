@@ -6,11 +6,11 @@ date: 2017-05-20
 
 [Josephus Problem](https://en.wikipedia.org/wiki/Josephus_problem) describes a counting-out game where you progressively remove (kill) people by their position, until only one person remains. For example, take a group of 10 people, then kill each second person until only one person remains. Josephus Problem tells us who is the survivor.
 
-There is an analytical solution for the special case of skipping one person (k=2). Within that, there is an intersting sub-problem - you need to calculate the value of n with only the highest bit set. For that, there are both naive and efficient solutions.
+There is an analytical solution for the special case of skipping one person (k=2). Within that, there is an interesting sub-problem - you need to calculate the value of n with only the highest bit set. For that, there are both naive and efficient solutions.
 
 The following shows how solve Josephus Problem for the special case of k=2, using both naive and efficient solutions to get highest bit set.
 
-```
+```c++
 #include <bitset>
 #include <iostream>
 

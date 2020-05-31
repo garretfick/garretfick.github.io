@@ -32,7 +32,7 @@ DWORD ThreadFunc(LPVOID lpThreadParam)
 }
 ```
 
-The class has a single event that is resued each time `MainThreadFunction` is called. `MainThreadFunction`creates a thread to run `ThreadFunc`, a thread-safe function, and waits for the thread to complete before returning. Resuing the event in this way is safe, provided that you don't recursively call `CMyClass::MainThreadFunction`. If `CMyClass::MainThreadFunction` is called recursively, the code may hang (I'll leave it as an excersise to show why, and why the answer is also not definitive). Whether the code recursively calls `CMyClass::MainThreadFunction` entirely depends on what happens in `WaitFunction` (and is the source of the bug I uncovered today).
+The class has a single event that is reused each time `MainThreadFunction` is called. `MainThreadFunction`creates a thread to run `ThreadFunc`, a thread-safe function, and waits for the thread to complete before returning. Reusing the event in this way is safe, provided that you don't recursively call `CMyClass::MainThreadFunction`. If `CMyClass::MainThreadFunction` is called recursively, the code may hang (I'll leave it as an exercise to show why, and why the answer is also not definitive). Whether the code recursively calls `CMyClass::MainThreadFunction` entirely depends on what happens in `WaitFunction` (and is the source of the bug I uncovered today).
 
 Often, `CMyClass::WaitFunction` looks something like
 

@@ -67,7 +67,7 @@ The important part is the testing. This wasn't my first approach, but it was the
 </tr>
 </tbody>
 </table>
-<figcaption>Whether this approach works using some operating systems, screen readers, and brower combinations.</figcaption>
+<figcaption>Whether this approach works using some operating systems, screen readers, and browser combinations.</figcaption>
 </figure>
 
 For things not in the table, such as Firefox, Android, iOS, etc, I simply don't know. If it works (or if it doesn't) let me know and help me populate the table.

@@ -6,7 +6,7 @@ date: 2013-08-12
 
 When I write documents in Microsoft Word, I make extensive use of styles because they are the easiest way to ensure that your document has a consistent formatting and that helps make your document more formal. It is also an enormous time saver if you want to change a style in your document because you only have to change it in one place and your entire document will be updated.
 
-Word has many built-in styles but they compete with using a consistent formatting you define. I've always wanted to remove some styles from certain documents. Although you can't remove them entirely, you can prevent them from being used and in fact force your doucment only use styles that you've defined.
+Word has many built-in styles but they compete with using a consistent formatting you define. I've always wanted to remove some styles from certain documents. Although you can't remove them entirely, you can prevent them from being used and in fact force your document only use styles that you've defined.
 
 1. Press `Alt+Ctrl+Shift+S` to show the `Styles` pane.
 

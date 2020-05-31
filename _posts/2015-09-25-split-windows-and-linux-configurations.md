@@ -41,19 +41,19 @@ Before adding and committing to Git, there are a few things that should not be c
 
 Since you cannot directly create a file name in Windows starting with a period, execute the following to create the `.gitignore` file:
 
-```
+```sh
 touch .gitignore
 ```
 
 Then either open the file add the following:
 
-```
+```sh
 *.pyc venv
 ```
 
-or paste the full contents of [Github's awesome standard .gitignore](https://github.com/github/gitignore/blob/master/Python.gitignore), adding the line:
+or paste the full contents of [GitHub's awesome standard `.gitignore`](https://github.com/github/gitignore/blob/master/Python.gitignore), adding the line:
 
-```
+```sh
 venv
 ```
 
@@ -74,7 +74,7 @@ The final step is to create a [Heroku](http://www.heroku.com/) application and p
 heroku login
 ```
 
-Then, in the same folder as the application, exeucte the follow to create a new Heroku application:
+Then, in the same folder as the application, execute the follow to create a new Heroku application:
 
 ```
 heroku apps:create APPNAME

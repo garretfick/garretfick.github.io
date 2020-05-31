@@ -54,8 +54,8 @@ outputs or the maximum binary output index. So, the group gives a semantic meani
 Another consideration is the variation. Variations tell you about the encoding of the value.
 In general, you can think of this as being the data type (e.g. a 16-bit integer), but DNP3
 supports a more diverse set of encodings than what software developers are normally familiar with.
-The particular set of variations depends on the group, so you don't have feedom to choose them
-aribtrarily - you need to select the correct pairing.
+The particular set of variations depends on the group, so you don't have freedom to choose them
+arbitrarily - you need to select the correct pairing.
 
 ## Reading
 
@@ -73,5 +73,5 @@ variation 6.
 
 A description of valid combinations of group and variation occupies a small (insert sarcasm)
 300+ pages of the DNP3 specification. The high quality [OpenDNP3](https://github.com/automatak/dnp3)
-has a partial list, but it is far from complete. Depsite this, the industrial applications
+has a partial list, but it is far from complete. Despite this, the industrial applications
 I've seen only use a few combinations.

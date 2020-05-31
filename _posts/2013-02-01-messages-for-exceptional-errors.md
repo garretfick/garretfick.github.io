@@ -10,9 +10,9 @@ But are there are limits to when you should provide this complete information? C
 
 ## Exceptional Errors
 
-Some types of errors are quite exceptional. For example, I've seen a lot of code that checks whether a fundamental part of Windows is installed, such as RICHED32.DLL. The absence of this DLL is a serious problem, and it's reasonable to assume that Windows would not be running without this DLL. I don't think it is valuable to write a detailed error message for this type of exceptional error, and how would you phrase the solution?
+Some types of errors are quite exceptional. For example, I've seen a lot of code that checks whether a fundamental part of Windows is installed, such as `RICHED32.DLL`. The absence of this DLL is a serious problem, and it's reasonable to assume that Windows would not be running without this DLL. I don't think it is valuable to write a detailed error message for this type of exceptional error, and how would you phrase the solution?
 
-> Unable to edit the text because RICHED32.DLL do not exist. Reinstall Windows and this program, then try again.
+> Unable to edit the text because `RICHED32.DLL` do not exist. Reinstall Windows and this program, then try again.
 
 The same can be said for parts of a product's installation. If a required part of the product is missing, is it valuable to provide a specific message for each case? A failed installation should be indicated by a message from the installer. They would have already received an appropriate error message.
 

@@ -9,7 +9,7 @@ understanding risks in third-party software that we use. To make things easy, I'
 been running locally via docker.
 
 One lesson is that you need a real database such as Postgres. The compose file below
-will get you started with Dependency Track connected to Postgress running in another
+will get you started with Dependency Track connected to Postgres running in another
 container.
 
 ```yml

@@ -9,7 +9,7 @@ For the menu system on the website I'm working on, we want to have a triangular 
 * an unopened state, pointing to the right
 * an opened state, pointing downward
 
-To make things more interesting, the color of the item changes when expanded, so the color of the triangle should also change. And for one final request, the icon transitions between the states by rotating. Oh, and if possible, I want to use CSS3 - I'm ok if old browsers don't get the animation.
+To make things more interesting, the color of the item changes when expanded, so the color of the triangle should also change. And for one final request, the icon transitions between the states by rotating. Oh, and if possible, I want to use CSS3 - I'm OK if old browsers don't get the animation.
 
 Let's start with what this looks like:
 
@@ -22,9 +22,9 @@ This is actually quite easy, and you can achieve the effect with only a few line
 
 ## HTML
 
-The HTML contains the content we want to animate appropriately tagged so we can find it with Javascript and a default class.
+The HTML contains the content we want to animate appropriately tagged so we can find it with JavaScript and a default class.
 
-```
+```html
 <a href="#" onclick="toggle_class('img'); toggle_class('sprite');">Toggle arrow</a><br><p><code>img</code> element</p><br>    <img id="img" class="unrotated" src="data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%14%00%00%00%14%08%06%00%00%00%8D%89%1D%0D%00%00%00%06bKGD%00%00%00%00%00%00%F9C%BB%7F%00%00%00%09pHYs%00%00%0B%13%00%00%0B%13%01%00%9A%9C%18%00%00%00%07tIME%07%DE%08%07%07%2A%27%86i%CBA%00%00%00%0CiTXtComment%00%00%00%00%00%BC%AE%B2%99%00%00%00%5CIDAT8%CB%CD%D4%01%0E%00%20%08%02%40%F1%FF%7F%B6%0F4%05%C7Z%3E%E0VI%A0%AA%2A%8C%93a%9E%2B%08%00%F6%13n%D1%F6%CA%1Bt%7CC%15%A5%96%A2%A0%F4%96YT%8A%0D%83%CA9%9C%D07%C1%EEf%FA%AA%E9%C4%24%90-%91tb%14%A8%D6%5B%3A%B1%16%DC%16%2F%BEo%EC%03%80O%24%238%EB%8E%EF%00%00%00%00IEND%AEB%60%82" /><br><p>CSS image sprite</p><br><div id="sprite" class="unrotated" sprite"></div>
 ```
 

@@ -10,7 +10,7 @@ A few things should affect the result. Most importantly, the speed of the cast a
 
 ![](/static/img/blog/visitor-versus-cast-s-in-c/c-sharp-visitor.png)
 
-I then wrote to code to either cast via `is` or call a visitor function. Everything except the `Circle` class can be entirely removed from the code by conditional compiles. This way, I can test the effects of adding more classes or increating the class hierarchy depth and this is detailed in the table below.
+I then wrote to code to either cast via `is` or call a visitor function. Everything except the `Circle` class can be entirely removed from the code by conditional compiles. This way, I can test the effects of adding more classes or increasing the class hierarchy depth and this is detailed in the table below.
 
 <table>
 <thead>
@@ -138,7 +138,7 @@ I then wrote to code to either cast via `is` or call a visitor function. Everyth
 
 Times increase with each addition because the total number of objects increases, so the important number is the average. The loop is also run 10000 times so that the times are much larger than the timer resolution of 1 ms.
 
-Overall, the results are not that unexpected. As you add more types, the number of failed if's increases, and the performance degredates. The visitor stays the same. Interestingly, at the lowest end, the cast is faster than the visitor, and so for simple checks, the better choice might be the cast.
+Overall, the results are not that unexpected. As you add more types, the number of failed if's increases, and the performance degrades. The visitor stays the same. Interestingly, at the lowest end, the cast is faster than the visitor, and so for simple checks, the better choice might be the cast.
 
 You can see the full source below.
 

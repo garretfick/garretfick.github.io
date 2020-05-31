@@ -4,7 +4,7 @@ title: Should You Use DATE_LONGDATE or DATE_SHORTDATE?
 date: 2013-02-13
 ---
 
-The Windows API provides the [`GetDateFormat`](http://msdn.microsoft.com/en-us/library/windows/desktop/dd318086(v=vs.85).aspx) and [`GetDateFormatEx`](http://msdn.microsoft.com/en-us/library/windows/desktop/dd318088(v=vs.85).aspx) functions for formatting time information into the appropriate locale specific format. Using the function, you can decide whether to return the date in short foramat (`DATE_SHORTDATE`) or long format (`DATE_LONGDATE`).
+The Windows API provides the [`GetDateFormat`](http://msdn.microsoft.com/en-us/library/windows/desktop/dd318086(v=vs.85).aspx) and [`GetDateFormatEx`](http://msdn.microsoft.com/en-us/library/windows/desktop/dd318088(v=vs.85).aspx) functions for formatting time information into the appropriate locale specific format. Using the function, you can decide whether to return the date in short format (`DATE_SHORTDATE`) or long format (`DATE_LONGDATE`).
 
 ```
 // Get the current time

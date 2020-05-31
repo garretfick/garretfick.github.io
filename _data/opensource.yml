@@ -26,7 +26,7 @@
       title: Discuss OpenPLC on Gitter
       href: https://gitter.im/openPLCProjectx/community
   content:
-    - OpenPLC Project is a complete solution for programming programable logic controllers (PLCs) using IEC 61131-3 languages (such as structured text and ladder diagrams).
+    - OpenPLC Project is a complete solution for programming programmable logic controllers (PLCs) using IEC 61131-3 languages (such as structured text and ladder diagrams).
     - I am presently active in the project working on core runtime improvements, automated testing, and a GitHub Pages website. You can often find me on the Gitter channel.
 
 - name: pyopendnp3
@@ -70,5 +70,5 @@
       href: https://github.com/curtacircuitos/pcb-tools
   content:
     - "pcb-tools is Python library for parsing and manipulating Gerber (RS-274) and Excellon
-      files that are the defacto standard used for printed circuit board (PCB) manufacturing.
+      files that are the de facto standard used for printed circuit board (PCB) manufacturing.
       I contributed support for aperture macros, drill files, and countless bug fixes. "

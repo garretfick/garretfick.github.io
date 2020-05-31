@@ -43,7 +43,7 @@
       href: https://github.com/garretfick/xss-by-example
 
 - name: PHP
-  desc: My first experience was developing a Wordpress plugin. Since then, I built backends for ChinaNetCloud in PHP using Laravel.
+  desc: My first experience was developing a WordPress plugin. Since then, I built backends for ChinaNetCloud in PHP using Laravel.
   skill: 50
   years: 1.5
   projects:

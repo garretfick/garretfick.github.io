@@ -18,7 +18,7 @@ class ContainerClass {
 };
 ```
 
-I want to implement the ItemExists function. Without using lambda functions, you would iterate through the collection, checking for the matching itemId. How can we do this with lamba expressions?
+I want to implement the ItemExists function. Without using lambda functions, you would iterate through the collection, checking for the matching itemId. How can we do this with lambda expressions?
 
 ```
 bool ContainerClass::ItemExists(int itemId) {

@@ -4,8 +4,8 @@ title: Hello World for OpenPLC and Modbus on Windows SoftPLC
 date: 2019-03-01
 ---
 
-My explortations into PLC runtimes has taken me to discover [OpenPLC](https://www.openplcproject.com/).
-The goal of this post is to explain how I was able to depoy a "Hello World" project running on the
+My explorations into PLC runtimes has taken me to discover [OpenPLC](https://www.openplcproject.com/).
+The goal of this post is to explain how I was able to deploy a "Hello World" project running on the
 Windows SoftPLC and connected to a Modbus client.
 
 To get started, I followed the [Creating You First Project](https://www.openplcproject.com/reference-your-first-project)

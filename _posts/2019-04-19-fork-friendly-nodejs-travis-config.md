@@ -14,7 +14,7 @@ tests in the repository). My next step was to publish a package to NPM. However,
 fork - I'm not the authority nor do I want to be. But I do want things to work for me.
 
 This means I wanted to publish a scoped package from my fork. And I want our builds to be able to
-depend on my scoped package, while still allowing cloudSploit to publish a package, if they so choose.
+depend on my scoped package, while still allowing CloudSploit to publish a package, if they so choose.
 Without a little magic, I would have to maintain different build scripts and `package.json` file.
 
 The default case for NPM and Travis CI don't play nicely in terms of allowing forks, but with a little
@@ -26,7 +26,7 @@ Requirements:
 * You need to be able to change the package name in `package.json` so that forks can publish their
   own scoped package.
   
-You can satify these all with Travis CI. Thus, my YML file looks like the following (your package would
+You can satisfy these all with Travis CI. Thus, my YML file looks like the following (your package would
 need to replace "cloudsploit" with the right package name.
 
 ```yml

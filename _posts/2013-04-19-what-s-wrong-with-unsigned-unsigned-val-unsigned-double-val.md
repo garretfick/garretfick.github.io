@@ -6,7 +6,7 @@ date: 2013-04-19
 
 During a code review, I was asked why I wrote the following C code:
 
-```
+```cpp
 double dval = ...;
 uint16_t uval = (uint16_t) MAX(0, MIN(dval, UINT16_MAX));
 ```
@@ -15,16 +15,16 @@ If I am going to store the value unsigned, why do I need the `MAX`/`MIN` values?
 
 The cast operators are inherently unsafe if the input is out of bounds of what can be stored in the destination. They can do more than just clip the value at the maximum.
 
-```
+```cpp
 double dval = 1000000000000;
 int ival = (int)dval;
 unsigned int uval = (unsigned int)(int)dval;
 unsigned int uval2 = (unsigned int)dval;
 ```
 
-What do you think ival, uval, and uval2 will be (on a Microsoft compiler)? The answer may surprise you.
+What do you think `ival`, `uval`, and `uval2` will be (on a Microsoft compiler)? The answer may surprise you.
 
-```
+```cpp
 ival = -2147483648
 uval = 2147483648
 uval2 = 3567587328

@@ -34,12 +34,12 @@ The OECL format description suggests the following identifier categories:
 
 Element | Category Identifier
 --------|--------------------
-ComponentBlueprint | `comp`
-OrderablePackageConfiguration | `ordpkg`
-SymbolBlueprint | `symb`
-ModelBlueprint | `modl`
-ManufacturerPackage | `mpkg`
-PackageBlueprint | `pkg`
+`ComponentBlueprint` | `comp`
+`OrderablePackageConfiguration` | `ordpkg`
+`SymbolBlueprint` | `symb`
+`ModelBlueprint` | `modl`
+`ManufacturerPackage` | `mpkg`
+`PackageBlueprint` | `pkg`
 
 Let's look at the [LM7121 from Texas Instruments](http://www.ti.com/product/lm7121) as an example. It has multiple part numbers and it is available in multiple packages.
 
@@ -49,9 +49,9 @@ The component would have the following IDs
 
 Category            | ID                    | Note
 --------------------|--------------------------|--------
-ComponentBlueprint  |com.ti.comp.LM7121        | Functionally distinct component.
-OrderablePackageConfiguration |	com.ti.ordpgk.LM7121M, com.ti.ordpkg.LM7121M/NOPB, com.ti.ordpkg.LM7121M5 | Different packages that can be ordered. A one-to-one mapping to part numbers.
-SymbolBlueprint     |com.ti.symb.opamp_generic | The graphic symbol for schematic capture.
-SimulationModelBlueprint | com.ti.modl.LM7171 | A SPICE simulation model.
-ManufacturerPackage      | com.ti.mpkg.8SOIC, com.ti.mpgk.5SOT23 | Standard package names from TI.
-PackageBlueprint | org.ipc.pkg.X where X is the specific name from IPC-7351 | Standard packages as defined by IPC.
+`ComponentBlueprint`  |com.ti.comp.LM7121        | Functionally distinct component.
+`OrderablePackageConfiguration` |	com.ti.ordpgk.LM7121M, com.ti.ordpkg.LM7121M/NOPB, com.ti.ordpkg.LM7121M5 | Different packages that can be ordered. A one-to-one mapping to part numbers.
+`SymbolBlueprint`     |com.ti.symb.opamp_generic | The graphic symbol for schematic capture.
+`SimulationModelBlueprint` | com.ti.modl.LM7171 | A SPICE simulation model.
+`ManufacturerPackage`      | com.ti.mpkg.8SOIC, com.ti.mpgk.5SOT23 | Standard package names from TI.
+`PackageBlueprint` | org.ipc.pkg.X where X is the specific name from IPC-7351 | Standard packages as defined by IPC.

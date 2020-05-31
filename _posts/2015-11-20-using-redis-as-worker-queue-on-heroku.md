@@ -76,7 +76,7 @@ class Command(BaseCommand):
 
 ## Test Locally
 
-If everthing is setup correctly, you can start the worker and then schedule tasks.
+If everything is setup correctly, you can start the worker and then schedule tasks.
 
 Run the following to start the worker listener:
 
@@ -90,11 +90,11 @@ Then in another terminal, run the following to schedule some tasks:
 $python manage.py scheduler
 ```
 
-If your tasks produce any outut, you will see them in the worker's terminal.
+If your tasks produce any output, you will see them in the worker's terminal.
 
 ## Provision Heroku Add-on
 
-In order to be able to use [RedisToGo](https://elements.heroku.com/addons/redistogo) on Heroku, you need to povision the addon. Run the following to provision the addon:
+In order to be able to use [RedisToGo](https://elements.heroku.com/addons/redistogo) on Heroku, you need to provision the add-on. Run the following to provision the add-on:
 
 ```sh
 heroku addons:create redistogo:nano
@@ -116,9 +116,9 @@ heroku run python manage.py scheduler
 
 *Note* You can only run one one-off dyno so you won't be able to see them interact using one-off dynos.
 
-## Add to the Procfile and Scale the Worker
+## Add to the `Procfile` and Scale the Worker
 
-The worker process will run in the background, so you need to define it in Procfile and then scale the worker. Add the following to your Procfile
+The worker process will run in the background, so you need to define it in `Procfile` and then scale the worker. Add the following to your `Procfile`
 
 ```
 worker: python ./manage.py worker

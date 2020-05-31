@@ -8,7 +8,7 @@ A pretty common problem is to get the top N items from a group from a SQL databa
 
 For some database engines, you can use `OVER` and `PARTITION BY` to achieve your goal. These functions don't exist on MySQL and SQLite, so if you are using those engines, then you need to fall back to basic SQL. It is almost certainly not as efficient (basically doing a cross-product), but you can make it work.
 
-The key insight, described well by [Bill Karwin](http://stackoverflow.com/users/20860/bill-karwin) on [Stackoverflow](http://stackoverflow.com/questions/1442527/how-to-select-the-newest-four-items-per-category/1442867#1442867) is to join the table with itself, but only do the join for the last item.
+The key insight, described well by [Bill Karwin](http://stackoverflow.com/users/20860/bill-karwin) on [Stack Overflow](http://stackoverflow.com/questions/1442527/how-to-select-the-newest-four-items-per-category/1442867#1442867) is to join the table with itself, but only do the join for the last item.
 
 Suppose the schema of table `items` contains a field for your group (e.g. customer ID) and a unique monotonically increasing field (e.g. the primary key or date)
 

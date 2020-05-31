@@ -4,7 +4,7 @@ title: Mapping SYS COLORS to Element
 date: 2011-11-27
 ---
 
-Whenever you create a custom control in Windows, it is important that the control look right, even when Windows has been themed. This means when drawing, you need to pick the right ID to use with `GetSysColor()`. The problem is that many of the [IDs for  GetSysColor](http://msdn.microsoft.com/en-us/library/windows/desktop/ms724371(v=vs.85).aspx) map to the same colour on many Windows themes, making it difficult to determine which colour to use. How do you know which color is used for which element?
+Whenever you create a custom control in Windows, it is important that the control look right, even when Windows has been themed. This means when drawing, you need to pick the right ID to use with `GetSysColor()`. The problem is that many of the [IDs for  `GetSysColor`](http://msdn.microsoft.com/en-us/library/windows/desktop/ms724371(v=vs.85).aspx) map to the same colour on many Windows themes, making it difficult to determine which colour to use. How do you know which color is used for which element?
 
 The trick is to tell Windows substitute a different colour from the theme. One way to do this is through the registry, and thankfully, the names are similar to the IDs, so doing it this way gives you confidence in what you changed. Follow these steps to change a Windows theme colour:
 

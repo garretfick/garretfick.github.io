@@ -7,7 +7,7 @@ date: 2017-04-19
 The following is a simple algorithm to merge two sorted arrays. Merging two sorted arrays is essentially the same as a single round in merge sort.
 
 If you were implementing this in a real project, you would probably was to use templates so this
-could work with any type. I've restricted this to only unsigned ints to focus on the algorithm.
+could work with any type. I've restricted this to only unsigned integers to focus on the algorithm.
 
 ```c++
 #include <iostream>
