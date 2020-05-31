@@ -6,7 +6,7 @@ date: 2012-07-18
 
 A couple of months ago, I ran another video series at work, this time about unit testing. Honestly, this one was less interesting than the design video series. But this shouldn't be a surprise; designers tend to be more interesting speakers, and pictures tend to be more engaging that lines of code.
 
-The series followed the Clean Code Talks by [Miško Hevery](http://misko.hevery.com/about/)
+The series followed the Clean Code Talks by [Misko Hevery](http://misko.hevery.com/about/)
 
 There were four in the series, and you can find them all on [YouTube](http://www.youtube.com)
 

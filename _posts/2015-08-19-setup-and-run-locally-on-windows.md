@@ -27,7 +27,7 @@ Django is written in Python (you already knew that didn't you), so install Pytho
 
 *Note* This guide will work with other version of Python which you can find on [python.org](http://python.org/), but I'm assuming this version to keep the instructions simple. If you use a different version, make sure to use the correct components of psycopg2-windows.
 
-A virtualenv allows installing Python packages locally to a particular project (instead of globally across a computer), and thus allows diferent projects to use different versions of Python packages.
+A virtualenv allows installing Python packages locally to a particular project (instead of globally across a computer), and thus allows different projects to use different versions of Python packages.
 
 Open a Git Bash command prompt (included with Heroku Toolbelt) and execute the following to install the virtualenv Python package:
 
@@ -70,8 +70,8 @@ source venv/Scripts/activate
 
 Next, install Django into the isolated project space. There are two ways do this:
 
-1. Directly specify Django at the command line
-2. Indirectly specify Django via a requirments file
+* Directly specify Django at the command line
+* Indirectly specify Django via a requirements file
 
 Heroku specifies dependencies using a requirements file so we should do the same.
 
@@ -102,9 +102,9 @@ manage.py --version
 1.8
 ```
 
-## Create Procfile and Run
+## Create `Procfile` and Run
 
-Heroku uses a [Procfile](https://devcenter.heroku.com/articles/procfile) to define and execute the web server processes. In the project directory, create a new file named `Procfile` (capital P, no extension) with the following content:
+Heroku uses a [`Procfile`](https://devcenter.heroku.com/articles/procfile) to define and execute the web server processes. In the project directory, create a new file named `Procfile` (capital P, no extension) with the following content:
 
 ```
 web: python manage.py runserver 0.0.0.0:$PORT --noreload

@@ -4,11 +4,11 @@ title: Testing Asynchronous Behaviour in Java with Countdown Latch
 date: 2018-09-09
 ---
 
-The popularity of reactive programming in Java (such as [CompletableFuture](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html))
+The popularity of reactive programming in Java (such as [`CompletableFuture`](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html))
 mean that multi-threaded programming is increasingly common. This can cause problems
 for unit testing because developers sometimes rely on timeouts which can cause random test
 failures if timeouts are too small or long tests if timeouts are too long. Fortunately,
-there is a simple pattern with CountDownLatch that makes is possible to write tests that
+there is a simple pattern with `CountDownLatch` that makes is possible to write tests that
 are resilient to random failure and execute fast.
 
 Enter [`CountDownLatch`](https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/CountDownLatch.html).

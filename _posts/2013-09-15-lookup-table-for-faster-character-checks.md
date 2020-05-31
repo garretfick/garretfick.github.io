@@ -18,7 +18,7 @@ if ((charToCheck >= '0' && charToCheck <= '0')
 }
 ```
 
-Instead, I decided to implement a lookup table, where I precalculated correct characters
+Instead, I decided to implement a lookup table, where I pre-calculated correct characters
 
 ```
 // Valid characters encoded as a table
@@ -152,12 +152,12 @@ int main(int argc, char* argv[])
 }
 ```
 
-Intiutively, which one do you think is fastest? I ran things 3 times with the input "TheStringThatIAmCheckingForComparison." The table below lists the result.
+Intuitively, which one do you think is fastest? I ran things 3 times with the input `TheStringThatIAmCheckingForComparison`. The table below lists the result.
 
 Function        | Time
 ----------------|----------
-CheckByIf       | 1240, 1202, 1303
-CheckByTable    | 369, 333, 332
-CheckByBitArray | 1422, 1165, 1185
+`CheckByIf`       | 1240, 1202, 1303
+`CheckByTable`    | 369, 333, 332
+`CheckByBitArray` | 1422, 1165, 1185
 
 Intuitively, I expected the lookup table would be fastest, and it is. What really surprised me is how slow the bit array is. I'm glad I implemented the table instead of optimizing too much.

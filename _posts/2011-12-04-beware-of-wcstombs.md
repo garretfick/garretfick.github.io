@@ -16,7 +16,7 @@ wchar_t* str = L"Ê";
 
 When will `wcstombs` successfully convert the string? As you might expect, that will depend on whether there is a representation for Ê in the code page. Perhaps unexpectedly, for some code pages, Ê is converted to E. The function succeeds, but [`mbstowcs`](http://www.cplusplus.com/reference/clibrary/cstdlib/mbstowcs/) will not convert back to the original string.
 
-If this is a problem, use WideCharToMultiByte with the flag `WC_NO_BEST_FIT_CHARS` and check the return value for `lpUsedDefaultChar`, for example,
+If this is a problem, use `WideCharToMultiByte` with the flag `WC_NO_BEST_FIT_CHARS` and check the return value for `lpUsedDefaultChar`, for example,
 
 ```
 wchar_t* strIn = L"Ê";

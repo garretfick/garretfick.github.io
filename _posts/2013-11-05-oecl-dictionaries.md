@@ -17,7 +17,7 @@ Schematic capture graphic symbols | `SymbolBlueprintDictionary`
 SPICE simulation models | `SimulationModelBlueprintDictionary`
 Manufacturer-defined package names | `ManufacturerPackageDictionary`
 Standard packages, also knows as land patterns | `PackageBlueprintDictionary`
-Obscolesence and replacements | `StatusDictionary`
+Obsolescence and replacements | `StatusDictionary`
 Ordering from a supplier | `OrderingInfoDictionary`
 Organization of components into a hierarchy | `ComponentCategoryDictionary`
 

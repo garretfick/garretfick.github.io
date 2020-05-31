@@ -10,13 +10,13 @@ I doubt search engines likely don't do anything special for them, but that doesn
 
 The first thing to note is that they are not equivalent. `pre` is a grouping element, similar to `p`, whereas `code`, `kbd`, `samp`, and `var` are text-level elements. The text-level elements can only occur with the context of a grouping element:
 
-```
+```html
 <code><p>After typing in <kbd>cd D:</kbd> at the command prompt, the output should show <samp>D:\></samp></p></code>
 ```
 
 or
 
-```
+```html
 <code><pre><code>void main(void) {}</code></pre></code>
 ```
 

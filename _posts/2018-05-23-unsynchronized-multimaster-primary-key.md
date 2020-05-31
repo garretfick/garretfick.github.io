@@ -4,7 +4,7 @@ title: Safe Multi-master Primary Keys
 date: 2018-05-23
 ---
 
-A common database design practice is to use autoincrementing (unsigned) integers as the primary key for a table.
+A common database design practice is to use auto-incrementing (unsigned) integers as the primary key for a table.
 While there are other approaches, such as UUIDs (GUIDs), integers have several advantages:
 
 1. reduces memory footprint per item
@@ -12,11 +12,11 @@ While there are other approaches, such as UUIDs (GUIDs), integers have several a
 1. easy to query (compare to encoded UUIDs)
 
 However, they do have a significant disadvantage compare to other solutions if you have multiple masters.
-The autoincrementing integer must be unique, and if you have multiple masters, you need to ensure that
+The auto-incrementing integer must be unique, and if you have multiple masters, you need to ensure that
 both masters don't create the same value - that is, the database must synchronize on every insert.
-This synchornization defeats part of the purpose of allowing multiple masters.
+This synchronization defeats part of the purpose of allowing multiple masters.
 
-It is possible to have non-overlapping autoincrementing keys without synchronization on every insert?
+It is possible to have non-overlapping auto-incrementing keys without synchronization on every insert?
 
 Yes - use custom sequences to increment by more than 1 and then set each master with a different starting point:
 

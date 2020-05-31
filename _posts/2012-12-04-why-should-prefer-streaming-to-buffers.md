@@ -4,7 +4,7 @@ title: Why Should You Prefer Streaming to Buffers?
 date: 2012-12-04
 ---
 
-I've been working with the [xmlwrapp library on Github](https://github.com/vslavik/xmlwrapp) for parsing XML in C++. For parsing XML, it provides two interfaces. The first one takes a file name and the second takes a buffer.
+I've been working with the [xmlwrapp library on GitHub](https://github.com/vslavik/xmlwrapp) for parsing XML in C++. For parsing XML, it provides two interfaces. The first one takes a file name and the second takes a buffer.
 
 For unit testing, I asked one of our interns to add an interface that uses a `std::istream`. When unit testing, we'll just pass in the stream. When not unit testing, we'll construct the stream using the file name and pass it to the parser. In both cases, we'll construct the parser using the `std::istream` ensuring that our unit tests exercise the same code path as production code.
 

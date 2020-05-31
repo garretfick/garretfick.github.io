@@ -1,6 +1,6 @@
 ---
 layout: post
-title: prowler on Centos7
+title: prowler on CentOS7
 date: 2019-02-08
 ---
 
@@ -17,7 +17,7 @@ $ cat /etc/centos-release
 CentOS Linux release 7.6.1810 (Core)
 ```
 
-After installing CentOS into Hyper-V, you need to setup networking. There is a good (Stackoverflow
+After installing CentOS into Hyper-V, you need to setup networking. There is a good (Stack Overflow
 post)[https://unix.stackexchange.com/questions/17436/centos-on-hyperv-eth0-not-in-ifconfig] on how to do this.
 
 1. Search and download *Linux Integration Disk*. I downloaded the ISO.

@@ -47,7 +47,7 @@ http://www.enterprisedb.com/postgresql-934-installers-win64?ls=Crossover&
 
 Paste that URL into the browser address bar to download the version 9.3.4 and install it.
 
-*Note* I would guess that the 9.3.x series maintains ABI compatability, but after 1 min of searching, I didn't find it explicitly stated anywhere. It was just faster to use the exact version.
+*Note* I would guess that the 9.3.x series maintains ABI compatibility, but after 1 min of searching, I didn't find it explicitly stated anywhere. It was just faster to use the exact version.
 
 *Note* You don't need to setup anything via Stack Builder.
 
@@ -73,17 +73,17 @@ The default Django project uses a SQLite database, so Django needs to be told to
 
 Open `speedydjango/settings.py`, and navigate to the databases section starting at line 74. The existing code tells Django to use SQLite as the database:
 
-```
+```py
 # Database # https://docs.djangoproject.com/en/1.8/ref/settings/ #databases DATABASES = { 'default': { 'ENGINE': 'django.db.backends.sqlite3', 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'), } }
 ```
 
 Replace the existing code with the following:
 
-```
+```py
 import dj_database_url DATABASES = {} DATABASES['default'] = dj_database_url.config('postgres://USERNAME:PASSWORD@HOSTADDRESS:HOSTPORT/DATABASENAME')
 ```
 
-*Note* You can determine the names of the capitalized varables using pgAdmin III. Open pgAdmin III, select the database, then click `Tools > Connect`. The highlighted boxes, from top to bottom, show HOSTADDRESS:HOSTPORT, DATABASENAME, and USERNAME.
+*Note* You can determine the names of the capitalized variables using pgAdmin III. Open pgAdmin III, select the database, then click `Tools > Connect`. The highlighted boxes, from top to bottom, show `HOSTADDRESS:HOSTPORT`, `DATABASENAME`, and `USERNAME`.
 
 ![](/static/img/blog/change-from-sqlite-to-postgresql/pgadmin.png)
 
@@ -95,7 +95,7 @@ import dj_database_url DATABASES = {} DATABASES['default'] = dj_database_url.con
 
 At this point, executing `heroku local` starts Django and Django connects to PostgreSQL instead of SQLite. The final piece is to create the tables and fields that Django needs. To see that this is required, start Django directly at the command line (instead of through Heroku/forego):
 
-```
+```sh
 python manage.py runserver
 Performing system checks...
 System check identified no issues (0 silenced).
@@ -109,13 +109,13 @@ Quit the server with CTRL-BREAK.
 
 Just as it says, execute the following the migrate the database:
 
-```
+```sh
 python manage.py migrate
 ```
 
 Then run the server again:
 
-```
+```sh
 python manage.py runserver
 Performing system checks...
 System check identified no issues (0 silenced).
@@ -127,4 +127,4 @@ Quit the server with CTRL-BREAK.
 
 Success! Django is now using the locally installed PostgreSQL.
 
-Next split Windows and Linux configurations
+Next split Windows and Linux configurations.

@@ -10,13 +10,13 @@ is to define a general identification for types:
 
 | Data Width  | Input  | Output | Memory |
 |-------------|--------|--------|--------|
-| Bit         | IX     | QX     | ~~MX~~ |
-| Byte        | IB     | QB     | ~~MB~~ |
-| Word        | IW     | QW     | MW     |
-| Double word | ~~ID~~ | ~~QD~~ | MD     |
-| Long word   | ~~IL~~ | ~~QL~~ | ML     |
+| Bit         | `IX`     | `QX`     | ~~`MX`~~ |
+| Byte        | `IB`     | `QB`     | ~~`MB`~~ |
+| Word        | `IW`     | `QW`     | `MW`     |
+| Double word | ~~`ID`~~ | ~~`QD`~~ | `MD`     |
+| Long word   | ~~`IL`~~ | ~~`QL`~~ | `ML`     |
 
-Items with a strikethrough are not currently supported. There is another important note. These values
+Items with a strike-through are not currently supported. There is another important note. These values
 should indicate the data width (not the type). However, as far as I can tell, OpenPLC assumes
 data types based on the definitions, which means you don't have freedom to use they as containers.
 

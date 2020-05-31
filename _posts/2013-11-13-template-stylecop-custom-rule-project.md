@@ -6,7 +6,7 @@ date: 2013-11-13
 
 A project I'm working on uses StyleCop to automatically enforce a set of style and consistency rules. It took some time for me to get a project setup because the StyleCop SDK is missing a few details. Until I got this right, my rules were never loaded, even if the DLL itself was loaded.
 
-* The namespace is important. It must match the project name.
+* The `namespace` is important. It must match the project name.
 * You must use .NET Framework 3.5
 
 If you have those setup, then the rest of the guide works correctly.

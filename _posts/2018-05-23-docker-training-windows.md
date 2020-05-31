@@ -21,7 +21,7 @@ However, there is a big hidden trade-off here. Vagrant boxes are specific to a p
 
 Second, I wanted to be able to follow the tutorial without translating every instruction from what to do on Linux into what to do on Windows. Of course it is possible to take that approach (and it was my initial strategy), but I quickly found I was spending my time doing the translation rather than the training. It was still instructive, but not my focus.
 
-My strategy therefore was to setup Hyper-V, then use an Ubuntu Vagrant box to run the extra scripts. With a synced folder, I can make all of the changes directly change the files on my destkop matchine.
+My strategy therefore was to setup Hyper-V, then use an Ubuntu Vagrant box to run the extra scripts. With a synced folder, I can make all of the changes directly change the files on my desktop machine.
 
 You can follow the steps below to create the same setup that I used.
 

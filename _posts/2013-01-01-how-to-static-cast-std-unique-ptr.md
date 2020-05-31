@@ -8,7 +8,7 @@ I've been writing a lot of code using `std::unique_ptr`, new in [standard librar
 
 I wrote a couple of helper functions that is probably useful for someone else. They obey the basic rule for `std::unique_ptr`, that one object owns the memory. They also work well with the `auto` keyword, and so can save you a lot of typing
 
-```
+```cpp
 template<typename D, typename B>
 std::unique_ptr<D> static_cast_ptr(std::unique_ptr<B>& base)
 {
@@ -24,4 +24,4 @@ std::unique_ptr<D> static_cast_ptr(std::unique_ptr<B>&& base)
 
 You can see the code in action on [ideone.com](http://ideone.com/waVNu).
 
-*Note* As JQ notes below, this code is not safe to temporarily cast the pointer.
+*Note* As noted in a prior comment section, this code is not safe to temporarily cast the pointer.

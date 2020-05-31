@@ -46,7 +46,7 @@ variable "heroku_app_region" {
   default = "us"
 }
 # The application needs to provision a database. This the plan level
-# for the basic Heroku Postgress database
+# for the basic Heroku Postgres database
 variable "heroku_db_plan" {
   default = "heroku-postgresql:hobby-basic"
 }
@@ -198,7 +198,7 @@ resource "heroku_app" "default" {
   ]
 }
 
-# Create the Heroku Postgress addon for the application
+# Create the Heroku Postgres addon for the application
 resource "heroku_addon" "database" {
   app  = "${heroku_app.default.name}"
   plan = "${var.heroku_db_plan}"

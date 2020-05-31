@@ -19,10 +19,10 @@ cover important security considerations that I think OctoberCMS does horribly wr
 (my favorite PaaS solution) and finally additional configuration you will need in order for your application to work
 with Heroku's ephemeral storage and across multiple instances.
 
-## Get the Vagrantbox (Scotchbox)
+## Get the Vagrant Box (Scotch Box)
 
 Open a terminal window. Execute the following to create directory
-for your project and then clone the scotchbox repository into
+for your project and then clone the scotch-box repository into
 the directory.
 
 ```sh
@@ -30,9 +30,9 @@ mkdir octobercms && cd octobercms
 git clone https://github.com/scotch-io/scotch-box .
 ```
 
-## Customize the Vagrant box
+## Customize the Vagrant Box
 
-The default Scotchbox is a good start, but we want to make a few changes
+The default Scotch Box is a good start, but we want to make a few changes
 so it works well for OctoberCMS and Heroku.
 
 ### Change the mapped `public` directory
@@ -57,10 +57,10 @@ config.vm.synced_folder ".", "/var/www/public", :mount_options => ["dmode=777", 
 
 OctoberCMS works well with PHP 7.x and older versions of PHP will
 soon be deprecated. It is good idea to start a new project with an
-environment that will be supported in the future. Scotchbox only has
+environment that will be supported in the future. Scotch Box only has
 PHP 5.6, but we can configure it to install PHP 7.1.
 
-Open `Vagrantfile` in a text editor. After the line `config.vm.hostname = "scotchbox"`, add the following (maintaing the same 4-space indentation):
+Open `Vagrantfile` in a text editor. After the line `config.vm.hostname = "scotchbox"`, add the following (maintaining the same 4-space indentation):
 
 ```
     config.vm.provision :shell, path: "bootstrap.sh"
@@ -80,7 +80,7 @@ installing OctoberCMS.
 
 ### Start the Vagrant box
 
-We will install OctoberCMS within the Vagrant box. In the terminal windown, execute the follwing to start and connect to the virtual
+We will install OctoberCMS within the Vagrant box. In the terminal window, execute the following to start and connect to the virtual
 machine.
 
 ```sh
@@ -170,7 +170,7 @@ Finally, commit your change.
 git commit -m "Initial commit of website code"
 ```
 
-**Tip**: If you are running git within the scotchbox, you will need to tell git a little about yourself before you can commit your first change.
+**Tip**: If you are running git within the Scotch Box, you will need to tell git a little about yourself before you can commit your first change.
 
 ```
 git config --global user.email "your.email@example.com"
@@ -200,7 +200,7 @@ set it's value to `true` as below:
 
 OctoberCMS comes with an installer to help setup a DB connection
 and default user based on the MySQL instance that is part of the
-scotchbox. We'll use it to start things, but then customize
+Scotch Box. We'll use it to start things, but then customize
 it further so it works with Heroku and is secure in the next step.
 
 In the terminal window, execute the following
@@ -212,9 +212,9 @@ php artisan october:install
 When prompted, input the following:
 
 1. Database type: 0 (MySQL)
-2. MySQL Host: localhost
+2. MySQL Host: `localhost`
 3. MySQL Port: 3306
-4. Database Name: scotchbox
+4. Database Name: `scotchbox`
 5. MySQL Login: root
 6. MySQL Password: root
 7. First Name: Admin
@@ -222,7 +222,7 @@ When prompted, input the following:
 8. Email Address: your.email@example.com
 9. Admin Login: admin
 10. Admin Password: admin
-11. Application URL: http://localhost
+11. Application URL: `http://localhost`
 12. Configure advanced options: no
 
 The installer should complete successfully.
@@ -261,7 +261,7 @@ set it's default value to `errorlog` as below:
 At this point, you should be able to see the OctoberCMS backend running via your browser.
 
 On your host machine, enter the IP address of your site followed by `/backend` (or URL if you are using the hostupdater Vagrant plugin). You should be able to login
-with the credientials you input above.
+with the credentials you input above.
 
 ### Commit your customization to Git
 

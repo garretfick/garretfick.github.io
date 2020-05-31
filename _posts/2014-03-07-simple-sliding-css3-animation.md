@@ -24,7 +24,7 @@ The HTML contains the content we want to animate appropriately tagged so we can 
 <p id="slider" class="left-pos">
 This is a block that we want to animate<br/>
 using CSS3 animations. We use a little<br/>
-Javascript to change the class but otherwise<br/>
+JavaScript to change the class but otherwise<br/>
 it is all in the CSS.<br/>
 </p>
 ```

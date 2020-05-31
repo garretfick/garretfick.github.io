@@ -7,6 +7,7 @@ install:
 script:
  - bundle exec rake test
  - html5validator --root _site/
+ - ./spellcheck.sh
   
 env:
   global:
@@ -19,6 +20,8 @@ addons:
     - openjdk-8-jre
     - python3-setuptools
     - python3-pip
+    - aspell
+    - aspell-en
 
 dist: xenial
 os: linux

@@ -18,13 +18,13 @@ and how you can develop on Windows and deploy to Heroku Linux.
 
 For this guide, I'll assume you are starting from scratch - as in you just installed a new copy of Windows. I'll also try to explain some of the why so when this guide becomes out of date, you can hopefully figure out how to handle new version numbers.
 
-If you just want to final code, [grab it from Bitbucket](https://bitbucket.org/garretfick/win-lin-django).
+If you just want to final code, [grab it from BitBucket](https://bitbucket.org/garretfick/win-lin-django).
 
 Why Develop on Windows
 
 Before we get into the details, I want to first talk about why.
 
-Getting Django to run on Windows is harder than on Linux. You often have to find reliable pre-compiled packages. Your development environment will not exactly match your production environment so you may run into issues that are unique to one environment or the other. Remember that even if you boot to Windows, you can still installl Linux in a virtual machine, such as [VirtualBox](https://virtualbox.org/), and develop on Linux.
+Getting Django to run on Windows is harder than on Linux. You often have to find reliable pre-compiled packages. Your development environment will not exactly match your production environment so you may run into issues that are unique to one environment or the other. Remember that even if you boot to Windows, you can still install Linux in a virtual machine, such as [VirtualBox](https://virtualbox.org/), and develop on Linux.
 
 Then why am I explaining how to setup a Windows environment? I sometimes spend long periods of time disconnected from power and running in a virtual machine drains the battery faster. I still maintain a Linux virtual machine for primary development - the Windows environment is secondary.
 

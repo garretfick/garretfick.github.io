@@ -16,11 +16,11 @@ Checking your balance is straightforward and in English. From your cell phone, [
 
 ## Add Money
 
-I've found two ways to add money to your phone. In either case, you'll need to tell the cashier China Unicom in Chinese: 中国联通 (zhōngguó liántōng). I usually go to [FamilyMart](http://en.wikipedia.org/wiki/FamilyMart) since it is close to where I live, but you can do this at many other places.
+I've found two ways to add money to your phone. In either case, you'll need to tell the cashier China Unicom in Chinese: 中国联通 (zhongguo liantong). I usually go to [FamilyMart](http://en.wikipedia.org/wiki/FamilyMart) since it is close to where I live, but you can do this at many other places.
 
 ### Instant Charge
 
-1. Go to most major convenience stores and tell them you want to add money: 加钱电话 (jiā qián diànhuà)
+1. Go to most major convenience stores and tell them you want to add money: 加钱电话 (jia qian dianhua)
 2. Pay for the recharge
 3. The cashier will redirect you to a machine. Enter your phone number and press OK, then enter your phone number again and press OK
 4. You should get a text message within a few seconds
