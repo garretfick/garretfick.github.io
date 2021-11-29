@@ -1,5 +1,5 @@
 - name: C/C++
-  desc: 6 years and countless lines of code later, C++ keeps a place in my heart. I have used C/C++ to build Linux embedded and Windows desktop applications.
+  desc: 6 years and countless lines of code later, C++ keeps a place in my heart. I have used C/C++ to build Linux embedded/server and Windows desktop applications.
   skill: 100
   years: 6
   projects:
@@ -23,7 +23,7 @@
       href: https://bitbucket.org/garretfick/win-lin-django
 
 - name: Java
-  desc: I am currently rediscovering Java at Smarter Grid Solutions. Previously, I developed several Android applications and even a desktop application in Swing.
+  desc: I've rediscovered Java multiple times in my career, most recently at Amazon and Smarter Grid Solutions for microservices. Previously, I developed several Android applications and even a desktop application in Swing.
   skill: 70
   years: 3
 
@@ -52,7 +52,7 @@
       href: https://github.com/garretfick/trustedproxies 
 
 - name: C#
-  desc: I dabbled in C# and MEF for a couple of years at National Instruments for LabVIEW.
+  desc: I dabbled in C# and MEF for a couple of years at National Instruments for LabVIEW. Later at Smater Grid Solutions, I developed microservices in C# to integrate with devices using industrial protocols.
   skill: 30
   years: 3
 

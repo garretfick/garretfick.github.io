@@ -78,6 +78,19 @@ One way to think of this is that if you only have a few samples, you should
 have no expectation of the samples being close to the expected value. With
 many, it is a good bet that they trend to the expected value.
 
+## Law of Medium Numbers
+
+> For medium number systems, we can expect that large fluctuations,
+> irregularities, and discrepancy with any theory will occur more or less
+> regularly.
+>
+> — Gerald Weinberg in "An Introduction to General Systems Thinking"
+
+In simple terms, small system are those that you can model analytically
+Large systems are those that you can model statistically. Medium systems
+neither lend themselves to "small analysis" nor "large analysis". They are
+pervasive.
+
 ## Single Responsibility Principle
 
 > A class should have only one reason to change

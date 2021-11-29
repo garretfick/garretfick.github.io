@@ -219,6 +219,10 @@ footer hr {
   border-bottom: 2px solid black;
 }
 
+.pure-menu-link.current {
+  border-bottom: 2px solid white;
+}
+
 .pure-menu-link:hover {
   background-color: black;
   border-bottom: 2px solid orange;
