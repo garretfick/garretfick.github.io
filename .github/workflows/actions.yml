@@ -11,7 +11,7 @@ jobs:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - run: sudo apt-get update -y && sudo apt-get -y install aspell aspell-en python3-pip locales openjdk-8-jre
     - run: echo "en_US UTF-8" | sudo tee -a /etc/locale.gen
-    - run: locale-gen en_US.UTF-8
+    - run: sudo locale-gen en_US.UTF-8
     - run: pip install html5validator
     - run: export LANG=en_US.UTF-8 && export LANGUAGE=en_US:en && export LC_ALL=en_US.UTF-8 && bundle exec rake test
     - run: html5validator --root _site/
