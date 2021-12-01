@@ -10,7 +10,7 @@ jobs:
         ruby-version: 2.7.3 # Not needed with a .ruby-version file
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - run: sudo apt-get update -y && sudo apt-get -y install aspell aspell-en python3-pip locales openjdk-8-jre
-    - run: sudo echo "en_US UTF-8" > /etc/locale.gen
+    - run: echo "en_US UTF-8" | sudo tee -a /etc/locale.gen
     - run: locale-gen en_US.UTF-8
     - run: pip install html5validator
     - run: export LANG=en_US.UTF-8 && export LANGUAGE=en_US:en && export LC_ALL=en_US.UTF-8 && bundle exec rake test
