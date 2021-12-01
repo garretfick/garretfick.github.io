@@ -25,7 +25,7 @@ $$
 
 This is very much a hypothesis. It is a mathematical model that enables us to
 make predictions. Given an observed mass and acceleration, we can predict the
-applied force. Einsten's Theory of Special Relativity is another such
+applied force. Einstein's Theory of Special Relativity is another such
 hypothesis.
 
 How then does this relate to machine learning models and $$h$$? The machine
