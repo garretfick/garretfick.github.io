@@ -2,3 +2,4 @@ name: Garret Fick
 markdown: kramdown
 permalink: /blog/:title
 title: Garret Fick
+encoding: utf-8
