@@ -15,4 +15,4 @@ jobs:
     - run: pip install html5validator
     - run: export LANG=en_US.UTF-8 && export LANGUAGE=en_US:en && export LC_ALL=en_US.UTF-8 && bundle exec rake test
     - run: html5validator --root _site/
-    # - run: bash ./spellcheck.sh
+    # - run: chmod +x spellcheck.sh && ./spellcheck.sh
