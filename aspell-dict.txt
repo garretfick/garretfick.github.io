@@ -60,7 +60,6 @@ PyPI
 Redis
 RedisToGo
 runtimes
-sauté
 SCVS
 Simulink
 SlideShare
@@ -361,3 +360,5 @@ Hyrum
 Ockham's
 Einstein's
 microservices
+sqrt
+simeq

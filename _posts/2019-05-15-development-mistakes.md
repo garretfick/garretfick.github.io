@@ -30,7 +30,7 @@ typically used for software testing that had complex shared dependencies with th
 capabilities that needed to be written from scratch - bad idea.
 
 When the project was starting, I had looked for other frameworks and even found other open source frameworks that were far more purpose
-built, but I shelved those thinking that I should be supporting (my naïve view of) NI's broader vision. I believe our use case didn't
+built, but I shelved those thinking that I should be supporting (my naive view of) NI's broader vision. I believe our use case didn't
 fit with TestStand vision at the time. NI didn't reap benefits from eating our own dog food and having to extend the system in many
 ways consumed valuable development capacity. Twice the loss!
 
