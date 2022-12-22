@@ -1,3 +1,12 @@
+- name: IronPLC
+  links:
+    - name: GitHub
+      icon: fa-github
+      title: View IronPLC on GitHub
+      href: https://github.com/garretfick/ironplc
+  content:
+    - I'm (presently) the developer of an ambitious project to write an entire SoftPLC in Rust.
+
 - name: OWASP SCVS
   links:
     - name: Website
