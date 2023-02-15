@@ -12,4 +12,4 @@ A joke for the catalog.
 >
 > — Garret Fick
 
-Coined by myself as a joke. I had completed something quite impactful to other teams and they didn't notice (by design). Things just got better.
+Coined by myself as a joke. I had completed something with significant impact to other teams and they didn't notice (by design). Things just got better.
