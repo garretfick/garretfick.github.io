@@ -10,6 +10,6 @@ One more for the catalog.
 
 > It is better to know that you are not wearing clothes rather than believe you are dressed when you are factually naked.
 >
-> — Anonymous (meaning ai didn't get explicit permission)
+> — Anonymous (I do know who)
 
 Behavior depend on your belief about the world. It is better to have behavior depend on reality rather than fiction.
