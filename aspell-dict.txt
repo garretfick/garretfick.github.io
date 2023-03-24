@@ -363,3 +363,4 @@ microservices
 sqrt
 simeq
 IronPLC
+Shewhart
