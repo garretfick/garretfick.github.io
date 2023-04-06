@@ -20,7 +20,7 @@ to actively creating and refining ideas. Beyond 5, there isn't enough "talking t
 Deciding meetings also go under many names such as a review, go no-go. The goal is to make a decision.
 As with creating meetings, the number of participants should be small. In most cases, you should know the
 outcome in advance (but if you really do, try asynchronous such as email instead). Deciding meetings need
-the decider present (see RACI).
+the decider present.
 
 Educating meetings, as you might expect, have many names. Training, knowledge sharing
 are some common names. These can be large format and sometimes very large.
