@@ -1,6 +1,9 @@
 {
 	"name": "Ruby",
-	"image": "mcr.microsoft.com/devcontainers/ruby:0-2.7",
+	"build": {
+        // Path is relative to the devcontainer.json file.
+        "dockerfile": "Dockerfile"
+    },
 
 	"customizations": {
 		"vscode": {
@@ -16,6 +19,10 @@
 			"label": "Hello Remote World",
 			"onAutoForward": "notify"
 		}
+	},
+
+	"features": {
+		"ghcr.io/guiyomh/features/just:0": {}
 	},
 
 	"postCreateCommand": "bundle install"
