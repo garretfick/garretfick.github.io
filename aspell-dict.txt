@@ -364,3 +364,16 @@ sqrt
 simeq
 IronPLC
 Shewhart
+Porras
+BHAG
+als
+Tzu
+Jackall
+Duarte
+Akerlog
+organisational
+Westrum
+Prahalad
+Hamel
+Tufte
+recency

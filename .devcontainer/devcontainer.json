@@ -1,0 +1,29 @@
+{
+	"name": "Ruby",
+	"build": {
+        // Path is relative to the devcontainer.json file.
+        "dockerfile": "Dockerfile"
+    },
+
+	"customizations": {
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"streetsidesoftware.code-spell-checker"
+			]
+		}
+	},
+
+	"portsAttributes": {
+		"4000": {
+			"label": "Hello Remote World",
+			"onAutoForward": "notify"
+		}
+	},
+
+	"features": {
+		"ghcr.io/guiyomh/features/just:0": {}
+	},
+
+	"postCreateCommand": "bundle install"
+}
