@@ -1,0 +1,22 @@
+{
+	"name": "Ruby",
+	"image": "mcr.microsoft.com/devcontainers/ruby:0-2.7",
+
+	"customizations": {
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"streetsidesoftware.code-spell-checker"
+			]
+		}
+	},
+
+	"portsAttributes": {
+		"4000": {
+			"label": "Hello Remote World",
+			"onAutoForward": "notify"
+		}
+	},
+
+	"postCreateCommand": "bundle install"
+}
