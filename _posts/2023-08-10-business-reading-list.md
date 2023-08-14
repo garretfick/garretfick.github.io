@@ -28,7 +28,7 @@ _The Innovator's Solution_ but what I remember if the first one.
 _Mythical Man Month: Essays on Software Engineering_ - Brooks
 
 It is a bit dated but still essential. "The Architect's Responsibility" comes from
-there. My blog/telephone log is als from there.
+there. My blog/telephone log is originates from there.
 
 _The Art of War_ - Sun Tzu (Kaufman translation)
 
@@ -70,4 +70,9 @@ is a reflection of the organizational structure.
 _The Cognitive Style of PowerPoint_ - Tufte
 
 After this, I finally understood why I so dislike bullet points.
+
+_The Big Lie of Strategic Planning_ - Martin (Harvard Business Review)
+
+Describes 3 traps and 3 ways to break out of the trap so that you have a useful
+strategic plan.
 
