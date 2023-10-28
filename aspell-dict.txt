@@ -377,3 +377,11 @@ Prahalad
 Hamel
 Tufte
 recency
+justfile
+Justfile
+macOS
+PowerShell
+Xvfb
+framebuffer
+Homebrew
+TypeScript
