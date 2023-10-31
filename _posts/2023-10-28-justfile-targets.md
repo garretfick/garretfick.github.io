@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Justfile "Targets"
+title: Justfile Targets
 date: 2023-10-27
 ---
 
