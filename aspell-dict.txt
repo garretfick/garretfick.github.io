@@ -385,3 +385,9 @@ Xvfb
 framebuffer
 Homebrew
 TypeScript
+Perrow
+subgenre
+distributable
+integrations
+runnable
+reStructuredText
