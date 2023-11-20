@@ -146,3 +146,5 @@ For example, the partial workflow for the compiler checks out the repository, in
 ## Partial Workflow Details
 
 Posts that follow describe in detail the partial workflows.
+
+1. [The Version Partial Workflow]({% post_url 2023-11-19-version-workflow %})
