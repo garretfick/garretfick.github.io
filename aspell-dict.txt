@@ -391,3 +391,7 @@ distributable
 integrations
 runnable
 reStructuredText
+vec
+cdot
+MSI
+NSI

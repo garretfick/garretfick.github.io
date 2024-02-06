@@ -40,7 +40,7 @@ This is the goal. Enough said!
 
 **The pipeline MUST fail if a release is not backwards compatible**
 
-Developer s will inevitably install different versions of the IronPLC Visual Studio Code Extension and the Language
+Developers will inevitably install different versions of the IronPLC Visual Studio Code Extension and the Language
 Server Provider. Poor compatibility would cause a poor experience.
 
 Also, at some point, there will be a change that breaks backwards compatibility. The pipeline should
@@ -123,12 +123,12 @@ This workflow is defined in `integration.yaml`.
 ## Shared Partial Workflows
 
 The deployment and integration workflows share a lot. I think it is possible to use a single
-workflow by adding all `if` conditions throughout. I also think conditionals such as `if`
-are a smell of poor abstraction.
+workflow by adding `if` conditions throughout. I also think conditionals such as `if`
+are a smell of poor abstraction so I prefer to avoid `if` conditions where possible.
 
-I borrowed the concept of partials for rendering web pages to avoid duplication. Each partial
-is a "function" that implements each significant step. These partials take in inputs and provide
-outputs. This ended up being a very useful concept.
+I borrowed the concept of partials for rendering web pages to avoid duplication and get rid of
+the `if` conditions. Each partial is a "function" that implements each significant step.
+These partials take in inputs and provide outputs, being a very useful concept.
 
 <img width="300px" src="/static/img/blog/ironplc-pipeline/workflows.png"/>
 
@@ -148,3 +148,4 @@ For example, the partial workflow for the compiler checks out the repository, in
 Posts that follow describe in detail the partial workflows.
 
 1. [The Version Partial Workflow]({% post_url 2023-11-19-version-workflow %})
+1. [The Integration Test Partial Workflow]({% post_url 2024-02-05-integration-test-workflow %})
