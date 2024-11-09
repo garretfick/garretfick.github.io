@@ -99,9 +99,11 @@ Finally, there is no easy way to know that an extension has successfully started
 (i.e. IronPLC compiler). I thus added logging to the IronPLC compiler so that I could detect that it had started
 correctly after opening a file:
 
+{% raw %}
 ```powershell
 IF (Test-Path "{{env_var('LOCALAPPDATA')}}\Temp\ironplcc\ironplcc.log" -PathType Leaf) { exit 0 } ELSE { exit 1 }
 ```
+{% endraw %}
 
 Given my "when I'm interested" rate of development, creating the end-to-end integration test was months
 of effort.
