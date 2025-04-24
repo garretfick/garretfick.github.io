@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Making Feedback Easier to Receive: The Power of “Yes, And”
+title: Making Feedback Easier to Receive - The Power of “Yes, And”
 date: 2025-04-23
 ---
 
