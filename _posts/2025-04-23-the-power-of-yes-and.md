@@ -73,3 +73,35 @@ You’re still delivering the same feedback. But now you’re collaborating. You
 Giving feedback is an art—and like all art, it improves with practice. “Yes, and” doesn’t mean avoiding critique. It means delivering it in a way that invites conversation rather than conflict.
 
 Try it in your next review, meeting, or mentoring session. You might be surprised how much more open—and productive—the conversation becomes.
+
+## A Personal Connection: Toastmasters
+
+Before we wrap up, I wanted to share a personal story about how these ideas came to life for me outside of work.
+
+Recently, after attending a friend's improv graduation class, I needed to come up with a meeting theme for [East Side Toastmasters Club](https://www.toastmasters.org/Find-a-Club/6138-6138)—and the principle of "Yes, and" was the perfect fit.
+
+Here’s how I introduced it to the group...
+
+> Welcome to tonight’s meeting. It’s always a pleasure to be among a group of people committed to growth—both as communicators and as leaders.
+>
+> One of the amazing things about clubs like ours is that they bring together people with a common interest. For us, it’s that powerful link between communication and leadership—and tonight’s theme highlights a simple phrase that captures that connection beautifully: “Yes, and.”
+>
+>Have you heard this phrase before? Anyone know where it comes from?
+>
+>Exactly—it’s a principle rooted in improv. In improvisational theatre, “yes, and” is more than just a guideline; it’s a mindset. It means accepting what someone else has offered and then building on it. It’s cooperative. It’s creative. And yes—it can feel risky. Because saying “yes, and” means we’re willing to step into the unknown, to embrace ideas we didn’t originate.
+>
+>Compare that to “yes, but.” That phrase might feel safer. It allows us to nod politely while holding tightly to our own opinions. It avoids risk—but it also limits growth.
+>
+>Now, you don’t need to actually say “yes, and” or “yes, but” for the mindset to show up in your language. Imagine we’re discussing funding cuts to public housing. One person might say:
+>
+>“Did you think about what happens to the residents?”
+>
+>Another might say:
+>
+>“We need to think about what happens to the residents.”
+>
+>Both are concerned. But only one builds forward.
+>
+>So tonight, and throughout the week, I encourage you to tune in—to your own language, and to how others speak. Are you hearing “yes, and” or “yes, but”? Are you opening doors, or quietly closing them?
+>
+>Let’s take that spirit into tonight’s meeting. Let’s support, build, and grow—together.
