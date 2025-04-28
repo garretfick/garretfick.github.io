@@ -12,7 +12,7 @@ Although the title of this post is all about no preparation, I don't advocate th
 
 In my case, I was the first and new CTO of the start-up, having joined 1.5 months before the interview date. I knew the basics of the company, but I didn't know all the details of the business model, prior pivots, etc. I hadn't practiced pitching the company. I was so busy from the date I joined that I didn't yet have an answer to "what does your company do?"
 
-I also knew little about the Silicon Valley start-up community. When I first heard "PG", I was left trying to figure out why [Proctor and Gamble](http://ficksworkshop.com/en.wikipedia.org/wiki/Procter_&_Gamble) was involved with startups. (In the start-up context, it actually stands for [Paul Graham](http://en.wikipedia.org/wiki/Paul_Graham).)
+I also knew little about the Silicon Valley start-up community. When I first heard "PG", I was left trying to figure out why [Proctor and Gamble](http://en.wikipedia.org/wiki/Procter_&_Gamble) was involved with startups. (In the start-up context, it actually stands for [Paul Graham](http://en.wikipedia.org/wiki/Paul_Graham).)
 
 Aware of how little I knew, at some point, I'm sure I thought: I'm going to f--- this up!
 

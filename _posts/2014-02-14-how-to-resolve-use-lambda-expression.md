@@ -4,7 +4,7 @@ title: How to Resolve Use Lambda Expression
 date: 2014-02-14
 ---
 
-As someone relatively new to C#, I don't always think of the simplest way to express my intent. We use [Resharper](http://ficksworkshop.com/www.jetbrains.com/resharper) in my workplace and it is quite good at picking up where I think too much in C++.
+As someone relatively new to C#, I don't always think of the simplest way to express my intent. We use [Resharper](https://www.jetbrains.com/resharper) in my workplace and it is quite good at picking up where I think too much in C++.
 
 A common message I get is
 
