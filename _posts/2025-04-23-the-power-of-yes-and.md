@@ -28,7 +28,7 @@ In improv, “yes, and” is more than a catchphrase. It’s a mindset. When a f
 
 This approach is:
 
-* Cooperative – you’re working with someone else’s idea.
+* Cooperative – you’re working with someone elses' idea.
 
 * Creative – you’re adding something new.
 

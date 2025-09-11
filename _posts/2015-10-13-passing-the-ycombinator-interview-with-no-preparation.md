@@ -1,10 +1,10 @@
 ---
 layout: post
-title: Passing the YCombinator Interview With No Preparation
+title: Passing the Y Combinator Interview With No Preparation
 date: 2015-10-13
 ---
 
-For me, applying to and interviewing for [YCombinator](http://www.ycombinator.com/) was a whirlwind experience. We applied a few days after the deadline and then didn't hear anything until 5 days before we were to be in California for the interview. Unlike anyone else I spoke to, we essentially did no preparation. Quite honestly, we were working on another major deadline that week, and simply didn't have more time to prepare. Still, we managed to get in, so we must have done something right.
+For me, applying to and interviewing for [Y Combinator](http://www.ycombinator.com/) was a whirlwind experience. We applied a few days after the deadline and then didn't hear anything until 5 days before we were to be in California for the interview. Unlike anyone else I spoke to, we essentially did no preparation. Quite honestly, we were working on another major deadline that week, and simply didn't have more time to prepare. Still, we managed to get in, so we must have done something right.
 
 Although the title of this post is all about no preparation, I don't advocate that approach or any other. I don't have any advice, but I will tell you what I/we did.
 

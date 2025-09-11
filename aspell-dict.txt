@@ -83,7 +83,7 @@ WordPress
 xss
 xmlwrapp
 YC
-YCombinator
+Combinator
 hCard
 SurePress
 SureType
@@ -399,3 +399,12 @@ SOPs
 responders
 runbook
 runbooks
+theatre
+improv
+mentees
+Jevon's
+COE
+Quetelet
+elses
+le
+te
