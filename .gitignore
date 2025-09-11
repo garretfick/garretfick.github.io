@@ -1,3 +1,4 @@
 _site/
 *.rws
 Gemfile.lock
+.DS_Store
