@@ -4,42 +4,43 @@ title: Portfolio
 ---
 
 <div class="pure-u-md-1-3 pure-u-1 three-across">
-    <div><i class="fa fa-users fa-fw" aria-hidden="true"></i><strong>Leadership</strong></div>
-    <div>Globally diverse and distributed teams are different from those that are 
-        located together. With technology and business leadership experience in the US, Canada,
-        China and working with teams spread across the globe, I bring a wealth of
-        nuanced experience.
+    <div><i class="fa fa-users fa-fw" aria-hidden="true"></i><strong>Lead</strong></div>
+    <div>Principal engineers lead through influence, not authority. I drive technical
+        strategy across globally distributed teams, making architectural decisions that
+        scale organizations and systems. My leadership spans technical direction,
+        cross-team collaboration, and mentoring the next generation of engineers.
     </div>
     <div><a href="#leadership">More</a></div>
 </div>
 <div class="pure-u-md-1-3 pure-u-1 three-across">
-    <div><i class="fa fa-wrench fa-fw" aria-hidden="true"></i><strong>Technology</strong></div>
-    <div>I combine both an engineering background and a passion for everything computing.
-        I wrote <a href="https://web.archive.org/web/20000902183420/http://www.geocities.com:80/CapeCanaveral/Hall/3230/">my first website</a>
-        around 1997. Since then, I have developed technologies for embedded systems,
-        desktop applications, mobile and back to web and cloud.
+    <div><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i><strong>Learn</strong></div>
+    <div>Technology evolves rapidly, and principal engineers must stay ahead of the curve.
+        I continuously learn new technologies, business domains, and leadership approaches.
+        From my first website in 1997 to today's distributed systems, I've adapted across
+        embedded systems, web, mobile, and cloud - always learning what's next.
     </div>
     <div><a href="#technology">More</a></div>
 </div>
 <div class="pure-u-md-1-3 pure-u-1 three-across">
-    <div><i class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></i><strong>Vision</strong></div>
-    <div>Vision is one part instinct and two parts engagement. Filtering out the hype
-        is often more important than catching early trends. In addition to leading
-        research in multiple roles, I've also developed novel technologies to give
-        companies a competitive edge.
+    <div><i class="fa fa-rocket fa-fw" aria-hidden="true"></i><strong>Launch</strong></div>
+    <div>Principal engineers don't just architect - they deliver. I launch solutions to
+        complex technical challenges, from novel verification systems to large-scale
+        distributed security platforms. Success means turning technical vision into
+        production systems that solve real problems at scale.
     </div>
     <div><a href="#vision">More</a></div>
 </div>
 
 <div id="leadership" class="pure-u-1">
-    <h2><i class="fa fa-users fa-fw" aria-hidden="true"></i>Leadership</h2>
+    <h2><i class="fa fa-users fa-fw" aria-hidden="true"></i>Lead</h2>
 </div>
 
 <div class="pure-u-1">
     <p>
-        At Amazon, I lead a team that secures micro-service messaging between
-        a very large number of micro-services that execute on a staggering
-        number of execution instances.
+        At Amazon, I lead the technical strategy for securing micro-service messaging across
+        thousands of services processing millions of requests. This involves architecting
+        solutions that scale horizontally, making trade-off decisions between security and
+        performance, and influencing engineering teams across multiple organizations.
     </p>
     <p>
         At Smarter Grid Solutions, I lead advances in industrial IoT for Smart Grids
@@ -61,14 +62,21 @@ title: Portfolio
 </div>
 
 <div id="technology" class="pure-u-1">
-    <h2><i class="fa fa-wrench fa-fw" aria-hidden="true"></i>Technology</h2>
+    <h2><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i>Learn</h2>
 </div>
 
 <div class="pure-u-1">
-    <h3>Process</h3>
+    <h3>Continuous Learning</h3>
     <p>
-        Process is the way software development teams and stakeholders organize in order to achieve
-        objectives.
+        Principal engineers must continuously adapt to new technologies, business contexts, and
+        organizational challenges. Learning isn't just about technical skills - it's about
+        understanding systems, people, and how to drive change effectively.
+    </p>
+
+    <h3>Process & Systems Thinking</h3>
+    <p>
+        Effective processes enable teams to deliver consistently while adapting to changing requirements.
+        I focus on understanding how teams, technology, and business objectives intersect.
     </p>
 </div>
 
@@ -85,8 +93,9 @@ title: Portfolio
     <p class="admonition">
         As the CTO at SnapEDA, I implemented
         a <a href="https://en.wikipedia.org/wiki/Kanban_(development)">Kanban-based</a>
-        process using Trello for all R&amp;D tasks. The process is <a href="https://www.garretfick.com/blog/practical-trello-for-small-team-software-development">
-        detailed on my blog</a>, with example boards in Trello. I also transformed the development
+        process using Trello for all R&amp;D tasks. The process is <a
+            href="https://www.garretfick.com/blog/practical-trello-for-small-team-software-development">
+            detailed on my blog</a>, with example boards in Trello. I also transformed the development
         process, eliminating the need to test in production by developing automated build,
         test environments.
     </p>
@@ -113,7 +122,7 @@ title: Portfolio
         your ideas in a concrete way. Still, it is one of the first questions we ask.
     </p>
 </div>
-    
+
 {% for language in site.data.languages %}
 <div class="pure-u-1" style="margin-bottom: 10px;">
     <div class="pure-u-1-8">
@@ -123,9 +132,9 @@ title: Portfolio
     <div class="pure-u-5-8">
         {{ language.desc }}
         {% if language.projects %}
-            {% for project in language.projects %}
-                <a href="{{ project.href }}" data-toggle="tooltip" title="{{ project.desc }}">{{ project.name }}</a>
-            {% endfor %}
+        {% for project in language.projects %}
+        <a href="{{ project.href }}" data-toggle="tooltip" title="{{ project.desc }}">{{ project.name }}</a>
+        {% endfor %}
         {% endif %}
     </div>
 </div>
@@ -138,17 +147,17 @@ title: Portfolio
         <i class="fa fa-square-o fa-2x" aria-hidden="true"></i>
     </div>
     <div class="pure-u-1-8">
-        
+
     </div>
     <div class="pure-u-5-8">
         Didn't find what you were looking for? I've also completed commercial projects in
-            Objective-C, MATLAB, IEC 61131, VHDL, Perl, VB.NET and probably more that I've
-            forgotten.
+        Objective-C, MATLAB, IEC 61131, VHDL, Perl, VB.NET and probably more that I've
+        forgotten.
     </div>
 </div>
-    
+
 <div class="pure-u-1" id="vision">
-    <h2><i class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></i>Vision</h2>
+    <h2><i class="fa fa-rocket fa-fw" aria-hidden="true"></i>Launch</h2>
 </div>
 
 <div class="pure-u-1">
@@ -162,7 +171,7 @@ title: Portfolio
         for embedded devices to take full advantage of best practices. For our differentiated
         control applications, we have developed fully automated pipelines that take
         <a href="https://www.mathworks.com/products/stateflow.html">Simulink-defined state
-        machines</a> and enable developers to compose solutions and
+            machines</a> and enable developers to compose solutions and
         automatically deploy then on all major PLC runtimes.
     </p>
     <p>The result? An efficient platform for embedded systems innovation.</p>
@@ -171,19 +180,19 @@ title: Portfolio
 <div class="pure-u-1">
     <p class="admonition">SnapEDA - Part Validations</p>
     <p>
-        Details in circuit board manufacturing are absolutely critical. Sub-millimeter mistakes 
+        Details in circuit board manufacturing are absolutely critical. Sub-millimeter mistakes
         can result in poor soldering, bad boards, or even boards that are impossible to assemble.
         This presents a barrier to acquiring data from 3rd parties such as SnapEDA.
     </p>
     <p>
         At SnapEDA, I invented a patented verification system that identifies data problems.
         What makes this powerful was recognizing that the same information is often specified
-        in multiple ways that should be self-consistent. The verification system is able to 
+        in multiple ways that should be self-consistent. The verification system is able to
         answer the question of "does this make sense?" and present the results in an
         easy-to-understand format.
     </p>
     <p>US patent pending 20170249410</p>
-    <p><img src="/static/img/portfolio/verifications.png" alt=""/></p>
+    <p><img src="/static/img/portfolio/verifications.png" alt="" /></p>
 </div>
 
 <div class="pure-u-1">
@@ -202,9 +211,9 @@ title: Portfolio
     <p>
         I have spoken about the migration in
         <a href="https://www.slideshare.net/garretfick/evolving-an-application-architecture">
-        &quot;Evolving an application architecture&quot;</a>.
+            &quot;Evolving an application architecture&quot;</a>.
     </p>
-    <p><img src="/static/img/portfolio/evolving-app-arch.png" alt=""/></p>
+    <p><img src="/static/img/portfolio/evolving-app-arch.png" alt="" /></p>
 </div>
 
 <div class="pure-u-1">
@@ -218,21 +227,23 @@ title: Portfolio
     </p>
 </div>
 
-    <div class="pure-u-1-2">
-        <span class="fa fa-bitbucket fa-lg fa-fw" aria-hidden="true"></span><a href="https://bitbucket.org/garretfick">BitBucket</a>
-    </div>
-    <div class="pure-u-1-2">
-        <span class="fa fa-github fa-lg fa-fw" aria-hidden="true"></span><a href="https://github.org/garretfick">GitHub</a>
-    </div>
-    <div class="pure-u-1-2">
-        <span class="fa fa-rss fa-lg fa-fw" aria-hidden="true"></span><a href="/blog">Blog</a>
-    </div>
-    <div class="pure-u-1-2">
-        <span class="fa fa-linkedin fa-lg fa-fw" aria-hidden="true"></span><a href="https://linkedin.com/in/garretfick">LinkedIn</a>
-    </div>
+<div class="pure-u-1-2">
+    <span class="fa fa-bitbucket fa-lg fa-fw" aria-hidden="true"></span><a
+        href="https://bitbucket.org/garretfick">BitBucket</a>
+</div>
+<div class="pure-u-1-2">
+    <span class="fa fa-github fa-lg fa-fw" aria-hidden="true"></span><a href="https://github.org/garretfick">GitHub</a>
+</div>
+<div class="pure-u-1-2">
+    <span class="fa fa-rss fa-lg fa-fw" aria-hidden="true"></span><a href="/blog">Blog</a>
+</div>
+<div class="pure-u-1-2">
+    <span class="fa fa-linkedin fa-lg fa-fw" aria-hidden="true"></span><a
+        href="https://linkedin.com/in/garretfick">LinkedIn</a>
+</div>
 
 
 <div class="pure-u-1">
-    <p>And if all else fails - just <a href="https://www.google.com/search?q=%22Garret+Fick%22">Google for my name</a>.</p>
+    <p>And if all else fails - just <a href="https://www.google.com/search?q=%22Garret+Fick%22">Google for my name</a>.
+    </p>
 </div>
-

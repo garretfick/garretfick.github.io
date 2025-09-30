@@ -75,7 +75,7 @@ table {
 }
 
 .admonition::before {
-  content: "⯈"
+  content: "➤"
 }
 
 .three-across > div {
