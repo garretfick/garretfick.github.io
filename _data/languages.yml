@@ -1,15 +1,3 @@
-- name: C/C++
-  desc: 6 years and countless lines of code later, C++ keeps a place in my heart. I have used C/C++ to build Linux embedded/server and Windows desktop applications.
-  skill: 100
-  years: 6
-  projects:
-    - name: OpenPLC (GitHub)
-      desc: Developed flexible application architecture, build systems, test automation, …
-      href: https://github.com/thiagoralves/OpenPLC_v3
-    - name: xmlstack (BitBucket)
-      desc: I developed an easy to test approach to XML parsing complex XML documents. See my blog for details.
-      href: https://bitbucket.org/garretfick/xmlstack
-
 - name: Python
   desc: My go to language for rapid development. It isn't just for scripting, I have built websites and full desktop applications in Python.
   skill: 100
@@ -24,8 +12,20 @@
 
 - name: Java
   desc: I've rediscovered Java multiple times in my career, most recently at Amazon and Smarter Grid Solutions for microservices. Previously, I developed several Android applications and even a desktop application in Swing.
-  skill: 70
-  years: 3
+  skill: 700
+  years: 8
+
+- name: C/C++
+  desc: 6 years and countless lines of code later, C++ keeps a place in my heart. I have used C/C++ to build Linux embedded/server and Windows desktop applications.
+  skill: 100
+  years: 6
+  projects:
+    - name: OpenPLC (GitHub)
+      desc: Developed flexible application architecture, build systems, test automation, …
+      href: https://github.com/thiagoralves/OpenPLC_v3
+    - name: xmlstack (BitBucket)
+      desc: I developed an easy to test approach to XML parsing complex XML documents. See my blog for details.
+      href: https://bitbucket.org/garretfick/xmlstack
 
 - name: JS/TS
   desc: JS has come a long way from my first exposure in the late 90s. Since then, I have built backend applications, mobile and single page applications using ES6 and TS in React and AngularJS.
@@ -41,6 +41,15 @@
     - name: xss-by-example (GitHub)
       desc: Code examples I used to demonstrate XSS vulnerabilities.
       href: https://github.com/garretfick/xss-by-example
+
+- name: Rust
+  desc: Rust piqued my interested for systems programming in 2022. I founded IronPLC specifically to learn Rust. I'm still at it!
+  skill: 60
+  years: 3
+  projects:
+    - name: IronPLC
+      desc: I am (slowly) building an industrial controller runtime in Rust.
+      href: https://www.ironplc.com
 
 - name: PHP
   desc: My first experience was developing a WordPress plugin. Since then, I built backends for ChinaNetCloud in PHP using Laravel.
