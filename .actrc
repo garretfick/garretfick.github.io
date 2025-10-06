@@ -1,0 +1,8 @@
+# Use a larger Docker image that includes more tools
+-P ubuntu-latest=catthehacker/ubuntu:full-latest
+
+# Bind mount your local directory
+--bind
+
+# Use your local environment
+--env-file .env.local
