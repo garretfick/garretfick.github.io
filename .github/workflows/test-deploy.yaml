@@ -1,0 +1,40 @@
+# Workflow for testing Jekyll builds locally with act
+# This skips the deployment steps that don't work locally
+name: Test Jekyll Build
+
+on:
+  # Run on pull requests for testing
+  pull_request:
+  
+  # Allow manual runs
+  workflow_dispatch:
+
+jobs:
+  # Build job
+  test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+      
+      - name: Build with Jekyll
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+      
+      - name: Test site generation
+        run: |
+          echo "Checking _site directory..."
+          ls -la _site/
+          echo "Site built successfully!"
+      
+      # Optional: Run your existing tests
+      - name: Run spellcheck
+        run: bundle exec rake spellcheck
+        continue-on-error: true
