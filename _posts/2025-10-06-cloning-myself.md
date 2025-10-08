@@ -35,7 +35,7 @@ Jekyll website builder and toward GitHub Actions.
 While waiting for lunch, I typed the following into Claude on my phone, typo and all:
 
 > I have a website hosted on GitHib. I want to migrate from the legacy GitHub pages generator
-> to a custom generator using GitHub actions. Can you make a pull requet to do this migration?
+> to a custom generator using GitHub actions. Can you make a pull request to do this migration?
 
 Claude replied that it couldn't create a pull request directly but was happy to generate the content
 for one. It just needed a little more information.
@@ -61,7 +61,7 @@ my local machine and, more importantly, that I probably wouldn't want to deploy 
 
 Claude provided me with a second, distinct actions file tailored specifically for local development.
 
-If you are astuely paying attention, Claude suggested two different workflow files, having almost the
+If you are astutely paying attention, Claude suggested two different workflow files, having almost the
 same content. That sounds like violation of the DRY principal. It took one more prompt:
 
 > Is there some way to not have the duplicated code, perhaps by providing an optional argument. That would

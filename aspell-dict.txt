@@ -408,3 +408,13 @@ Quetelet
 elses
 le
 te
+OneNote
+Evernote
+Drucker
+architecting
+impactful
+ChatGPT
+GitHib
+embeddings
+Kiro
+DevContainer

@@ -3,3 +3,12 @@ markdown: kramdown
 permalink: /blog/:title
 title: Garret Fick
 encoding: utf-8
+exclude:
+  - aspell-dict.rws
+  - aspell-dict.txt
+  - Gemfile
+  - Gemfile.lock
+  - generate_embeddings.py
+  - justfile
+  - Rakefile
+  - README.md

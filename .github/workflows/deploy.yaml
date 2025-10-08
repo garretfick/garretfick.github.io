@@ -56,17 +56,16 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
         if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy == true)
-      
-      - name: Run embedding script
-        run: python generate_embeddings.py
-
+ 
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
         run: |
           if [ "${{ steps.pages.outcome }}" == "success" ]; then
             bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+            python generate_embeddings.py
           else
             bundle exec jekyll build
+            python generate_embeddings.py
           fi
         env:
           JEKYLL_ENV: production
@@ -80,11 +79,10 @@ jobs:
             echo "should_deploy=false" >> $GITHUB_OUTPUT
           fi
       
-      - name: Test site generation
+      - name: Check site generation
         run: |
           echo "Checking _site directory..."
           ls -la _site/
-          echo "Site built successfully!"
       
       - name: Run spellcheck
         run: bundle exec rake spellcheck
