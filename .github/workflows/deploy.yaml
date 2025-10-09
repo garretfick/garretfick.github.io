@@ -55,6 +55,10 @@ jobs:
           echo "en_US UTF-8" | sudo tee -a /etc/locale.gen
           sudo locale-gen en_US.UTF-8
 
+      - name: Run spellcheck
+        run: bundle exec rake spellcheck
+        continue-on-error: true
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
@@ -87,10 +91,6 @@ jobs:
           echo "Checking _site directory..."
           ls -la _site/
           ls -la _site/static/model/
-      
-      - name: Run spellcheck
-        run: bundle exec rake spellcheck
-        continue-on-error: true
       
       - name: Upload artifact
         if: steps.check-deploy.outputs.should_deploy == 'true'
