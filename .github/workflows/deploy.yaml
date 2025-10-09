@@ -51,13 +51,16 @@ jobs:
       - name: Install dependencies
         run: |
           pip install sentence-transformers
+          sudo apt-get update -y && sudo apt-get -y install aspell aspell-en locales
+          echo "en_US UTF-8" | sudo tee -a /etc/locale.gen
+          sudo locale-gen en_US.UTF-8
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
         if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy == true)
  
-      - name: Build with Jekyll
+      - name: Build with Jekyll and Create Embeddings
         # Outputs to the './_site' directory by default
         run: |
           if [ "${{ steps.pages.outcome }}" == "success" ]; then
@@ -83,6 +86,7 @@ jobs:
         run: |
           echo "Checking _site directory..."
           ls -la _site/
+          ls -la _site/static/model/
       
       - name: Run spellcheck
         run: bundle exec rake spellcheck
