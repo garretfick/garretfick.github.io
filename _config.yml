@@ -13,3 +13,5 @@ exclude:
   - Rakefile
   - README.md
   - vendor
+keep_files:
+  - static/model/
