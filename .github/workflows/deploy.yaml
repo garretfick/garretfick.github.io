@@ -40,7 +40,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1' # Adjust if you need a specific version
+          ruby-version: '3.3'
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - name: Setup Python
@@ -64,15 +64,14 @@ jobs:
         uses: actions/configure-pages@v5
         if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy == true)
  
-      - name: Build with Jekyll and Create Embeddings
+      - name: Build with Jekyll
         # Outputs to the './_site' directory by default
+        # The Jekyll hook will automatically generate embeddings
         run: |
           if [ "${{ steps.pages.outcome }}" == "success" ]; then
             bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
-            python generate_embeddings.py
           else
             bundle exec jekyll build
-            python generate_embeddings.py
           fi
         env:
           JEKYLL_ENV: production

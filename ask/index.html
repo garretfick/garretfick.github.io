@@ -1,87 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAG Chatbot with Transformers.js</title>
-    <style>
-        body { font-family: sans-serif; max-width: 700px; margin: 2rem auto; padding: 0 1rem; }
-        textarea { width: 100%; height: 60px; margin-bottom: 0.5rem; }
-        button { padding: 0.5rem 1rem; }
-        #status { margin-top: 1rem; font-style: italic; color: #555; }
-        #output { margin-top: 1rem; padding: 1rem; background-color: #f0f0f0; border-radius: 4px; white-space: pre-wrap; }
-    </style>
-</head>
-<body>
+---
+layout: default
+title: Ask
+---
 
-    <h1>Ask a Question About My Content</h1>
-    <p>This chatbot uses AI to answer questions based on the content of my website. The models run entirely in your browser.</p>
+<p>
+    You can ask me about things on my website. I'm doing by best to answer the questions.
+</p>
 
-    <textarea id="question" placeholder="What is the main topic of the tech blog post?"></textarea>
-    <button id="askButton">Ask</button>
+<p class="admonition">Asking me is an experiment in using AI. The answers are not very good.</p>
 
-    <div id="status">Ready.</div>
-    <div id="output">The answer will appear here.</div>
+    <form class="pure-form">
+        <fieldset class="pure-group">
+            <textarea class="pure-input-2-3" id="question" placeholder="What is the main topic of the tech blog post?"></textarea>
+            <button class="pure-button pure-input-1-4 pure-button-primary" id="askButton">Ask</button>
+        </fieldset>
+    </form>
 
-    <script type="module">
-        // 1. Import the 'pipeline' function from the Transformers.js library.
-        import { pipeline, cos_sim } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2';
+<div class="pure-g">
+    <div class="pure-u-1">
+        <p id="status">Ready</p>
+    </div>
 
-        // 2. Get references to the HTML elements
-        const questionInput = document.getElementById('question');
-        const askButton = document.getElementById('askButton');
-        const statusDiv = document.getElementById('status');
-        const outputDiv = document.getElementById('output');
+    <div class="pure-u-1">
+        <p id="output">The answer will appear here.</p>
+    </div>
+</div>
 
-        // 3. Global variable to hold the blog content and embeddings
-        let blogContent = null;
-        
-        // Caching models for performance
-        let embedder = null;
-        let generator = null;
+<script type="module">
+    // 1. Import the 'pipeline' function from the Transformers.js library.
+    import { pipeline, cos_sim } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2';
 
-        // 4. Function to load the embeddings file
-        async function loadEmbeddings() {
-            statusDiv.textContent = 'Loading knowledge base...';
-            const response = await fetch('/static/model/embeddings.json');
-            blogContent = await response.json();
-            statusDiv.textContent = 'Ready to answer questions.';
-            console.log('Embeddings loaded.');
+    // 2. Get references to the HTML elements
+    const questionInput = document.getElementById('question');
+    const askButton = document.getElementById('askButton');
+    const statusDiv = document.getElementById('status');
+    const outputDiv = document.getElementById('output');
+
+    // 3. Global variable to hold the blog content and embeddings
+    let blogContent = null;
+    
+    // Caching models for performance
+    let embedder = null;
+    let generator = null;
+
+    // 4. Function to load the embeddings file
+    async function loadEmbeddings() {
+        statusDiv.textContent = 'Loading knowledge base...';
+        const response = await fetch('/static/model/embeddings.json');
+        blogContent = await response.json();
+        statusDiv.textContent = 'Ready to answer questions.';
+        console.log('Embeddings loaded.');
+    }
+
+    // 5. The main function to handle the user's query
+    async function answerQuestion() {
+        const query = questionInput.value;
+        if (!query || !blogContent) {
+            outputDiv.textContent = 'Please ask a question after the knowledge base has loaded.';
+            return;
         }
 
-        // 5. The main function to handle the user's query
-        async function answerQuestion() {
-            const query = questionInput.value;
-            if (!query || !blogContent) {
-                outputDiv.textContent = 'Please ask a question after the knowledge base has loaded.';
-                return;
-            }
+        askButton.disabled = true;
 
-            askButton.disabled = true;
+        // Step A: Generate an embedding for the user's question
+        statusDiv.textContent = 'Thinking... (creating query embedding)';
+        if (!embedder) {
+                embedder = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+        }
+        const queryEmbedding = await embedder(query, { pooling: 'mean', normalize: true });
 
-            // Step A: Generate an embedding for the user's question
-            statusDiv.textContent = 'Thinking... (creating query embedding)';
-            if (!embedder) {
-                 embedder = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
-            }
-            const queryEmbedding = await embedder(query, { pooling: 'mean', normalize: true });
+        // Step B: Find the most similar chunks from the blog content
+        statusDiv.textContent = 'Thinking... (searching for relevant content)';
+        const rankedChunks = blogContent.map(doc => {
+            const similarity = cos_sim(queryEmbedding.data, doc.embedding);
+            return { ...doc, similarity };
+        }).sort((a, b) => b.similarity - a.similarity);
 
-            // Step B: Find the most similar chunks from the blog content
-            statusDiv.textContent = 'Thinking... (searching for relevant content)';
-            const rankedChunks = blogContent.map(doc => {
-                const similarity = cos_sim(queryEmbedding.data, doc.embedding);
-                return { ...doc, similarity };
-            }).sort((a, b) => b.similarity - a.similarity);
+        // Select the top 3 most relevant chunks
+        const topChunks = rankedChunks.slice(0, 3);
+        const context = topChunks.map(chunk => chunk.chunk).join('\n\n---\n\n');
 
-            // Select the top 3 most relevant chunks
-            const topChunks = rankedChunks.slice(0, 3);
-            const context = topChunks.map(chunk => chunk.chunk).join('\n\n---\n\n');
+        // Step C: Generate an answer using the retrieved context
+        statusDiv.textContent = 'Thinking... (generating final answer)';
 
-            // Step C: Generate an answer using the retrieved context
-            statusDiv.textContent = 'Thinking... (generating final answer)';
-            
-            // Construct a clear prompt for the generative model
-            const prompt = `
+        console.log(`${context}`);
+        
+        // Construct a clear prompt for the generative model
+        const prompt = `
 Based SOLELY on the following context, please provide a direct answer to the question. Do not use any outside knowledge.
 
 Context:
@@ -90,26 +95,23 @@ ${context}
 Question: ${query}
 
 Answer:`;
-            
-            if (!generator) {
-                generator = await pipeline('text-generation', 'Xenova/distilgpt2');
-            }
-            
-            const result = await generator(prompt, {
-                max_new_tokens: 200,
-                no_repeat_ngram_size: 3,
-            });
-
-            // Step D: Display the final answer
-            outputDiv.textContent = result[0].generated_text.replace(prompt, '').trim(); // Clean up the output
-            statusDiv.textContent = 'Ready to answer questions.';
-            askButton.disabled = false;
+        
+        if (!generator) {
+            generator = await pipeline('text-generation', 'Xenova/distilgpt2');
         }
+        
+        const result = await generator(prompt, {
+            max_new_tokens: 200,
+            no_repeat_ngram_size: 3,
+        });
 
-        // Add event listener and load the data when the page is ready
-        askButton.addEventListener('click', answerQuestion);
-        loadEmbeddings();
-    </script>
+        // Step D: Display the final answer
+        outputDiv.textContent = result[0].generated_text.replace(prompt, '').trim(); // Clean up the output
+        statusDiv.textContent = 'Ready to answer questions.';
+        askButton.disabled = false;
+    }
 
-</body>
-</html>
+    // Add event listener and load the data when the page is ready
+    askButton.addEventListener('click', answerQuestion);
+    loadEmbeddings();
+</script>

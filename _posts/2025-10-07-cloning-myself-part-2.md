@@ -6,7 +6,9 @@ date: 2025-10-07
 
 _This post is the part of a series._
 
-With the groundwork from Part 1 laid, it was time to get to the core of the project: generating the embeddings that would power my AI clone. My tool of choice? Gemini. I figured since that's where I first asked about building a clone, it would have the necessary context. A flawless assumption, right?
+With the groundwork from Part 1 laid, it was time to get to the core of the project: generating the embeddings that would 
+power my AI clone. My tool of choice? Gemini. I figured since that's where I first asked about building a clone, it would 
+have the necessary context. A flawless assumption, right?
 
 ## The Embedding Script
 
@@ -28,7 +30,7 @@ Predictably, the first pass at the workflow failed. It ran at the wrong time, ca
 
 ## Building the Front-End
 
-Now for the fun part: making it all work on a webpage. I needed to use transformer.js to take user input and find the most relevant content from the embeddings.
+Now for the fun part: making it all work on a web page. I needed to use transformer.js to take user input and find the most relevant content from the embeddings.
 
 > How do I use transformer.js on my site? For example, can you write the JS code that would be needed to take input from a text area and return a response?
 
@@ -40,7 +42,7 @@ And then, more directly:
 
 > Can you write the JS to do this?
 
-With that, I had a webpage that… sort of worked.
+With that, I had a web page that… sort of worked.
 
 The clone was alive! But it was slow, clunky, and running entirely in the browser. I asked a
 question that I had answered on my website.
