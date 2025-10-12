@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Cloning Myself (Part 2)
+title: Cloning Myself - Basic Embeddings (Part 2)
 date: 2025-10-07
 ---
 
