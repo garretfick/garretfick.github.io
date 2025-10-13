@@ -6,24 +6,14 @@ date: 2025-10-07
 
 _This post is the part of a series._
 
-n the last post, I finally got my AI clone up and running on the website. It was
- alive! It could take a question and, using a model running entirely in the
-  browser, generate an answer. But from another, more practical perspective,
-  it was a complete failure. The answers weren't just bad; they were
-  hilariously nonsensical.
-
-Of course. Here is an improved version of the blog post, edited to match the style of your site.
-
-This post is part of a series.
-
-Cloning Myself (Part 3): Garbage In, Garbage Out
-
-In the last post, I finally got my AI clone up and running on the website. It was alive! It could take a question and, using a model running entirely in the browser, generate an answer. But from another, more practical perspective, it was a complete failure. The answers weren't just bad; they were hilariously nonsensical.
+In the last post, I got my AI clone up and running on the website. It was alive! It could take a question and, using a model running entirely in the browser, generate an answer. But from another, more practical perspective, it was a complete failure. The answers weren't just bad; they were hilariously nonsensical.
 
 For example, I asked it a simple question about a topic I've specifically
 written about:
 
-> What is a Moral Maze? 
+> What is a Moral Maze?
+
+and the response was:
 
 > What does a Moral Maze look like? Answer : What is an Maze? Question : What does an Maz?
 > The answer: What are the Mazs? What is an Rm? Why? I think the Maze is a Maze. What are the Rm:
@@ -31,14 +21,11 @@ written about:
 > How is the Gm? Why? Is the LM? What are Rms?: Why is the Cm? Where is the S? Who is the Bm? Who is the
 > Em? The Em?: Who are the Ems? The S? The Bm?: The S?: The Bms?: The Ems?
 
-The response was pure gibberish:
-
-So, what went wrong? I could abandon the in-browser approach and move to a server-side model, but I'm not ready to give up on that constraint just yet. That left me with three levers to pull to improve the output:
+That response was pure gibberish.
 
 ## Where to Next?
 
-One obvious approach would be to abandon the idea of running in browser. I'm not ready to take that approach,
-at least not yet. What else can I do to improve the model. I see three possible choices.
+What went wrong? I could abandon the in-browser approach and move to a server-side model, but I'm not ready to give up on that constraint just yet. That left me with three levers to pull to improve the output:
 
 * **The Data**: Change the embeddings the model uses for context.
 * **The Prompt**: Change the instructions I give the model.
