@@ -1,5 +1,14 @@
-_site/
+# Jekyll
+site/_site/
+site/.jekyll-cache/
 *.rws
+
+# Ruby
 Gemfile.lock
+
+# OS
 .DS_Store
+
+# IDE
 .vscode
+.ruby-lsp

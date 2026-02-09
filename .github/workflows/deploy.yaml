@@ -1,4 +1,4 @@
-#This workflow builds and deploys a Jekyll site to GitHub Pages
+# This workflow builds and deploys a Jekyll site to GitHub Pages
 name: Deploy Jekyll site to Pages
 
 on:
@@ -36,12 +36,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          working-directory: site
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -56,6 +57,7 @@ jobs:
           sudo locale-gen en_US.UTF-8
 
       - name: Run spellcheck
+        working-directory: site
         run: bundle exec rake spellcheck
         continue-on-error: true
 
@@ -63,10 +65,11 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
         if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy == true)
- 
+
       - name: Build with Jekyll
-        # Outputs to the './_site' directory by default
+        # Outputs to the './site/_site' directory by default
         # The Jekyll hook will automatically generate embeddings
+        working-directory: site
         run: |
           if [ "${{ steps.pages.outcome }}" == "success" ]; then
             bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
@@ -75,7 +78,7 @@ jobs:
           fi
         env:
           JEKYLL_ENV: production
-      
+
       - name: Check deployment condition
         id: check-deploy
         run: |
@@ -84,16 +87,18 @@ jobs:
           else
             echo "should_deploy=false" >> $GITHUB_OUTPUT
           fi
-      
+
       - name: Check site generation
         run: |
-          echo "Checking _site directory..."
-          ls -la _site/
-          ls -la _site/static/model/
-      
+          echo "Checking site/_site directory..."
+          ls -la site/_site/
+          ls -la site/_site/static/model/
+
       - name: Upload artifact
         if: steps.check-deploy.outputs.should_deploy == 'true'
         uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/_site
 
   # Deployment job
   deploy:
