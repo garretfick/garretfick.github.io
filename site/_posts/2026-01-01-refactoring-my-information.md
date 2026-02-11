@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Refactoring My Information Diet: Moving from Push to Pull
+title: Refactoring My Information Diet - Moving from Push to Pull
 date: 2026-01-01
 ---
 
