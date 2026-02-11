@@ -25,7 +25,7 @@ The "ask" page at `site/ask/index.html` runs a complete RAG pipeline in the brow
 
 The embeddings are generated at build time by `site/generate_embeddings.py`, which is
 invoked by a Jekyll post-write hook (`site/_plugins/generate_embeddings.rb`). The hook
-does not fail the Jekyll build if the Python script errors.
+currently does not fail the Jekyll build if the Python script errors.
 
 The CI pipeline (`.github/workflows/deploy.yaml`) runs:
 `Jekyll build` (triggers embeddings) -> `upload artifact` -> `deploy to GitHub Pages`.
@@ -215,12 +215,15 @@ Add steps to the `build` job in `.github/workflows/deploy.yaml`, after the Jekyl
 build and before the artifact upload:
 
 ```yaml
+- name: Verify embeddings
+  run: |
+    test -f site/_site/static/model/embeddings-all-MiniLM-L6-v2.json
+    test -f site/_site/static/model/embeddings-bge-small-en-v1.5.json
+
 - name: Setup Terraform
-  if: env.CLOUDFLARE_API_TOKEN != ''
   uses: hashicorp/setup-terraform@v3
 
 - name: Deploy Worker via Terraform
-  if: env.CLOUDFLARE_API_TOKEN != ''
   working-directory: terraform
   env:
     TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -230,8 +233,9 @@ build and before the artifact upload:
     terraform apply -auto-approve
 ```
 
-The `if` condition ensures the steps are skipped when Cloudflare secrets aren't
-configured. The existing Jekyll build and GitHub Pages deployment are unaffected.
+All steps are **unconditional** -- the Cloudflare secrets must be configured as
+repository secrets. If embeddings are missing or Terraform fails, the build fails
+and no broken site is deployed.
 
 ### Free Tier Budget
 
@@ -265,13 +269,13 @@ configured. The existing Jekyll build and GitHub Pages deployment are unaffected
 | `.gitignore` | Add terraform state, node_modules |
 | `site/generate_embeddings.py` | Rename output file, dual model loading, dual output files |
 | `site/ask/index.html` | Update embeddings path to new filename, add mode toggle, cloud fetch logic |
-| `.github/workflows/deploy.yaml` | Add conditional Terraform steps |
+| `site/_plugins/generate_embeddings.rb` | Fail the Jekyll build if embedding generation fails |
+| `.github/workflows/deploy.yaml` | Add embeddings verification step and unconditional Terraform steps |
 
 ### Unchanged Files
 
 | File | Why |
 |------|-----|
-| `site/_plugins/generate_embeddings.rb` | Hook still calls same script |
 | `site/_config.yml` | `keep_files: [static/model/]` already covers new file |
 | `.devcontainer/Dockerfile` | `sentence-transformers` already installed; bge model auto-downloads |
 
@@ -551,20 +555,51 @@ just build
 
 ---
 
-### Step 6: CI/CD Pipeline
+### Step 6: Fail Build on Embedding Errors
+
+**Files changed:** `site/_plugins/generate_embeddings.rb`
+
+The current hook silently swallows embedding generation failures. Change it to
+raise an error so Jekyll aborts the build:
+
+```ruby
+module Jekyll
+  Hooks.register :site, :post_write do |site|
+    puts "Generating embeddings..."
+    result = system("python3 ./generate_embeddings.py")
+    unless result
+      raise "Embedding generation failed"
+    end
+    puts "Embeddings generated successfully"
+  end
+end
+```
+
+**Verification:**
+```
+just build   # must succeed end-to-end with embeddings generated
+# Temporarily break generate_embeddings.py -> just build must FAIL
+```
+
+---
+
+### Step 7: CI/CD Pipeline
 
 **Files changed:** `.github/workflows/deploy.yaml`
 
-Add two steps to the `build` job, after "Check site generation" and before
+Add three steps to the `build` job, after "Check site generation" and before
 "Upload artifact":
 
 ```yaml
+    - name: Verify embeddings
+      run: |
+        test -f site/_site/static/model/embeddings-all-MiniLM-L6-v2.json
+        test -f site/_site/static/model/embeddings-bge-small-en-v1.5.json
+
     - name: Setup Terraform
-      if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
       uses: hashicorp/setup-terraform@v3
 
     - name: Deploy Worker via Terraform
-      if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
       working-directory: terraform
       env:
         TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -574,13 +609,15 @@ Add two steps to the `build` job, after "Check site generation" and before
         terraform apply -auto-approve
 ```
 
-Both steps are conditional on the Cloudflare API token secret being configured.
-If it isn't, the steps are skipped and the existing pipeline runs unchanged.
+All steps are **unconditional**. `CLOUDFLARE_API_TOKEN` and
+`CLOUDFLARE_ACCOUNT_ID` must be configured as repository secrets. If either
+embedding file is missing or Terraform fails, the build fails and no broken
+site version is deployed.
 
 **Verification:**
 ```
 just build   # Jekyll build passes (unaffected)
-# Push to branch -> CI runs -> Terraform steps skip (no secrets) -> rest works
+# Push to branch -> CI runs -> embeddings verified -> Terraform runs -> deploy
 ```
 
 ---
