@@ -826,11 +826,16 @@ After the Worker is deployed and confirmed working:
    - Workers KV Storage: Edit (Account scope)
    - Workers AI: Read (Account scope)
    - Workers AI: Edit (Account scope)
-5. Add GitHub secrets:
-   - `CLOUDFLARE_API_TOKEN` - The API token
-   - `CLOUDFLARE_ACCOUNT_ID` - Your account ID
-6. Create GitHub environment: `cloudflare-worker`
-7. (Optional) Install Terraform locally for testing
+5. Create Terraform Cloud account at app.terraform.io:
+   - Create organization `garretfick`
+   - Create workspace `ask-ai` with CLI-Driven Workflow
+   - Generate user API token: User Settings > Tokens > Create an API token
+6. Add GitHub secrets:
+   - `CLOUDFLARE_API_TOKEN` - The Cloudflare API token
+   - `CLOUDFLARE_ACCOUNT_ID` - Your Cloudflare account ID
+   - `TF_API_TOKEN` - Terraform Cloud API token
+7. Create GitHub environment: `cloudflare-worker`
+8. (Optional) Install Terraform locally for testing
 
 ---
 

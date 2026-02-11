@@ -136,5 +136,6 @@ jobs:
       - name: Deploy
         run: just deploy
         env:
+          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
           TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           TF_VAR_cloudflare_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

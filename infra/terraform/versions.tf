@@ -1,4 +1,12 @@
 terraform {
+  cloud {
+    organization = "garretfick"
+
+    workspaces {
+      name = "ask-ai"
+    }
+  }
+
   required_version = ">= 1.0"
 
   required_providers {
