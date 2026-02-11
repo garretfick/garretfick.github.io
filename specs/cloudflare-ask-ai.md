@@ -193,15 +193,17 @@ Add a `<select>` element before the question textarea. Two options:
 
 **Mode behavior:**
 
-- **Browser mode:** Identical to current behavior. `loadEmbeddings()` still runs on
-  page load. `answerQuestion()` still uses Transformers.js. No code changes to this path.
+- **Browser mode:** Identical to current behavior. `answerQuestion()` uses
+  Transformers.js. Embeddings are loaded lazily (see loading behavior below).
 - **Cloud mode:** `answerQuestion()` checks the selected mode. If cloud, it POSTs to
   the Worker URL, shows "Thinking..." in the status div, and displays the response
   in the output div. If the fetch fails (Worker not deployed, network error), show a
   user-friendly error message in the output div.
-- **Loading behavior:** `loadEmbeddings()` always runs (needed for browser mode). The
-  cloud path doesn't need the local embeddings but loading them is harmless and keeps
-  the browser path ready if the user switches modes.
+- **Loading behavior:** `loadEmbeddings()` is **not** called on page load. Instead,
+  embeddings are loaded on-demand the first time the user submits a question in
+  browser mode (or switches to browser mode after having been in cloud mode). Once
+  loaded, the embeddings are cached in memory so subsequent browser-mode questions
+  don't re-fetch. This avoids a ~2-5 MB download for users who only use cloud mode.
 
 **Worker URL:** Hardcode as a `const` at the top of the script block. Use a
 placeholder like `https://ask-ai.ACCOUNT_ID.workers.dev` initially. Update after
@@ -533,7 +535,11 @@ Add a mode selector and cloud fetch logic. Preserve all existing Transformers.js
 
 5. The existing `answerQuestion()` function is **not modified at all**.
 
-6. The existing `loadEmbeddings()` call on page load stays (needed for browser mode).
+6. **Lazy-load embeddings:** Remove the `loadEmbeddings()` call from page load.
+   Instead, call `loadEmbeddings()` at the start of `answerQuestion()` (the browser
+   path) if embeddings haven't been loaded yet. Guard with a simple flag or null
+   check so the fetch only happens once. This avoids downloading embeddings for
+   users who only use cloud mode.
 
 **Verification:**
 ```
