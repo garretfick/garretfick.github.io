@@ -16,7 +16,7 @@ Jekyll build (`just build`) in a passing state.
 
 The "ask" page at `site/ask/index.html` runs a complete RAG pipeline in the browser:
 
-1. On page load, fetches `/static/model/embeddings.json` (pre-computed at build time).
+1. On page load, fetches `/static/model/embeddings-all-MiniLM-L6-v2.json` (pre-computed at build time).
 2. On question submit, computes a query embedding with `Xenova/all-MiniLM-L6-v2`
    via Transformers.js.
 3. Ranks chunks by cosine similarity, takes top 3.
@@ -54,7 +54,7 @@ site/ask/index.html
   |
   |-- [mode = "browser"]
   |     Uses existing Transformers.js pipeline (unchanged)
-  |     Loads: /static/model/embeddings.json (all-MiniLM-L6-v2)
+  |     Loads: /static/model/embeddings-all-MiniLM-L6-v2.json
   |     Models: Xenova/all-MiniLM-L6-v2 + Xenova/distilgpt2
   |
   |-- [mode = "cloud"]
@@ -75,8 +75,8 @@ chunks are embedded by both models. Two output files:
 
 | File | Model | Consumer |
 |------|-------|----------|
-| `embeddings.json` | `all-MiniLM-L6-v2` | In-browser Transformers.js |
-| `embeddings-bge.json` | `BAAI/bge-small-en-v1.5` | Cloudflare Worker via KV |
+| `embeddings-all-MiniLM-L6-v2.json` | `all-MiniLM-L6-v2` | In-browser Transformers.js |
+| `embeddings-bge-small-en-v1.5.json` | `BAAI/bge-small-en-v1.5` | Cloudflare Worker via KV |
 
 ### Worker API Contract
 
@@ -153,7 +153,7 @@ chunks are embedded by both models. Two output files:
 |----------|------|---------|
 | `cloudflare_workers_kv_namespace.ask_ai_embeddings` | KV namespace | Store pre-computed bge embeddings |
 | `cloudflare_workers_script.ask_ai` | Worker script | The RAG worker with AI + KV bindings |
-| `cloudflare_workers_kv.embeddings_data` | KV entry | Upload `embeddings-bge.json` to KV |
+| `cloudflare_workers_kv.embeddings_data` | KV entry | Upload `embeddings-bge-small-en-v1.5.json` to KV |
 
 ### Embedding Generation Changes
 
@@ -164,7 +164,7 @@ modification loads two models and writes two files. The chunking logic is untouc
 ```
 Load all-MiniLM-L6-v2
 For each post: chunk -> encode -> append to documents[]
-Write documents[] to _site/static/model/embeddings.json
+Write documents[] to _site/static/model/embeddings-all-MiniLM-L6-v2.json
 ```
 
 **New flow:**
@@ -174,12 +174,13 @@ Load BAAI/bge-small-en-v1.5
 For each post: chunk -> collect chunks_with_title[]
 Encode chunks_with_title[] with all-MiniLM-L6-v2 -> documents_minilm[]
 Encode chunks_with_title[] with bge-small-en-v1.5 -> documents_bge[]
-Write documents_minilm[] to _site/static/model/embeddings.json
-Write documents_bge[] to _site/static/model/embeddings-bge.json
+Write documents_minilm[] to _site/static/model/embeddings-all-MiniLM-L6-v2.json
+Write documents_bge[] to _site/static/model/embeddings-bge-small-en-v1.5.json
 ```
 
-The `embeddings.json` output must remain **byte-for-byte identical** to the current
-output (same model, same chunking, same JSON format with `indent=2`).
+The `embeddings-all-MiniLM-L6-v2.json` output must be identical to what the current
+script produces as `embeddings.json` (same model, same chunking, same JSON format
+with `indent=2`). The filename changes but the content does not.
 
 ### Frontend Toggle Design
 
@@ -260,8 +261,8 @@ configured. The existing Jekyll build and GitHub Pages deployment are unaffected
 | File | Change |
 |------|--------|
 | `.gitignore` | Add terraform state, node_modules |
-| `site/generate_embeddings.py` | Dual model loading, dual output files |
-| `site/ask/index.html` | Add mode toggle, cloud fetch logic |
+| `site/generate_embeddings.py` | Rename output file, dual model loading, dual output files |
+| `site/ask/index.html` | Update embeddings path to new filename, add mode toggle, cloud fetch logic |
 | `.github/workflows/deploy.yaml` | Add conditional Terraform steps |
 
 ### Unchanged Files
@@ -406,7 +407,7 @@ resource "cloudflare_workers_kv" "embeddings_data" {
   account_id   = var.cloudflare_account_id
   namespace_id = cloudflare_workers_kv_namespace.ask_ai_embeddings.id
   key_name     = "embeddings"
-  value        = file("${path.module}/../site/_site/static/model/embeddings-bge.json")
+  value        = file("${path.module}/../site/_site/static/model/embeddings-bge-small-en-v1.5.json")
 }
 ```
 
@@ -468,20 +469,21 @@ Modify to load two models and write two output files. The core changes:
 
 3. Write two output files:
    ```python
-   output_file_minilm = '_site/static/model/embeddings.json'
-   output_file_bge = '_site/static/model/embeddings-bge.json'
+   output_file_minilm = '_site/static/model/embeddings-all-MiniLM-L6-v2.json'
+   output_file_bge = '_site/static/model/embeddings-bge-small-en-v1.5.json'
    ```
 
-4. The existing `embeddings.json` must use the same model (`all-MiniLM-L6-v2`) and
-   produce identical output to the current script.
+4. The `embeddings-all-MiniLM-L6-v2.json` output must use the same model
+   (`all-MiniLM-L6-v2`) and produce content identical to the current script's
+   `embeddings.json` output.
 
 **Verification:**
 ```
 just build
-ls site/_site/static/model/embeddings.json       # must exist
-ls site/_site/static/model/embeddings-bge.json    # must exist
+ls site/_site/static/model/embeddings-all-MiniLM-L6-v2.json    # must exist
+ls site/_site/static/model/embeddings-bge-small-en-v1.5.json   # must exist
 # Both files have the same number of chunks
-# Ask page in-browser mode works (loads embeddings.json as before)
+# Ask page in-browser mode works (loads embeddings-all-MiniLM-L6-v2.json)
 ```
 
 ---
