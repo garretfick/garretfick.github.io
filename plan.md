@@ -99,146 +99,218 @@ garretfick.github.io/
 
 ## Implementation Steps
 
-### Step 1: Create the Cloudflare Worker (`workers/ask-ai/src/index.js`)
+Each step is a single commit. After every commit, the Jekyll build (`just build`)
+must pass and the existing ask page must continue to work in-browser.
 
-A single Worker script that:
+**Build chain reminder:** `just build` runs `bundle exec jekyll build`, which
+triggers `site/_plugins/generate_embeddings.rb` (a post-write hook) that calls
+`python3 ./generate_embeddings.py`. The hook does **not** fail the build if the
+Python script errors, but we should keep it working anyway.
 
-1. **Handles CORS** -- `OPTIONS` preflight + `Access-Control-Allow-Origin` header
-   scoped to the GitHub Pages origin (`https://garretfick.github.io`).
-2. **Accepts POST /ask** with JSON body `{ "question": "..." }`.
-3. **Computes query embedding** by calling `env.AI.run("@cf/baai/bge-small-en-v1.5", ...)`.
-4. **Loads embeddings from KV** -- single key `embeddings` containing the full JSON
-   array of `{ chunk, embedding }` objects.
-5. **Cosine similarity search** -- rank all chunks, take top 3.
-6. **Builds RAG prompt** -- system message constraining the model to answer only from
-   context, plus the user question and retrieved chunks.
-7. **Generates answer** by calling `env.AI.run("@cf/meta/llama-3.1-8b-instruct", ...)`.
-8. **Returns JSON** `{ "answer": "...", "sources": ["chunk1...", "chunk2...", "chunk3..."] }`.
-9. **Error handling** -- returns structured JSON errors with appropriate HTTP status codes.
+---
 
-Add `workers/ask-ai/package.json` with `wrangler` as a dev dependency for local
-testing. Add `workers/ask-ai/wrangler.toml` for `wrangler dev` (local development
-only; production deployment is via Terraform).
+### Step 1: .gitignore and Dev Container Prep
 
-### Step 2: Create Terraform Configuration (`terraform/`)
+**Files changed:** `.gitignore`, `.devcontainer/Dockerfile`
 
-**`terraform/main.tf`:**
+Add ignore rules for files that will be created in later steps:
+- `terraform/.terraform/`
+- `terraform/*.tfstate*`
+- `terraform/.terraform.lock.hcl`
+- `workers/ask-ai/node_modules/`
 
-```hcl
-terraform {
-  required_providers {
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "~> 5.0"
-    }
-  }
-}
+Update dev container Dockerfile: no changes needed for Python deps
+(`sentence-transformers` already installed; `BAAI/bge-small-en-v1.5` auto-downloads
+on first use). Optionally add `terraform` and `node` if not already present.
 
-provider "cloudflare" {
-  api_token = var.cloudflare_api_token
-}
+**Why first:** Sets up ignore rules before creating the files, so nothing
+accidentally gets committed. Pure housekeeping.
 
-# KV namespace for storing embeddings
-resource "cloudflare_workers_kv_namespace" "ask_ai_embeddings" {
-  account_id = var.cloudflare_account_id
-  title      = "ask-ai-embeddings"
-}
-
-# Worker script with AI and KV bindings
-resource "cloudflare_workers_script" "ask_ai" {
-  account_id  = var.cloudflare_account_id
-  script_name = "ask-ai"
-  content     = file("${path.module}/../workers/ask-ai/src/index.js")
-
-  metadata = {
-    main_module        = "index.js"
-    compatibility_date = "2025-01-01"
-    bindings = [
-      {
-        type = "ai"
-        name = "AI"
-      },
-      {
-        type           = "kv_namespace"
-        name           = "EMBEDDINGS_KV"
-        namespace_id   = cloudflare_workers_kv_namespace.ask_ai_embeddings.id
-      }
-    ]
-  }
-}
-
-# Upload embeddings to KV
-resource "cloudflare_workers_kv" "embeddings_data" {
-  account_id   = var.cloudflare_account_id
-  namespace_id = cloudflare_workers_kv_namespace.ask_ai_embeddings.id
-  key_name     = "embeddings"
-  value        = file("${path.module}/../site/_site/static/model/embeddings-bge.json")
-}
+**Build verification:**
+```
+just build                    # Jekyll build + embeddings must pass
+# Ask page works in-browser   (unchanged)
 ```
 
-**`terraform/variables.tf`:**
-- `cloudflare_api_token` (sensitive)
-- `cloudflare_account_id`
-- `allowed_origin` (default: `https://garretfick.github.io`)
+---
 
-**`terraform/outputs.tf`:**
-- Worker URL (`ask-ai.<account>.workers.dev`)
+### Step 2: Cloudflare Worker
 
-**`terraform/terraform.tfvars.example`:**
-- Template with placeholder values, no secrets.
+**Files added:** `workers/ask-ai/src/index.js`, `workers/ask-ai/package.json`,
+`workers/ask-ai/wrangler.toml`
 
-### Step 3: Generate Dual Embeddings (`site/generate_embeddings.py`)
+Create the Worker script that handles the full server-side RAG pipeline:
 
-Modify the existing script to generate **two** embedding files:
+1. **CORS handling** -- `OPTIONS` preflight + `Access-Control-Allow-Origin` scoped
+   to `https://garretfick.github.io`.
+2. **POST /ask** with JSON body `{ "question": "..." }`.
+3. **Query embedding** via `env.AI.run("@cf/baai/bge-small-en-v1.5", ...)`.
+4. **Load embeddings from KV** -- key `embeddings`, JSON array of `{ chunk, embedding }`.
+5. **Cosine similarity** -- rank chunks, take top 3.
+6. **RAG prompt** -- system message + context + user question.
+7. **Generate answer** via `env.AI.run("@cf/meta/llama-3.1-8b-instruct", ...)`.
+8. **Return JSON** `{ "answer": "...", "sources": [...] }`.
+9. **Error handling** -- structured JSON errors with HTTP status codes.
 
-1. `_site/static/model/embeddings.json` -- using `all-MiniLM-L6-v2` (existing,
-   for the in-browser path, unchanged behavior).
+Add `package.json` with `wrangler` as a dev dependency (for local testing).
+Add `wrangler.toml` for `wrangler dev` (local dev only; production via Terraform).
+
+**Why this step is safe:** Entirely new files in `workers/` directory. Not part of
+the Jekyll build. The site doesn't reference these files yet.
+
+**Build verification:**
+```
+just build                    # Jekyll build + embeddings must pass (unaffected)
+node -c workers/ask-ai/src/index.js   # Syntax check the Worker JS
+# Ask page works in-browser   (unchanged)
+```
+
+---
+
+### Step 3: Terraform Configuration
+
+**Files added:** `terraform/main.tf`, `terraform/variables.tf`,
+`terraform/outputs.tf`, `terraform/terraform.tfvars.example`
+
+Terraform config for:
+- Cloudflare provider (pinned `~> 5.0`)
+- `cloudflare_workers_kv_namespace` for embeddings storage
+- `cloudflare_workers_script` with AI + KV bindings (references Worker JS from Step 2)
+- `cloudflare_workers_kv` to upload `embeddings-bge.json` (file won't exist yet --
+  that's fine, Terraform only reads it at `plan`/`apply` time, not at commit time)
+- Variables: `cloudflare_api_token` (sensitive), `cloudflare_account_id`, `allowed_origin`
+- Outputs: Worker URL
+- `terraform.tfvars.example` with placeholder values (no secrets)
+
+**Why this step is safe:** Entirely new files in `terraform/` directory. Not part of
+the Jekyll build. Terraform doesn't run until CI is configured (Step 6).
+
+**Build verification:**
+```
+just build                    # Jekyll build + embeddings must pass (unaffected)
+terraform fmt -check terraform/   # Format check (if terraform installed)
+# Ask page works in-browser   (unchanged)
+```
+
+---
+
+### Step 4: Dual Embedding Generation
+
+**Files changed:** `site/generate_embeddings.py`
+
+Modify the existing script to generate **two** embedding files from the same chunks:
+
+1. `_site/static/model/embeddings.json` -- using `all-MiniLM-L6-v2` (existing
+   behavior, unchanged output for the in-browser path).
 2. `_site/static/model/embeddings-bge.json` -- using `BAAI/bge-small-en-v1.5`
-   (new, for the Cloudflare Worker path).
+   (new, for the Cloudflare Worker path uploaded to KV via Terraform).
 
-Both models output 384-dim vectors. The chunking logic stays the same -- only the
-encoding step runs twice with different models. The same chunks get embedded by both
-models.
+Implementation approach:
+- Keep the existing chunking logic untouched.
+- Load both models at the start.
+- After chunking, encode once per model.
+- Write both output files.
+- The existing `embeddings.json` output is byte-for-byte identical to before.
 
-### Step 4: Update the Ask Page Frontend (`site/ask/index.html`)
+Both models output 384-dim vectors. Same chunks, two encoding passes.
 
-Add a mode toggle while preserving the existing Transformers.js code:
+**Why this step is safe:** The existing `embeddings.json` is still generated with the
+same model and same logic. The ask page loads `embeddings.json` and works exactly as
+before. The new `embeddings-bge.json` is an extra output that nothing references yet.
 
-- **Add a toggle/select** above the question input: "In-Browser (experimental)" vs
-  "Cloud (Llama 3.1)".
-- **In-Browser mode**: Runs the existing Transformers.js pipeline exactly as today.
-  No changes to this code path.
-- **Cloud mode**: On button click, POST to the Worker URL with
-  `{ "question": questionInput.value }`, show loading state, display the returned
-  `answer` field.
-- The Worker URL can be hardcoded since this is a personal site.
-- Default to "Cloud" mode since it's faster and produces better answers, but let
-  users try the in-browser mode too.
+**Build verification:**
+```
+just build                    # Jekyll build must pass
+ls site/_site/static/model/   # Both embeddings.json AND embeddings-bge.json exist
+python3 -c "import json; d=json.load(open('site/_site/static/model/embeddings.json')); print(f'{len(d)} chunks')"
+python3 -c "import json; d=json.load(open('site/_site/static/model/embeddings-bge.json')); print(f'{len(d)} chunks')"
+# Both files should have the same number of chunks
+# Ask page works in-browser   (unchanged -- still loads embeddings.json)
+```
 
-### Step 5: Update CI/CD Pipeline (`.github/workflows/deploy.yaml`)
+---
 
-Add a job (or extend the existing one) that runs after the Jekyll build:
+### Step 5: Frontend Toggle
 
-1. **Setup Terraform** -- use `hashicorp/setup-terraform` action.
-2. **Terraform init + apply** -- deploys the Worker and KV namespace. Uses secrets
-   `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` from GitHub repo settings.
-3. The embeddings upload happens implicitly via the `cloudflare_workers_kv` Terraform
-   resource that reads the built `embeddings-bge.json`.
+**Files changed:** `site/ask/index.html`
+
+Add a mode selector while preserving all existing Transformers.js code:
+
+- **Add a `<select>` or radio buttons** above the question input:
+  "In-Browser (distilgpt2)" vs "Cloud (Llama 3.1 8B)".
+- **In-Browser mode**: Executes the existing Transformers.js pipeline. Zero changes
+  to this code path. All existing JS stays in place.
+- **Cloud mode**: On submit, POST to the Worker URL with
+  `{ "question": questionInput.value }`. Show "Thinking..." status. Display the
+  returned `answer`. Show source chunks if returned.
+- **Worker URL**: Hardcoded placeholder (e.g., `https://ask-ai.<account>.workers.dev`).
+  Will be updated once the Worker is deployed. Until then, Cloud mode shows a
+  user-friendly error ("Cloud service not yet deployed" or similar).
+- **Default to In-Browser** for now (since the Worker isn't deployed yet). Switch
+  default to Cloud after Step 6 deploys the Worker.
+- **Loading behavior**: In-Browser mode still downloads Transformers.js models on
+  first use (existing behavior). Cloud mode skips model downloads entirely.
+
+**Why this step is safe:** The existing in-browser code path is untouched. The
+toggle defaults to In-Browser. Cloud mode gracefully handles the Worker not being
+available. The page loads, the existing flow works.
+
+**Build verification:**
+```
+just build                    # Jekyll build must pass
+# Open ask page in browser:
+#   - Select "In-Browser" -> ask a question -> works as before
+#   - Select "Cloud" -> ask a question -> shows friendly error (Worker not deployed)
+```
+
+---
+
+### Step 6: CI/CD Pipeline
+
+**Files changed:** `.github/workflows/deploy.yaml`
+
+Add a Terraform deployment step **between** the Jekyll build and GitHub Pages deploy:
+
+1. **Setup Terraform** -- `hashicorp/setup-terraform` action.
+2. **Terraform init** in `terraform/` directory.
+3. **Terraform apply -auto-approve** -- deploys Worker, KV namespace, uploads
+   `embeddings-bge.json` to KV.
+4. Uses GitHub repo secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
+
+**Make the Terraform step conditional:** If Cloudflare secrets aren't configured,
+skip the step gracefully (using `if: secrets.CLOUDFLARE_API_TOKEN != ''` or similar).
+This way the existing Jekyll build + GitHub Pages deploy still works for anyone who
+hasn't set up Cloudflare credentials yet.
 
 **Sequencing:**
 ```
-Jekyll build (generates both embeddings.json and embeddings-bge.json)
-  -> Terraform apply (deploys Worker + uploads bge embeddings to KV)
-  -> GitHub Pages deploy (deploys updated frontend with toggle)
+Jekyll build (generates embeddings.json + embeddings-bge.json)
+  -> Terraform apply (deploys Worker + uploads bge embeddings to KV) [conditional]
+  -> GitHub Pages deploy (deploys frontend with toggle)
 ```
 
-### Step 6: Update .gitignore and Dev Container
+**Why this step is safe:** The Terraform step is conditional -- if secrets aren't
+configured, it's skipped and the rest of the pipeline works exactly as before.
+The Jekyll build and GitHub Pages deploy are unaffected.
 
-- Add `terraform/.terraform/`, `terraform/*.tfstate*`, `terraform/.terraform.lock.hcl`
-  to `.gitignore`.
-- Add `BAAI/bge-small-en-v1.5` to the Python dependencies in the dev container
-  Dockerfile and GitHub Actions workflow (sentence-transformers already handles this;
-  the model downloads automatically on first use).
+**Build verification:**
+```
+just build                    # Jekyll build must pass (unaffected)
+# CI pipeline: push to a branch, verify the workflow runs
+#   - Without Cloudflare secrets: Terraform step skips, rest works
+#   - With Cloudflare secrets: Full pipeline deploys Worker + site
+```
+
+---
+
+### Post-Deployment: Update Default Mode
+
+After Step 6 is deployed and the Worker is confirmed working:
+
+- Update `site/ask/index.html` to default to "Cloud" mode.
+- Update the hardcoded Worker URL if it was a placeholder.
+
+This is a small follow-up commit, not a full step.
 
 ---
 
