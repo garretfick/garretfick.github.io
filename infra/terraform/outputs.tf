@@ -1,6 +1,6 @@
 output "worker_name" {
   description = "Name of the deployed Cloudflare Worker"
-  value       = cloudflare_worker_script.ask_ai.name
+  value       = cloudflare_worker.ask_ai.name
 }
 
 output "worker_url" {

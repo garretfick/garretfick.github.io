@@ -2,6 +2,10 @@ build:
     cd cloudflare-worker && npm install
     cd cloudflare-worker && npm run build
 
+test:
+    cd terraform && terraform init -backend=false
+    cd terraform && terraform validate
+
 deploy: build
     cd terraform && terraform init
     cd terraform && terraform plan -out=tfplan
