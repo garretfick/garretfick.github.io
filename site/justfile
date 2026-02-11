@@ -7,6 +7,8 @@ install:
 
 build:
     bundle exec jekyll build
+    test -f _site/static/model/embeddings-all-MiniLM-L6-v2.json
+    test -f _site/static/model/embeddings-bge-small-en-v1.5.json
 
 test:
     bundle exec rake checkhtml

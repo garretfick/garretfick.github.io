@@ -46,7 +46,7 @@ title: Ask
     // 4. Function to load the embeddings file
     async function loadEmbeddings() {
         statusDiv.textContent = 'Loading knowledge base...';
-        const response = await fetch('/static/model/embeddings.json');
+        const response = await fetch('/static/model/embeddings-all-MiniLM-L6-v2.json');
         blogContent = await response.json();
         statusDiv.textContent = 'Ready to answer questions.';
         console.log('Embeddings loaded.');

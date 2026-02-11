@@ -1,0 +1,2 @@
+build:
+    just site/build
