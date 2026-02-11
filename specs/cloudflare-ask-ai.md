@@ -109,7 +109,7 @@ chunks are embedded by both models. Two output files:
 ```
 
 **CORS:**
-- `Access-Control-Allow-Origin`: `https://garretfick.github.io`
+- `Access-Control-Allow-Origin`: `https://garretfick.com` (also allow `https://garretfick.github.io`)
 - `Access-Control-Allow-Methods`: `POST, OPTIONS`
 - `Access-Control-Allow-Headers`: `Content-Type`
 - Responds to `OPTIONS` preflight with 204.
@@ -311,7 +311,9 @@ in the Design section above. Key requirements:
 
 - ES module format (`export default { async fetch(request, env) { ... } }`).
 - CORS handling: respond to OPTIONS with 204 and appropriate headers. Add CORS
-  headers to all responses. Allow origin `https://garretfick.github.io`.
+  headers to all responses. Check the request `Origin` header against an allowlist
+  of `["https://garretfick.com", "https://garretfick.github.io"]` and reflect the
+  matching origin in the `Access-Control-Allow-Origin` response header.
 - Route POST /ask to the RAG pipeline.
 - Return 405 for other methods, 404 for other paths.
 - All responses are JSON with `Content-Type: application/json`.
@@ -422,10 +424,10 @@ variable "cloudflare_account_id" {
   type        = string
 }
 
-variable "allowed_origin" {
-  description = "Allowed CORS origin for the Worker"
-  type        = string
-  default     = "https://garretfick.github.io"
+variable "allowed_origins" {
+  description = "Allowed CORS origins for the Worker"
+  type        = list(string)
+  default     = ["https://garretfick.com", "https://garretfick.github.io"]
 }
 ```
 
