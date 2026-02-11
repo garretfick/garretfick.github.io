@@ -206,8 +206,12 @@ Health check endpoint.
 | Resource | Type | Purpose |
 |----------|------|---------|
 | `cloudflare_workers_kv_namespace.ask_ai_embeddings` | KV namespace | Store pre-computed bge embeddings |
-| `cloudflare_workers_script.ask_ai` | Worker script | The ask-ai worker with AI + KV bindings |
-| `cloudflare_workers_kv.embeddings_data` | KV entry | Upload `embeddings-bge-small-en-v1.5.json` to KV |
+| `cloudflare_worker.ask_ai` | Worker | Worker identity and settings |
+| `cloudflare_worker_version.ask_ai` | Worker version | Code + bindings (AI + KV namespace) |
+| `cloudflare_workers_deployment.ask_ai` | Deployment | Deploys the version at 100% |
+
+Embeddings KV data is uploaded separately (not via Terraform) because it
+depends on the site build output.
 
 ### Embedding Generation Changes
 
@@ -529,41 +533,56 @@ resource "cloudflare_workers_kv_namespace" "ask_ai_embeddings" {
   title      = "ask-ai-embeddings"
 }
 
-resource "cloudflare_workers_script" "ask_ai" {
+resource "cloudflare_worker" "ask_ai" {
+  account_id = var.cloudflare_account_id
+  name       = "ask-ai"
+}
+
+resource "cloudflare_worker_version" "ask_ai" {
+  account_id         = var.cloudflare_account_id
+  worker_id          = cloudflare_worker.ask_ai.id
+  compatibility_date = "2025-01-01"
+  main_module        = "index.js"
+
+  modules = [{
+    name         = "index.js"
+    content_type = "application/javascript+module"
+    content_file = "${path.module}/../cloudflare-worker/dist/index.js"
+  }]
+
+  bindings = [
+    {
+      type = "ai"
+      name = "AI"
+    },
+    {
+      type         = "kv_namespace"
+      name         = "EMBEDDINGS_KV"
+      namespace_id = cloudflare_workers_kv_namespace.ask_ai_embeddings.id
+    }
+  ]
+}
+
+resource "cloudflare_workers_deployment" "ask_ai" {
   account_id  = var.cloudflare_account_id
-  script_name = "ask-ai"
-  content     = file("${path.module}/../cloudflare-worker/dist/index.js")
+  script_name = cloudflare_worker.ask_ai.name
+  strategy    = "percentage"
 
-  metadata = {
-    main_module        = "index.js"
-    compatibility_date = "2025-01-01"
-    bindings = [
-      {
-        type = "ai"
-        name = "AI"
-      },
-      {
-        type         = "kv_namespace"
-        name         = "EMBEDDINGS_KV"
-        namespace_id = cloudflare_workers_kv_namespace.ask_ai_embeddings.id
-      }
-    ]
-  }
+  versions = [{
+    percentage = 100
+    version_id = cloudflare_worker_version.ask_ai.id
+  }]
 }
 
-resource "cloudflare_workers_kv" "embeddings_data" {
-  account_id   = var.cloudflare_account_id
-  namespace_id = cloudflare_workers_kv_namespace.ask_ai_embeddings.id
-  key_name     = "embeddings"
-  value        = file("${path.module}/../../site/_site/static/model/embeddings-bge-small-en-v1.5.json")
-}
+# Embeddings KV data is uploaded separately via the deploy pipeline,
+# not via Terraform, because it depends on the site build output.
 ```
 
 **`infra/terraform/variables.tf`:**
 
 ```hcl
 variable "cloudflare_api_token" {
-  description = "Cloudflare API token with Workers Scripts: Edit and Workers AI permissions"
+  description = "Cloudflare API token with Workers Scripts: Edit, Workers KV Storage: Edit, and Workers AI permissions"
   type        = string
   sensitive   = true
 }
@@ -596,12 +615,17 @@ variable "allowed_origins" {
 ```hcl
 output "worker_name" {
   description = "Name of the deployed Cloudflare Worker"
-  value       = cloudflare_workers_script.ask_ai.name
+  value       = cloudflare_worker.ask_ai.name
 }
 
 output "worker_url" {
   description = "URL of the deployed ask-ai Worker"
   value       = "https://ask-ai.${var.cloudflare_account_id}.workers.dev"
+}
+
+output "kv_namespace_id" {
+  description = "KV namespace ID for uploading embeddings"
+  value       = cloudflare_workers_kv_namespace.ask_ai_embeddings.id
 }
 ```
 
@@ -799,6 +823,7 @@ After the Worker is deployed and confirmed working:
 3. Note your Account ID (found in Cloudflare dashboard URL or Overview page)
 4. Generate API token (Dashboard -> My Profile -> API Tokens -> Create Token):
    - Workers Scripts: Edit (Account scope)
+   - Workers KV Storage: Edit (Account scope)
    - Workers AI: Read (Account scope)
    - Workers AI: Edit (Account scope)
 5. Add GitHub secrets:
@@ -818,7 +843,7 @@ After the Worker is deployed and confirmed working:
 | 10,000 neurons/day exhausted | Personal site has low traffic. ~50-100 queries/day budget. |
 | Dual embedding generation doubles build time | ~30s per model. Acceptable. |
 | `bge-small-en-v1.5` local vs Workers AI produces slightly different embeddings | Same BAAI model weights. Test after deployment. |
-| Terraform provider breaking changes | Pinned to `~> 5.0`. |
+| Terraform provider breaking changes | Pinned to `~> 5.0`. Uses the v5.9+ resource model (`cloudflare_worker` + `cloudflare_worker_version` + `cloudflare_workers_deployment`). |
 
 ## Out of Scope
 
