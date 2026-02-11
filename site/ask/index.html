@@ -11,6 +11,10 @@ title: Ask
 
     <form class="pure-form">
         <fieldset class="pure-group">
+            <select id="mode" class="pure-input-1-4">
+                <option value="browser">In-Browser (distilgpt2)</option>
+                <option value="cloud">Cloud (Llama 3.1 8B)</option>
+            </select>
             <textarea class="pure-input-2-3" id="question" placeholder="What is the main topic of the tech blog post?"></textarea>
             <button class="pure-button pure-input-1-4 pure-button-primary" id="askButton">Ask</button>
         </fieldset>
@@ -30,37 +34,44 @@ title: Ask
     // 1. Import the 'pipeline' function from the Transformers.js library.
     import { pipeline, cos_sim } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2';
 
+    const WORKER_URL = 'https://ask-ai.ACCOUNT_ID.workers.dev';
+
     // 2. Get references to the HTML elements
     const questionInput = document.getElementById('question');
     const askButton = document.getElementById('askButton');
     const statusDiv = document.getElementById('status');
     const outputDiv = document.getElementById('output');
+    const modeSelect = document.getElementById('mode');
 
     // 3. Global variable to hold the blog content and embeddings
     let blogContent = null;
-    
+
     // Caching models for performance
     let embedder = null;
     let generator = null;
 
-    // 4. Function to load the embeddings file
+    // 4. Function to load the embeddings file (called lazily on first browser-mode question)
     async function loadEmbeddings() {
         statusDiv.textContent = 'Loading knowledge base...';
         const response = await fetch('/static/model/embeddings-all-MiniLM-L6-v2.json');
         blogContent = await response.json();
-        statusDiv.textContent = 'Ready to answer questions.';
         console.log('Embeddings loaded.');
     }
 
-    // 5. The main function to handle the user's query
-    async function answerQuestion() {
+    // 5. Answer using the in-browser Transformers.js pipeline
+    async function answerWithBrowser() {
         const query = questionInput.value;
-        if (!query || !blogContent) {
-            outputDiv.textContent = 'Please ask a question after the knowledge base has loaded.';
+        if (!query) {
+            outputDiv.textContent = 'Please ask a question.';
             return;
         }
 
         askButton.disabled = true;
+
+        // Lazy-load embeddings on first use
+        if (!blogContent) {
+            await loadEmbeddings();
+        }
 
         // Step A: Generate an embedding for the user's question
         statusDiv.textContent = 'Thinking... (creating query embedding)';
@@ -84,7 +95,7 @@ title: Ask
         statusDiv.textContent = 'Thinking... (generating final answer)';
 
         console.log(`${context}`);
-        
+
         // Construct a clear prompt for the generative model
         const prompt = `
 Based SOLELY on the following context, please provide a direct answer to the question. Do not use any outside knowledge.
@@ -95,23 +106,61 @@ ${context}
 Question: ${query}
 
 Answer:`;
-        
+
         if (!generator) {
             generator = await pipeline('text-generation', 'Xenova/distilgpt2');
         }
-        
+
         const result = await generator(prompt, {
             max_new_tokens: 200,
             no_repeat_ngram_size: 3,
         });
 
         // Step D: Display the final answer
-        outputDiv.textContent = result[0].generated_text.replace(prompt, '').trim(); // Clean up the output
+        outputDiv.textContent = result[0].generated_text.replace(prompt, '').trim();
         statusDiv.textContent = 'Ready to answer questions.';
         askButton.disabled = false;
     }
 
-    // Add event listener and load the data when the page is ready
-    askButton.addEventListener('click', answerQuestion);
-    loadEmbeddings();
+    // 6. Answer using the Cloudflare Worker
+    async function answerWithCloudflare() {
+        const query = questionInput.value;
+        if (!query) {
+            outputDiv.textContent = 'Please ask a question.';
+            return;
+        }
+
+        askButton.disabled = true;
+        statusDiv.textContent = 'Thinking...';
+
+        try {
+            const response = await fetch(WORKER_URL + '/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question: query }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Server responded with ${response.status}`);
+            }
+
+            const data = await response.json();
+            outputDiv.textContent = data.answer;
+        } catch (error) {
+            console.error('Cloud request failed:', error);
+            outputDiv.textContent = 'Cloud service is unavailable. Try the in-browser option.';
+        }
+
+        statusDiv.textContent = 'Ready to answer questions.';
+        askButton.disabled = false;
+    }
+
+    // 7. Dispatch based on selected mode
+    askButton.addEventListener('click', () => {
+        if (modeSelect.value === 'cloud') {
+            answerWithCloudflare();
+        } else {
+            answerWithBrowser();
+        }
+    });
 </script>
