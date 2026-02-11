@@ -5,8 +5,8 @@ default: install build test
 install:
     bundle install
 
-build:
-    bundle exec jekyll build
+build *ARGS:
+    bundle exec jekyll build {{ARGS}}
     test -f _site/static/model/embeddings-all-MiniLM-L6-v2.json
     test -f _site/static/model/embeddings-bge-small-en-v1.5.json
 

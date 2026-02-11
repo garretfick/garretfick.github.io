@@ -14,6 +14,11 @@ on:
         required: false
         default: 'true'
         type: boolean
+      deploy_worker:
+        description: 'Deploy Cloudflare Worker'
+        required: false
+        default: 'true'
+        type: boolean
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -56,6 +61,9 @@ jobs:
           echo "en_US UTF-8" | sudo tee -a /etc/locale.gen
           sudo locale-gen en_US.UTF-8
 
+      - name: Setup Just
+        uses: extractions/setup-just@v2
+
       - name: Run spellcheck
         working-directory: site
         run: bundle exec rake spellcheck
@@ -66,15 +74,12 @@ jobs:
         uses: actions/configure-pages@v5
         if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy == true)
 
-      - name: Build with Jekyll
-        # Outputs to the './site/_site' directory by default
-        # The Jekyll hook will automatically generate embeddings
-        working-directory: site
+      - name: Build site
         run: |
           if [ "${{ steps.pages.outcome }}" == "success" ]; then
-            bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+            just build --baseurl "${{ steps.pages.outputs.base_path }}"
           else
-            bundle exec jekyll build
+            just build
           fi
         env:
           JEKYLL_ENV: production
@@ -87,12 +92,6 @@ jobs:
           else
             echo "should_deploy=false" >> $GITHUB_OUTPUT
           fi
-
-      - name: Check site generation
-        run: |
-          echo "Checking site/_site directory..."
-          ls -la site/_site/
-          ls -la site/_site/static/model/
 
       - name: Upload artifact
         if: steps.check-deploy.outputs.should_deploy == 'true'
@@ -112,3 +111,30 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # Cloudflare Worker deployment job
+  deploy-worker:
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy_worker == true)
+    runs-on: ubuntu-latest
+    environment:
+      name: cloudflare-worker
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Setup Just
+        uses: extractions/setup-just@v2
+
+      - name: Deploy
+        run: just deploy
+        env:
+          TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          TF_VAR_cloudflare_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

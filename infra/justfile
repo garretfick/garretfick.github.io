@@ -1,0 +1,8 @@
+build:
+    cd cloudflare-worker && npm install
+    cd cloudflare-worker && npm run build
+
+deploy: build
+    cd terraform && terraform init
+    cd terraform && terraform plan -out=tfplan
+    cd terraform && terraform apply -auto-approve tfplan
