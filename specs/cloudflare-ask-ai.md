@@ -30,6 +30,37 @@ currently does not fail the Jekyll build if the Python script errors.
 The CI pipeline (`.github/workflows/deploy.yaml`) runs:
 `Jekyll build` (triggers embeddings) -> `upload artifact` -> `deploy to GitHub Pages`.
 
+### Repository Structure
+
+The repository is a monorepo with clear separation of concerns:
+
+```
+garretfick.github.io/
+├── site/                    # Jekyll website (GitHub Pages)
+│   ├── _posts/              # 160+ blog posts
+│   ├── _layouts/
+│   ├── _includes/
+│   ├── _plugins/
+│   ├── _config.yml
+│   ├── ask/
+│   ├── static/
+│   ├── generate_embeddings.py
+│   ├── Gemfile
+│   └── ...
+├── infra/                   # Infrastructure code
+│   ├── terraform/           # Terraform IaC
+│   └── cloudflare-worker/   # Cloudflare Worker source code
+├── .github/
+│   └── workflows/
+│       └── deploy.yaml      # CI/CD for both site and Worker
+└── .devcontainer/           # Development environment (stays at root)
+```
+
+The `infra/` directory is structured to support additional backends in the future
+(e.g., `infra/other-backend/`). The `cloudflare-worker/` subdirectory is specific
+to the Cloudflare implementation. Terraform in `infra/terraform/` manages all
+infrastructure and can grow to include additional providers.
+
 ### Limitations of Current System
 
 - distilgpt2 produces low-quality answers (not instruction-tuned, small model).
@@ -82,6 +113,9 @@ chunks are embedded by both models. Two output files:
 
 **Endpoint:** `POST /ask`
 
+Full RAG pipeline: computes query embedding, retrieves relevant chunks from KV,
+and generates an answer.
+
 **Request:**
 ```json
 {
@@ -101,6 +135,21 @@ chunks are embedded by both models. Two output files:
 }
 ```
 
+---
+
+**Endpoint:** `GET /health`
+
+Health check endpoint.
+
+**Response (HTTP 200):**
+```json
+{
+  "status": "ok"
+}
+```
+
+---
+
 **Response (error, HTTP 4xx/5xx):**
 ```json
 {
@@ -109,8 +158,13 @@ chunks are embedded by both models. Two output files:
 ```
 
 **CORS:**
-- `Access-Control-Allow-Origin`: `https://garretfick.com` (also allow `https://garretfick.github.io`)
-- `Access-Control-Allow-Methods`: `POST, OPTIONS`
+- `Access-Control-Allow-Origin`: Check the request `Origin` header against an
+  allowlist and reflect the matching origin. Allowlist:
+  - `https://garretfick.com`
+  - `https://www.garretfick.com`
+  - `https://garretfick.github.io`
+  - `http://localhost:4000` (local dev)
+- `Access-Control-Allow-Methods`: `POST, GET, OPTIONS`
 - `Access-Control-Allow-Headers`: `Content-Type`
 - Responds to `OPTIONS` preflight with 204.
 
@@ -152,7 +206,7 @@ chunks are embedded by both models. Two output files:
 | Resource | Type | Purpose |
 |----------|------|---------|
 | `cloudflare_workers_kv_namespace.ask_ai_embeddings` | KV namespace | Store pre-computed bge embeddings |
-| `cloudflare_workers_script.ask_ai` | Worker script | The RAG worker with AI + KV bindings |
+| `cloudflare_workers_script.ask_ai` | Worker script | The ask-ai worker with AI + KV bindings |
 | `cloudflare_workers_kv.embeddings_data` | KV entry | Upload `embeddings-bge-small-en-v1.5.json` to KV |
 
 ### Embedding Generation Changes
@@ -193,17 +247,17 @@ Add a `<select>` element before the question textarea. Two options:
 
 **Mode behavior:**
 
-- **Browser mode:** Identical to current behavior. `answerQuestion()` uses
+- **Browser mode:** Identical to current behavior. `answerWithBrowser()` uses
   Transformers.js. Embeddings are loaded lazily (see loading behavior below).
-- **Cloud mode:** `answerQuestion()` checks the selected mode. If cloud, it POSTs to
-  the Worker URL, shows "Thinking..." in the status div, and displays the response
-  in the output div. If the fetch fails (Worker not deployed, network error), show a
-  user-friendly error message in the output div.
+- **Cloud mode:** `answerWithCloudflare()` POSTs to the Worker URL, shows
+  "Thinking..." in the status div, and displays the response in the output div.
+  If the fetch fails (Worker not deployed, network error), show a user-friendly
+  error message in the output div.
 - **Loading behavior:** `loadEmbeddings()` is **not** called on page load. Instead,
   embeddings are loaded on-demand the first time the user submits a question in
-  browser mode (or switches to browser mode after having been in cloud mode). Once
-  loaded, the embeddings are cached in memory so subsequent browser-mode questions
-  don't re-fetch. This avoids a ~2-5 MB download for users who only use cloud mode.
+  browser mode. Once loaded, the embeddings are cached in memory so subsequent
+  browser-mode questions don't re-fetch. This avoids a ~2-5 MB download for users
+  who only use cloud mode.
 
 **Worker URL:** Hardcode as a `const` at the top of the script block. Use a
 placeholder like `https://ask-ai.ACCOUNT_ID.workers.dev` initially. Update after
@@ -211,31 +265,77 @@ deployment.
 
 ### CI/CD Changes
 
-Add steps to the `build` job in `.github/workflows/deploy.yaml`, after the Jekyll
-build and before the artifact upload:
+Add a separate `deploy-worker` job in `.github/workflows/deploy.yaml` for
+Cloudflare Worker deployment:
 
 ```yaml
-- name: Verify embeddings
-  run: |
-    test -f site/_site/static/model/embeddings-all-MiniLM-L6-v2.json
-    test -f site/_site/static/model/embeddings-bge-small-en-v1.5.json
+deploy-worker:
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy_worker == true)
+    runs-on: ubuntu-latest
+    environment:
+      name: cloudflare-worker
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-- name: Setup Terraform
-  uses: hashicorp/setup-terraform@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-- name: Deploy Worker via Terraform
-  working-directory: terraform
-  env:
-    TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-    TF_VAR_cloudflare_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-  run: |
-    terraform init
-    terraform apply -auto-approve
+      - name: Install Worker dependencies
+        working-directory: infra/cloudflare-worker
+        run: npm install
+
+      - name: Build Worker
+        working-directory: infra/cloudflare-worker
+        run: npm run build
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        working-directory: infra/terraform
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: infra/terraform
+        run: terraform plan -out=tfplan
+        env:
+          TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          TF_VAR_cloudflare_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Terraform Apply
+        working-directory: infra/terraform
+        run: terraform apply -auto-approve tfplan
+        env:
+          TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          TF_VAR_cloudflare_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 ```
 
-All steps are **unconditional** -- the Cloudflare secrets must be configured as
-repository secrets. If embeddings are missing or Terraform fails, the build fails
-and no broken site is deployed.
+Also add an embeddings verification step to the `build` job, after the Jekyll build
+and before artifact upload:
+
+```yaml
+    - name: Verify embeddings
+      run: |
+        test -f site/_site/static/model/embeddings-all-MiniLM-L6-v2.json
+        test -f site/_site/static/model/embeddings-bge-small-en-v1.5.json
+```
+
+Also add a `deploy_worker` workflow dispatch input:
+
+```yaml
+      deploy_worker:
+        description: 'Deploy Cloudflare Worker'
+        required: false
+        default: 'true'
+        type: boolean
+```
+
+`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` must be configured as
+repository secrets. A `cloudflare-worker` GitHub environment must be created
+for deployment protection.
 
 ### Free Tier Budget
 
@@ -245,6 +345,7 @@ and no broken site is deployed.
 | Workers requests | 100,000/day | Well within limits for personal site. |
 | KV reads | 100,000/day | One read per query. |
 | KV storage | 1 GB | Embeddings ~2-5 MB. |
+| Worker size | 10 MB | Actual ~3 MB. |
 
 ---
 
@@ -254,29 +355,31 @@ and no broken site is deployed.
 
 | File | Purpose |
 |------|---------|
-| `workers/ask-ai/src/index.js` | Worker entry point |
-| `workers/ask-ai/package.json` | Dev dependency on wrangler |
-| `workers/ask-ai/wrangler.toml` | Local dev config (not used in production) |
-| `terraform/main.tf` | Provider, Worker, KV namespace, KV entry |
-| `terraform/variables.tf` | Input variables |
-| `terraform/outputs.tf` | Worker URL output |
-| `terraform/terraform.tfvars.example` | Example values (no secrets) |
+| `infra/cloudflare-worker/src/index.ts` | Worker entry point (TypeScript) |
+| `infra/cloudflare-worker/package.json` | Dev dependencies: `@cloudflare/workers-types`, `esbuild`, `typescript`, `wrangler` |
+| `infra/cloudflare-worker/tsconfig.json` | TypeScript config (ES2022, ESM) |
+| `infra/cloudflare-worker/wrangler.toml` | Local dev config (production deployment via Terraform) |
+| `infra/terraform/main.tf` | Worker script, KV namespace, KV entry resources |
+| `infra/terraform/variables.tf` | Input variables: `cloudflare_api_token`, `cloudflare_account_id`, `worker_name`, `allowed_origins` |
+| `infra/terraform/outputs.tf` | Worker name and URL outputs |
+| `infra/terraform/versions.tf` | Provider version constraints (Cloudflare `~> 5.0`) |
+| `infra/terraform/terraform.tfvars.example` | Example values (no secrets) |
 
 ### Modified Files
 
 | File | Change |
 |------|--------|
-| `.gitignore` | Add terraform state, node_modules |
+| `.gitignore` | Add terraform state, node_modules, worker dist |
 | `site/generate_embeddings.py` | Rename output file, dual model loading, dual output files |
 | `site/ask/index.html` | Update embeddings path to new filename, add mode toggle, cloud fetch logic |
 | `site/_plugins/generate_embeddings.rb` | Fail the Jekyll build if embedding generation fails |
-| `.github/workflows/deploy.yaml` | Add embeddings verification step and unconditional Terraform steps |
+| `.github/workflows/deploy.yaml` | Add embeddings verification step, Worker deployment job, `deploy_worker` input |
 
 ### Unchanged Files
 
 | File | Why |
 |------|-----|
-| `site/_config.yml` | `keep_files: [static/model/]` already covers new file |
+| `site/_config.yml` | `keep_files: [static/model/]` already covers new files |
 | `.devcontainer/Dockerfile` | `sentence-transformers` already installed; bge model auto-downloads |
 
 ---
@@ -294,12 +397,15 @@ Append these entries:
 
 ```
 # Terraform
-terraform/.terraform/
-terraform/*.tfstate*
-terraform/.terraform.lock.hcl
+infra/terraform/.terraform/
+infra/terraform/*.tfstate
+infra/terraform/*.tfstate.*
+infra/terraform/.terraform.lock.hcl
+infra/terraform/terraform.tfvars
 
-# Node
-workers/ask-ai/node_modules/
+# Node.js
+node_modules/
+infra/cloudflare-worker/dist/
 ```
 
 **Verification:** `just build` passes. No functional changes.
@@ -309,40 +415,71 @@ workers/ask-ai/node_modules/
 ### Step 2: Cloudflare Worker
 
 **Files added:**
-- `workers/ask-ai/src/index.js`
-- `workers/ask-ai/package.json`
-- `workers/ask-ai/wrangler.toml`
+- `infra/cloudflare-worker/src/index.ts`
+- `infra/cloudflare-worker/package.json`
+- `infra/cloudflare-worker/tsconfig.json`
+- `infra/cloudflare-worker/wrangler.toml`
 
-**`workers/ask-ai/src/index.js`** must implement the Worker API contract described
-in the Design section above. Key requirements:
+**`infra/cloudflare-worker/src/index.ts`** must implement the Worker API contract
+described in the Design section above. Key requirements:
 
-- ES module format (`export default { async fetch(request, env) { ... } }`).
+- TypeScript with ES module format (`export default { async fetch(request, env) { ... } }`).
 - CORS handling: respond to OPTIONS with 204 and appropriate headers. Add CORS
-  headers to all responses. Check the request `Origin` header against an allowlist
-  of `["https://garretfick.com", "https://garretfick.github.io"]` and reflect the
-  matching origin in the `Access-Control-Allow-Origin` response header.
-- Route POST /ask to the RAG pipeline.
+  headers to all responses. Check the request `Origin` header against a configurable
+  allowlist and reflect the matching origin in the `Access-Control-Allow-Origin`
+  response header.
+- Route `POST /ask` to the RAG pipeline.
+- Route `GET /health` to the health check handler.
 - Return 405 for other methods, 404 for other paths.
 - All responses are JSON with `Content-Type: application/json`.
 - Cosine similarity: since both query and stored embeddings are L2-normalized,
   use dot product (`sum(a[i] * b[i])`).
 
-**`workers/ask-ai/package.json`:**
+**`infra/cloudflare-worker/package.json`:**
 ```json
 {
   "name": "ask-ai",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --format=esm --target=es2022",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
   "devDependencies": {
-    "wrangler": "^3"
+    "@cloudflare/workers-types": "^4.20240129.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.3.0",
+    "wrangler": "^3.0.0"
   }
 }
 ```
 
-**`workers/ask-ai/wrangler.toml`:**
+**`infra/cloudflare-worker/tsconfig.json`:**
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022"],
+    "types": ["@cloudflare/workers-types"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"]
+}
+```
+
+**`infra/cloudflare-worker/wrangler.toml`:**
 ```toml
+# Wrangler configuration for local development
+# Production deployment is handled by Terraform
 name = "ask-ai"
-main = "src/index.js"
+main = "src/index.ts"
 compatibility_date = "2025-01-01"
 
 [ai]
@@ -354,22 +491,23 @@ id = "placeholder-for-local-dev"
 ```
 
 **Verification:** `just build` passes (new files outside `site/`).
-`node -c workers/ask-ai/src/index.js` passes syntax check.
 
 ---
 
 ### Step 3: Terraform Configuration
 
 **Files added:**
-- `terraform/main.tf`
-- `terraform/variables.tf`
-- `terraform/outputs.tf`
-- `terraform/terraform.tfvars.example`
+- `infra/terraform/versions.tf`
+- `infra/terraform/main.tf`
+- `infra/terraform/variables.tf`
+- `infra/terraform/outputs.tf`
+- `infra/terraform/terraform.tfvars.example`
 
-**`terraform/main.tf`:**
+**`infra/terraform/versions.tf`:**
 
 ```hcl
 terraform {
+  required_version = ">= 1.0"
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
@@ -381,7 +519,11 @@ terraform {
 provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
+```
 
+**`infra/terraform/main.tf`:**
+
+```hcl
 resource "cloudflare_workers_kv_namespace" "ask_ai_embeddings" {
   account_id = var.cloudflare_account_id
   title      = "ask-ai-embeddings"
@@ -390,7 +532,7 @@ resource "cloudflare_workers_kv_namespace" "ask_ai_embeddings" {
 resource "cloudflare_workers_script" "ask_ai" {
   account_id  = var.cloudflare_account_id
   script_name = "ask-ai"
-  content     = file("${path.module}/../workers/ask-ai/src/index.js")
+  content     = file("${path.module}/../cloudflare-worker/dist/index.js")
 
   metadata = {
     main_module        = "index.js"
@@ -413,44 +555,62 @@ resource "cloudflare_workers_kv" "embeddings_data" {
   account_id   = var.cloudflare_account_id
   namespace_id = cloudflare_workers_kv_namespace.ask_ai_embeddings.id
   key_name     = "embeddings"
-  value        = file("${path.module}/../site/_site/static/model/embeddings-bge-small-en-v1.5.json")
+  value        = file("${path.module}/../../site/_site/static/model/embeddings-bge-small-en-v1.5.json")
 }
 ```
 
-**`terraform/variables.tf`:**
+**`infra/terraform/variables.tf`:**
 
 ```hcl
 variable "cloudflare_api_token" {
-  description = "Cloudflare API token with Workers and KV permissions"
+  description = "Cloudflare API token with Workers Scripts: Edit and Workers AI permissions"
   type        = string
   sensitive   = true
 }
 
 variable "cloudflare_account_id" {
-  description = "Cloudflare account ID"
+  description = "Cloudflare Account ID"
   type        = string
+}
+
+variable "worker_name" {
+  description = "Name of the Cloudflare Worker"
+  type        = string
+  default     = "ask-ai"
 }
 
 variable "allowed_origins" {
   description = "Allowed CORS origins for the Worker"
   type        = list(string)
-  default     = ["https://garretfick.com", "https://garretfick.github.io"]
+  default     = [
+    "https://garretfick.com",
+    "https://www.garretfick.com",
+    "https://garretfick.github.io",
+    "http://localhost:4000"
+  ]
 }
 ```
 
-**`terraform/outputs.tf`:**
+**`infra/terraform/outputs.tf`:**
 
 ```hcl
+output "worker_name" {
+  description = "Name of the deployed Cloudflare Worker"
+  value       = cloudflare_workers_script.ask_ai.name
+}
+
 output "worker_url" {
   description = "URL of the deployed ask-ai Worker"
   value       = "https://ask-ai.${var.cloudflare_account_id}.workers.dev"
 }
 ```
 
-**`terraform/terraform.tfvars.example`:**
+**`infra/terraform/terraform.tfvars.example`:**
 
 ```hcl
-cloudflare_api_token = "your-api-token-here"
+# Copy this file to terraform.tfvars and fill in your values
+# DO NOT commit terraform.tfvars to version control
+cloudflare_api_token  = "your-api-token-here"
 cloudflare_account_id = "your-account-id-here"
 ```
 
@@ -516,7 +676,14 @@ Add a mode selector and cloud fetch logic. Preserve all existing Transformers.js
 
 2. Add a reference: `const modeSelect = document.getElementById('mode');`
 
-3. Add a `async function answerQuestionCloud()` function that:
+3. Add `async function answerWithBrowser()` that refactors the existing
+   `answerQuestion()` logic (same behavior, clearer name):
+   - Gets the question text.
+   - Lazily loads embeddings if not yet loaded (see loading behavior below).
+   - Computes query embedding, finds top 3 chunks, generates answer with distilgpt2.
+   - Displays the generated text.
+
+4. Add `async function answerWithCloudflare()` that:
    - Gets the question text.
    - Sets status to "Thinking...".
    - Disables the ask button.
@@ -526,24 +693,22 @@ Add a mode selector and cloud fetch logic. Preserve all existing Transformers.js
      message like "Cloud service is unavailable. Try the in-browser option."
    - Re-enables the ask button and resets status.
 
-4. Modify the ask button event listener to dispatch based on mode:
+5. Modify the ask button event listener to dispatch based on mode:
    ```javascript
    askButton.addEventListener('click', () => {
        if (modeSelect.value === 'cloud') {
-           answerQuestionCloud();
+           answerWithCloudflare();
        } else {
-           answerQuestion();
+           answerWithBrowser();
        }
    });
    ```
 
-5. The existing `answerQuestion()` function is **not modified at all**.
-
 6. **Lazy-load embeddings:** Remove the `loadEmbeddings()` call from page load.
-   Instead, call `loadEmbeddings()` at the start of `answerQuestion()` (the browser
-   path) if embeddings haven't been loaded yet. Guard with a simple flag or null
-   check so the fetch only happens once. This avoids downloading embeddings for
-   users who only use cloud mode.
+   Instead, call `loadEmbeddings()` at the start of `answerWithBrowser()` if
+   embeddings haven't been loaded yet. Guard with a simple flag or null check so
+   the fetch only happens once. This avoids downloading embeddings for users who
+   only use cloud mode.
 
 **Verification:**
 ```
@@ -587,38 +752,34 @@ just build   # must succeed end-to-end with embeddings generated
 
 **Files changed:** `.github/workflows/deploy.yaml`
 
-Add three steps to the `build` job, after "Check site generation" and before
-"Upload artifact":
-
-```yaml
-    - name: Verify embeddings
-      run: |
-        test -f site/_site/static/model/embeddings-all-MiniLM-L6-v2.json
-        test -f site/_site/static/model/embeddings-bge-small-en-v1.5.json
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-
-    - name: Deploy Worker via Terraform
-      working-directory: terraform
-      env:
-        TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        TF_VAR_cloudflare_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      run: |
-        terraform init
-        terraform apply -auto-approve
-```
-
-All steps are **unconditional**. `CLOUDFLARE_API_TOKEN` and
-`CLOUDFLARE_ACCOUNT_ID` must be configured as repository secrets. If either
-embedding file is missing or Terraform fails, the build fails and no broken
-site version is deployed.
+Add an embeddings verification step to the `build` job and a separate
+`deploy-worker` job for Cloudflare Worker deployment (see CI/CD Changes
+section in Design for full YAML).
 
 **Verification:**
 ```
 just build   # Jekyll build passes (unaffected)
-# Push to branch -> CI runs -> embeddings verified -> Terraform runs -> deploy
+# Push to branch -> CI runs -> embeddings verified -> Worker deployed
 ```
+
+---
+
+### Step 8: Blog Posts (after implementation)
+
+Create two posts continuing the "Cloning Myself" series:
+
+**Part 4: Technical Journey**
+(`site/_posts/YYYY-MM-DD-cloning-myself-part-4-cloudflare-workers.md`)
+- Adding a hosted LLM backend
+- Repository restructuring (site/ vs infra/)
+- Terraform IaC setup for Cloudflare
+- Worker implementation details
+- CI/CD integration
+
+**Part 5: Comparison & Results** (future post)
+- Side-by-side comparison of browser vs cloud modes
+- Response quality differences
+- Trade-offs: privacy, cost, complexity
 
 ---
 
@@ -628,6 +789,23 @@ After the Worker is deployed and confirmed working:
 
 1. Update `WORKER_URL` in `site/ask/index.html` to the real Worker URL.
 2. Optionally change the default `<select>` option to `cloud`.
+
+---
+
+## Prerequisites
+
+1. Create Cloudflare account at cloudflare.com
+2. Enable Workers AI: Dashboard -> AI -> Workers AI -> Get Started
+3. Note your Account ID (found in Cloudflare dashboard URL or Overview page)
+4. Generate API token (Dashboard -> My Profile -> API Tokens -> Create Token):
+   - Workers Scripts: Edit (Account scope)
+   - Workers AI: Read (Account scope)
+   - Workers AI: Edit (Account scope)
+5. Add GitHub secrets:
+   - `CLOUDFLARE_API_TOKEN` - The API token
+   - `CLOUDFLARE_ACCOUNT_ID` - Your account ID
+6. Create GitHub environment: `cloudflare-worker`
+7. (Optional) Install Terraform locally for testing
 
 ---
 
