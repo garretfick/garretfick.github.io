@@ -76,7 +76,7 @@ jobs:
 
       - name: Build site
         run: |
-          if [ "${{ steps.pages.outcome }}" == "success" ]; then
+          if [ -n "${{ steps.pages.outputs.base_path }}" ]; then
             just build --baseurl "${{ steps.pages.outputs.base_path }}"
           else
             just build
