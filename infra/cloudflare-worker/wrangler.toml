@@ -1,0 +1,12 @@
+# Wrangler configuration for local development
+# Production deployment is handled by Terraform
+name = "ask-ai"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[ai]
+binding = "AI"
+
+[[kv_namespaces]]
+binding = "EMBEDDINGS_KV"
+id = "placeholder-for-local-dev"
