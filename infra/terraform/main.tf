@@ -44,5 +44,11 @@ resource "cloudflare_workers_deployment" "ask_ai" {
   }]
 }
 
+resource "cloudflare_workers_script_subdomain" "ask_ai" {
+  account_id = var.cloudflare_account_id
+  script_name = cloudflare_worker.ask_ai.name
+  enabled = true
+}
+
 # Embeddings KV data is uploaded separately via the deploy pipeline,
 # not via Terraform, because it depends on the site build output.
