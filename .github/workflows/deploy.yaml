@@ -56,7 +56,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install sentence-transformers
+          pip install sentence-transformers numpy
           sudo apt-get update -y && sudo apt-get -y install aspell aspell-en locales
           echo "en_US UTF-8" | sudo tee -a /etc/locale.gen
           sudo locale-gen en_US.UTF-8
@@ -83,6 +83,10 @@ jobs:
           fi
         env:
           JEKYLL_ENV: production
+
+      - name: Evaluate retrieval quality
+        working-directory: site
+        run: just eval
 
       - name: Check deployment condition
         id: check-deploy

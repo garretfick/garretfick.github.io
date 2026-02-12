@@ -1,0 +1,74 @@
+[
+  {
+    "question": "What is an embedding in the context of AI?",
+    "expected_keywords": ["embedding", "numerical", "recipe", "word", "numbers"],
+    "expected_title": "Building Wonders Without Blueprints - How AI Learned to \"Understand\" Language",
+    "description": "The embeddings blog post explains what embeddings are using the recipe analogy"
+  },
+  {
+    "question": "How does Word2Vec work?",
+    "expected_keywords": ["Word2Vec", "nudge", "similar", "random", "billions"],
+    "expected_title": "Building Wonders Without Blueprints - How AI Learned to \"Understand\" Language",
+    "description": "The embeddings post has a section on Word2Vec"
+  },
+  {
+    "question": "What is king minus man plus woman?",
+    "expected_keywords": ["king", "queen", "woman", "man"],
+    "expected_title": "Building Wonders Without Blueprints - How AI Learned to \"Understand\" Language",
+    "description": "The famous word math example from the embeddings post"
+  },
+  {
+    "question": "What is a standard operating procedure?",
+    "expected_keywords": ["SOP", "runbook", "mitigate", "procedure"],
+    "expected_title": "What Makes a Good Standard Operating Procedure",
+    "description": "The SOP post defines what SOPs are and their purpose"
+  },
+  {
+    "question": "What are the sections in an SOP template?",
+    "expected_keywords": ["preamble", "steps", "testing", "check", "act", "verify"],
+    "expected_title": "What Makes a Good Standard Operating Procedure",
+    "description": "The SOP post describes the template sections"
+  },
+  {
+    "question": "How was the cloning myself project built?",
+    "expected_keywords": ["GitHub Pages", "browser", "embeddings", "clone"],
+    "expected_title": "Cloning Myself (Part 1)",
+    "description": "The cloning myself series describes building an AI clone"
+  },
+  {
+    "question": "What constraint did the cloning myself project have?",
+    "expected_keywords": ["GitHub Pages", "free", "browser", "no server"],
+    "expected_title": "Cloning Myself (Part 1)",
+    "description": "The key constraint was running on GitHub Pages with no backend"
+  },
+  {
+    "question": "What tools were used to generate embeddings for the blog?",
+    "expected_keywords": ["Gemini", "Python", "sentence", "embedding"],
+    "expected_title": "Cloning Myself - Basic Embeddings (Part 2)",
+    "description": "Part 2 describes using Gemini and a Python script to generate embeddings"
+  },
+  {
+    "question": "What are the components of IronPLC?",
+    "expected_keywords": ["Visual Studio Code", "Compiler", "Rust", "TypeScript"],
+    "expected_title": "Continuous Deployment for a Visual Studio Code Extension with Language Server Protocol",
+    "description": "The IronPLC pipeline post lists the components"
+  },
+  {
+    "question": "Why does ChatGPT seem to hate my boyfriend?",
+    "expected_keywords": ["agreeable", "word predictor", "chat history", "emotion"],
+    "expected_title": "Does AI love my boyfriend?",
+    "description": "The post explains why AI appears to have opinions about relationships"
+  },
+  {
+    "question": "What is ELIZA?",
+    "expected_keywords": ["ELIZA", "psychotherapist", "Rogerian", "computer program"],
+    "expected_title": "Does AI love my boyfriend?",
+    "description": "ELIZA is discussed as an example of anthropomorphizing computers"
+  },
+  {
+    "question": "What was the schematic capture feature for FPGAs?",
+    "expected_keywords": ["schematic", "VHDL", "FPGA", "high school"],
+    "expected_title": "Success at Work",
+    "description": "The early post about building a schematic capture feature"
+  }
+]
