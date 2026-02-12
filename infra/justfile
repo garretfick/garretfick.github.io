@@ -10,3 +10,13 @@ deploy: build
     cd terraform && terraform init
     cd terraform && terraform plan -out=tfplan
     cd terraform && terraform apply -auto-approve tfplan
+
+upload-embeddings file account_id=env("CLOUDFLARE_ACCOUNT_ID") api_token=env("CLOUDFLARE_API_TOKEN"):
+    #!/usr/bin/env bash
+    set -euo pipefail
+    NAMESPACE_ID=$(cd terraform && terraform output -raw kv_namespace_id)
+    curl -sf -X PUT \
+      "https://api.cloudflare.com/client/v4/accounts/{{account_id}}/storage/kv/namespaces/${NAMESPACE_ID}/values/embeddings" \
+      -H "Authorization: Bearer {{api_token}}" \
+      -H "Content-Type: application/json" \
+      --data-binary "@{{file}}"
