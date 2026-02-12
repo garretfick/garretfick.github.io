@@ -64,11 +64,6 @@ jobs:
       - name: Setup Just
         uses: extractions/setup-just@v2
 
-      - name: Run spellcheck
-        working-directory: site
-        run: bundle exec rake spellcheck
-        continue-on-error: true
-
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
