@@ -154,7 +154,7 @@ embeddings_bge = model_bge.encode(all_chunks_with_title)
 documents_minilm = []
 documents_bge = []
 
-for i, chunk in enumerate(all_chunks):
+for i, chunk in enumerate(all_chunks_with_title):
     documents_minilm.append({
         'chunk': chunk,
         'embedding': embeddings_minilm[i].tolist()
